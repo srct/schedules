@@ -1,0 +1,37 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  crn: MyString
+  section_type: MyString
+  title: MyString
+  instructor: MyString
+  start_date: 2018-04-07
+  end_date: 2018-04-07
+  days: MyString
+  start_time: MyString
+  end_time: MyString
+  location: MyString
+  status: MyString
+  campus: MyString
+  notes: MyString
+  size_limit: 1
+  course: one
+
+two:
+  name: MyString
+  crn: MyString
+  section_type: MyString
+  title: MyString
+  instructor: MyString
+  start_date: 2018-04-07
+  end_date: 2018-04-07
+  days: MyString
+  start_time: MyString
+  end_time: MyString
+  location: MyString
+  status: MyString
+  campus: MyString
+  notes: MyString
+  size_limit: 1
+  course: two
