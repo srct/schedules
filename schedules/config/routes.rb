@@ -1,8 +1,11 @@
+# Registers all routes for the app.
 Rails.application.routes.draw do
-  resources :courses, only: [:index] do
-    resources :sections, only: [:index]
+  scope :api do # Register /api routes
+    resources :courses, only: [:index] do # GET /api/courses
+      resources :sections, only: [:index] # GET /api/courses/:course_id/sections
+    end
   end
 
-  root 'courses#index'
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  get 'home/index'
+  root 'home#index' # Set the root to be the home index
 end
