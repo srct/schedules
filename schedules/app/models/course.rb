@@ -2,7 +2,6 @@
 #
 # TODO: Add more docs
 class Course < ApplicationRecord
-
   # Each course belongs to a +Semester+
   belongs_to :semester
 
@@ -13,6 +12,6 @@ class Course < ApplicationRecord
 
   # Returns all +Section+ objects that belong to this course.
   def sections
-    Section.where :course_id => id
+    Section.where course_id: id
   end
 end

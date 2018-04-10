@@ -8,11 +8,10 @@
 require 'rubyXL'
 require_relative 'excel_loader'
 
-if Rails.env == 'test'
-  loader = ExcelLoader.new 'db/data/testdata.xlsx'
-  loader.load_data
-else
-  loader = ExcelLoader.new 'db/data/allsections.xlsx'
-  loader.load_data
-end
+loader = if Rails.env.test?
+           ExcelLoader.new 'db/data/testdata.xlsx'
+         else
+           ExcelLoader.new 'db/data/allsections.xlsx'
+         end
 
+loader.load_data

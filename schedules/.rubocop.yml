@@ -1,0 +1,23 @@
+inherit_from: .rubocop_autogen.yml # Some auto-generated Rails code we shouldn't worry about
+
+AllCops:
+  TargetRubyVersion: 2.5.0
+
+Style/FrozenStringLiteralComment:
+  Enabled: false # unnecessary
+
+Metrics/AbcSize:
+  Enabled: false # unnecessary IMO
+
+Metrics/LineLength:
+  Max: 120
+
+Metrics/MethodLength:
+  Max: 15 # 10 is a little too low IMO
+  Exclude:
+    - "db/excel_loader.rb" # creating objects takes a lot of lines
+    - "db/migrate/*"
+
+Style/SymbolArray:
+  EnforcedStyle: brackets # [:symbol1, :symbol2]
+
