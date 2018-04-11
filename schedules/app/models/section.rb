@@ -2,7 +2,6 @@
 #
 # TODO: Add more docs
 class Section < ApplicationRecord
-
   # Each +Section+ belongs to a +Course+.
   belongs_to :course
 

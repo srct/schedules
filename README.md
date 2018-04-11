@@ -38,10 +38,23 @@ To populate your local database, run `rake db:migrate:seed`. This sets up your l
 ### Development server
 To start a local development server, run the `rails server` command. The server should now be available at `localhost:3000`.
 
+### Testing
+Before you make a commit, you should ensure you new code passes the project's tests. 
+
+To run the project's tests, run the command `rails test`.
+
+It is recommended that you write tests for any new code you add, but this is not required.  
+
 ## Opening issues
 
 Please use the issue templates located on the new issue page when opening issues. Any issues that do not follow a template will not be accepted.
 
 ## Coding style
 
-Please try to adhere [Airbnb's Ruby Style Guide](https://github.com/airbnb/ruby). This will not be strictly enforced, but please make sure your code is understandable and well documented.
+The style for this project is the [Relaxed Ruby Style](http://relaxed.ruby.style), which is a subset of the community-driven [Ruby style guide](https://github.com/bbatsov/ruby-style-guide) with more relaxed rules.  
+
+A great tool for making sure your code meets the project's style is [RuboCop](https://github.com/bbatsov/rubocop). To use RuboCop, install it by running the command  
+    
+    gem install rubocop
+    
+Then, when inside the `/schedules/` directory, you can run the command `rubocop` to see where your style does not match the project's.

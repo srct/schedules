@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class SemesterTest < ActiveSupport::TestCase
-  test "create fails with no data" do
+  test 'create fails with no data' do
     assert_raise do
       Semester.create!(season: nil, year: nil)
     end
