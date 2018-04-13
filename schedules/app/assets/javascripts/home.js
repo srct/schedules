@@ -1,0 +1,22 @@
+function search() {
+    const searchTable = document.getElementById('scheduleTable');
+    const crn = document.getElementById('search').value;
+
+    fetch(`api/search?crn=${crn}`)
+        .then(section => section.json())
+        .then(section => addRow(searchTable, section));
+}
+
+function addRow(table, section) {
+    const tr = document.createElement('tr');
+    const fields = [section.name, section.title, section.crn, section.professor, section.location, section.days];
+
+    fields.forEach(field => {
+        const td = document.createElement('td');
+        const txt = document.createTextNode(field);
+        td.appendChild(txt);
+        tr.appendChild(td);
+    });
+
+    table.appendChild(tr);
+}
