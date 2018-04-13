@@ -9,7 +9,15 @@ function search() {
 
 function addRow(table, section) {
     const tr = document.createElement('tr');
-    const fields = [section.name, section.title, section.crn, section.professor, section.location, section.days];
+    const fields = [
+        section.name,
+        section.title,
+        section.crn,
+        section.instructor,
+        section.location,
+        section.days,
+        [section.start_time, section.end_time].join(' - '),
+    ];
 
     fields.forEach(field => {
         const td = document.createElement('td');
