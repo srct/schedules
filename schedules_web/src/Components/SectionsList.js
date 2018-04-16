@@ -1,6 +1,48 @@
 import React, { Component } from 'react';
 
 export default class SectionsList extends Component {
+    constructor(props) {
+        super(props);
+
+        this.getRowsForSections = this.getRowsForSections.bind(this);
+        this.getRowForSection = this.getRowForSection.bind(this);
+        this.getLastColumn = this.getLastColumn.bind(this);
+    }
+
+    getRowsForSections() {
+        return this.props.sections.map(section => {
+            return this.getRowForSection(section);
+        });
+    }
+
+    getRowForSection(section) {
+        return (
+            <tr key={section.id}>
+                <td>{section.name}</td>
+                <td>{section.title}</td>
+                <td>{section.crn}</td>
+                <td>{section.instructor}</td>
+                <td>{section.location}</td>
+                <td>{section.days}</td>
+                <td>{[section.start_time, section.end_time].join(' - ')}</td>
+
+                {this.getLastColumn(section)}
+            </tr>
+        );
+    }
+
+    getLastColumn(section) {
+        if (this.props.addToSchedule) {
+            return (
+                <td>
+                    <button onClick={e => this.props.addToSchedule(section)}>Add to schedule</button>
+                </td>
+            );
+        } else {
+            return <td />;
+        }
+    }
+
     render() {
         return (
             <div>
@@ -17,31 +59,7 @@ export default class SectionsList extends Component {
                             <th>Times</th>
                             <th />
                         </tr>
-                        {this.props.sections.map(section => {
-                            return (
-                                <tr key={section.id}>
-                                    <td>{section.name}</td>
-                                    <td>{section.title}</td>
-                                    <td>{section.crn}</td>
-                                    <td>{section.instructor}</td>
-                                    <td>{section.location}</td>
-                                    <td>{section.days}</td>
-                                    <td>{[section.start_time, section.end_time].join(' - ')}</td>
-
-                                    {/* If the addToSchedule prop exists, include an
-                                    add to schedule button to the last column */}
-                                    {this.props.addToSchedule ? (
-                                        <td>
-                                            <button onClick={e => this.props.addToSchedule(e, section)}>
-                                                Add to schedule
-                                            </button>
-                                        </td>
-                                    ) : (
-                                        <td />
-                                    )}
-                                </tr>
-                            );
-                        })}
+                        {this.getRowsForSections()}
                     </tbody>
                 </table>
             </div>
