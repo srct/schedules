@@ -5,4 +5,8 @@ export interface Props {
     framework: string;
 }
 
-export const Hello = (props: Props) => <h1>Hello from {props.compilier} and {props.framework}</h1>;
+export const Hello = (props: Props) => (
+    <h1>
+        Hello from {props.compilier} and {props.framework}
+    </h1>
+);
