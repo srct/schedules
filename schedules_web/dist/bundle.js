@@ -88,19 +88,20 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = { currentSchedule: [] };
-        this.addSectionToCurrentSchedule = this.addSectionToCurrentSchedule.bind(this);
+        this.addSectionToCurrentScheduleIfUnique = this.addSectionToCurrentScheduleIfUnique.bind(this);
     }
-    addSectionToCurrentSchedule(section) {
-        this.setState({
-            currentSchedule: [...this.state.currentSchedule, section],
-        });
+    addSectionToCurrentScheduleIfUnique(section) {
+        if (!this.state.currentSchedule.find(sectionInSchedule => section === sectionInSchedule)) {
+            this.setState({
+                currentSchedule: [...this.state.currentSchedule, section],
+            });
+        }
     }
     render() {
         return (React.createElement("div", null,
             React.createElement("h1", null, "Schedules"),
-            React.createElement(Search_1.default, null),
-            React.createElement(SectionList_1.default, { addToScheduleCallback: this.addSectionToCurrentSchedule }),
-            React.createElement(SectionList_1.default, null)));
+            React.createElement(Search_1.default, { addSearchResultCallback: this.addSectionToCurrentScheduleIfUnique }),
+            React.createElement(SectionList_1.default, { sections: this.state.currentSchedule })));
     }
 }
 exports.default = App;
@@ -119,7 +120,41 @@ exports.default = App;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(/*! react */ "react");
+const section_1 = __webpack_require__(/*! ../section */ "./src/section.ts");
+const SearchBar_1 = __webpack_require__(/*! ./SearchBar */ "./src/components/SearchBar.tsx");
+const SectionList_1 = __webpack_require__(/*! ./SectionList */ "./src/components/SectionList.tsx");
 class Search extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { sections: [] };
+        this.searchForSections = this.searchForSections.bind(this);
+    }
+    searchForSections(crn) {
+        section_1.fetchSectionWithCRN(crn).then(section => this.setState({ sections: [section] }));
+    }
+    render() {
+        return (React.createElement("div", null,
+            React.createElement(SearchBar_1.default, { onSearch: this.searchForSections }),
+            React.createElement(SectionList_1.default, { sections: this.state.sections, selectSectionCallback: this.props.addSearchResultCallback })));
+    }
+}
+exports.default = Search;
+
+
+/***/ }),
+
+/***/ "./src/components/SearchBar.tsx":
+/*!**************************************!*\
+  !*** ./src/components/SearchBar.tsx ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const React = __webpack_require__(/*! react */ "react");
+class SearchBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = { searchTerm: '' };
@@ -132,6 +167,7 @@ class Search extends React.Component {
         });
     }
     onSearch(event) {
+        this.props.onSearch(this.state.searchTerm);
         event.preventDefault();
     }
     render() {
@@ -140,7 +176,7 @@ class Search extends React.Component {
             React.createElement("input", { type: "submit", value: "Search" })));
     }
 }
-exports.default = Search;
+exports.default = SearchBar;
 
 
 /***/ }),
@@ -156,42 +192,51 @@ exports.default = Search;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const React = __webpack_require__(/*! react */ "react");
-const section_1 = __webpack_require__(/*! ../section */ "./src/section.ts");
 class SectionList extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { sections: [] };
-        section_1.fetchSections().then(sections => this.updateStateWithSections(sections));
-        this.updateStateWithSections = this.updateStateWithSections.bind(this);
-    }
-    updateStateWithSections(sections) {
-        this.setState({
-            sections,
-        });
+        this.renderSelectSectionColumn = this.renderSelectSectionColumn.bind(this);
+        this.getSectionWithCRN = this.getSectionWithCRN.bind(this);
     }
     render() {
         return (React.createElement("table", null,
-            React.createElement("tr", null,
-                React.createElement("th", null, "Course"),
-                React.createElement("th", null, "Section Name"),
-                React.createElement("th", null, "CRN"),
-                React.createElement("th", null, "Days"),
-                React.createElement("th", null, "Instructor"),
-                React.createElement("th", null, "Location"),
-                React.createElement("th", null, "Time")),
-            this.renderRowsForSections(this.state.sections)));
+            React.createElement("tbody", null,
+                React.createElement("tr", null,
+                    React.createElement("th", null, "Course"),
+                    React.createElement("th", null, "Section Name"),
+                    React.createElement("th", null, "CRN"),
+                    React.createElement("th", null, "Days"),
+                    React.createElement("th", null, "Instructor"),
+                    React.createElement("th", null, "Location"),
+                    React.createElement("th", null, "Time"),
+                    React.createElement("th", null)),
+                this.renderRowsForSections(this.props.sections))));
     }
     renderRowsForSections(sections) {
         return sections.map(section => {
-            return (React.createElement("tr", null,
+            return (React.createElement("tr", { key: section.id },
                 React.createElement("td", null, section.name),
                 React.createElement("td", null, section.title),
                 React.createElement("td", null, section.crn),
                 React.createElement("td", null, section.days),
                 React.createElement("td", null, section.instructor),
                 React.createElement("td", null, section.location),
-                React.createElement("td", null, [section.startTime, section.endTime].join(' - '))));
+                React.createElement("td", null, [section.startTime, section.endTime].join(' - ')),
+                this.renderSelectSectionColumn(section.crn)));
         });
+    }
+    renderSelectSectionColumn(rowCRN) {
+        if (this.props.selectSectionCallback) {
+            const sectionWithCRN = this.getSectionWithCRN(rowCRN);
+            return (React.createElement("td", null,
+                React.createElement("button", { onClick: () => this.props.selectSectionCallback(sectionWithCRN) }, "Add to schedule")));
+        }
+        else {
+            return React.createElement("td", null);
+        }
+    }
+    getSectionWithCRN(crn) {
+        return this.props.sections.find(section => section.crn === crn);
     }
 }
 exports.default = SectionList;
@@ -235,28 +280,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-function fetchSections() {
+function fetchSectionWithCRN(crn) {
     return __awaiter(this, void 0, void 0, function* () {
-        const response = yield fetch('http://localhost:3001/api/courses/1/sections');
-        const jsonObjects = yield response.json();
-        let sections = [];
-        jsonObjects.forEach((object) => {
-            sections.push({
-                id: object.id,
-                name: object.name,
-                title: object.title,
-                crn: object.crn,
-                instructor: object.instructor,
-                location: object.location,
-                days: object.days,
-                startTime: object.start_time,
-                endTime: object.end_time,
-            });
-        });
-        return sections;
+        const response = yield fetch(`http://localhost:3001/api/search?crn=${crn}`);
+        const object = yield response.json();
+        return {
+            id: object.id,
+            name: object.name,
+            title: object.title,
+            crn: object.crn,
+            instructor: object.instructor,
+            location: object.location,
+            days: object.days,
+            startTime: object.start_time,
+            endTime: object.end_time,
+        };
     });
 }
-exports.fetchSections = fetchSections;
+exports.fetchSectionWithCRN = fetchSectionWithCRN;
 
 
 /***/ }),

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Section, { fetchSectionsWithCRN } from '../section';
+import Section, { fetchSectionWithCRN } from '../section';
 import SearchBar from './SearchBar';
 import SectionList from './SectionList';
 
@@ -15,18 +15,22 @@ export default class Search extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
 
-        this.setState({ sections: [] });
+        this.state = { sections: [] };
+        this.searchForSections = this.searchForSections.bind(this);
     }
 
     searchForSections(crn: string) {
-        fetchSectionsWithCRN(crn).then(sections => this.setState({ sections }));
+        fetchSectionWithCRN(crn).then(section => this.setState({ sections: [section] }));
     }
 
     render() {
         return (
             <div>
                 <SearchBar onSearch={this.searchForSections} />
-                <SectionList sections={this.state.sections} />
+                <SectionList
+                    sections={this.state.sections}
+                    selectSectionCallback={this.props.addSearchResultCallback}
+                />
             </div>
         );
     }

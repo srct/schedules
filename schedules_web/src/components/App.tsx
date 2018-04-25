@@ -12,20 +12,22 @@ class App extends React.Component<any, State> {
         super(props);
         this.state = { currentSchedule: [] };
 
-        this.addSectionToCurrentSchedule = this.addSectionToCurrentSchedule.bind(this);
+        this.addSectionToCurrentScheduleIfUnique = this.addSectionToCurrentScheduleIfUnique.bind(this);
     }
 
-    addSectionToCurrentSchedule(section: Section) {
-        this.setState({
-            currentSchedule: [...this.state.currentSchedule, section],
-        });
+    addSectionToCurrentScheduleIfUnique(section: Section) {
+        if (!this.state.currentSchedule.find(sectionInSchedule => section === sectionInSchedule)) {
+            this.setState({
+                currentSchedule: [...this.state.currentSchedule, section],
+            });
+        }
     }
 
     render() {
         return (
             <div>
                 <h1>Schedules</h1>
-                <Search />
+                <Search addSearchResultCallback={this.addSectionToCurrentScheduleIfUnique} />
                 <SectionList sections={this.state.currentSchedule} />
             </div>
         );
