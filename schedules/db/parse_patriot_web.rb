@@ -142,21 +142,8 @@ def getCourses(semester)
   semesters
 end
 
-# Initialize threads to be waited on array
-threads = []
-
-total = {}
-# below will get you literally all semesters which is wildly overkill
-# getSemesters.each do |semester|
-semester = getSemesters.first
-getCourses(semester).each do |course|
-  threads << Thread.new {
-    total[course] = full_major(course)
-  }
-end
 # end
 
-ThreadsWait.all_waits(*threads)
 
 # total.each { |subject|
 #   puts subject.first
@@ -165,10 +152,45 @@ ThreadsWait.all_waits(*threads)
 #   }
 # }
 
-total.each { |subject|
-  subject[1].each { |crn|
-    section = crn[1]
-    puts section
-    # puts "#{section[:subj]} #{section[:code]} #{section[:sect]} #{section[:name]}"
+def load_data
+  # Initialize threads to be waited on array
+  threads = []
+
+  total = {}
+  # below will get you literally all semesters which is wildly overkill
+  # getSemesters.each do |semester|
+  semester = getSemesters.first
+  getCourses(semester).each do |course|
+    threads << Thread.new {
+      total[course] = full_major(course)
+    }
+  end
+
+  ThreadsWait.all_waits(*threads)
+
+  Semester.delete_all
+  Course.delete_all
+  Section.delete_all
+
+  semester = Semester.create! season: 'Fall', year: '2018'
+  semester.save!
+
+  total.each { |subject|
+    subject[1].each { |crn|
+      section = crn[1]
+      course = Course.find_or_create_by(subject: section[:subj],
+                                        course_number: section[:code])
+
+      course.semester = semester
+      course.save!
+
+      section_name = "#{section[:subj]} #{section[:code]} #{section[:sect]}"
+      Section.create!(name: section_name,
+                      crn: section[:crn],
+                      title: section[:name],
+                      course: course)
+
+      puts "#{section[:subj]} #{section[:code]} #{section[:sect]} #{section[:name]}"
+    }
   }
-}
+end

@@ -6,12 +6,14 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 require 'rubyXL'
-require_relative 'excel_loader'
+# require_relative 'excel_loader'
+require_relative 'parse_patriot_web'
 
-loader = if Rails.env.test?
-           ExcelLoader.new 'db/data/testdata.xlsx'
-         else
-           ExcelLoader.new 'db/data/allsections.xlsx'
-         end
+# loader = if Rails.env.test?
+#            ExcelLoader.new 'db/data/testdata.xlsx'
+#          else
+#            ExcelLoader.new 'db/data/allsections.xlsx'
+#          end
 
-loader.load_data
+# loader.load_data
+load_data
