@@ -5,6 +5,7 @@ module.exports = {
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist'),
+        publicPath: '/dist/',
     },
 
     devtool: 'source-map',
@@ -15,7 +16,11 @@ module.exports = {
 
     module: {
         rules: [
-            { test: /\.tsx?$/, loader: 'awesome-typescript-loader' },
+            {
+                test: /\.tsx?$/,
+                loader: 'awesome-typescript-loader',
+                exclude: /node_modules/,
+            },
             { enforce: 'pre', test: /\.js$/, loader: 'source-map-loader' },
         ],
     },
