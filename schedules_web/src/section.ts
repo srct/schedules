@@ -11,7 +11,7 @@ export default interface Section {
 }
 
 export async function fetchSectionWithCRN(crn: string): Promise<Section> {
-    const response = await fetch(`http://localhost:3001/api/search?crn=${crn}`);
+    const response = await fetch(`http://localhost:3000/api/search?crn=${crn}`);
     const object = await response.json();
 
     return {

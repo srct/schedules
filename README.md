@@ -1,6 +1,6 @@
 # Schedules
 
-Schedules is a web app that allows students to import their class schedules into popular calendar managers. It consists of an API written in Ruby on Rails and a client built with React.
+Schedules is a web app that allows students to import their class schedules into popular calendar managers. It consists of an API written in Ruby on Rails and a web client built with React.
 
 The project manager for Schedules is Zac Wood.
 
@@ -50,10 +50,10 @@ To install the React client's dependencies, run the `yarn` command from the `/sc
 While developing for schedules, it is useful to have development servers for both the React client and the Ruby on Rails API running.
 
 ### API
-To start the API, run the `./start_server` command in the `/schedules_api` directory.
+To start the API, run the `rails server` command in the `/schedules_api` directory. The API should now be accessible from `localhost:3000`
 
 ### Client
-To start the development server for the React client, run the `yarn start` command from the `/schedules_web` directory.
+To start the development server for the React client, run the `yarn start` command from the `/schedules_web` directory. The client should now be available from `localhost:8080`.
 
 ## Testing
 Before you make a commit, you should ensure you new code passes the project's tests. 
