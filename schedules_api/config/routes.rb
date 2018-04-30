@@ -8,6 +8,5 @@ Rails.application.routes.draw do
     get 'search', controller: 'search', action: 'index'
   end
 
-  get 'home/index'
-  root 'home#index' # Set the root to be the home index
+  root 'courses#index' # Set the root to be the courses API endpoint
 end
