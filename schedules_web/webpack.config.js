@@ -1,11 +1,11 @@
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
     entry: './src/index.tsx',
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist'),
-        publicPath: '/dist/',
     },
 
     devtool: 'source-map',
@@ -23,6 +23,14 @@ module.exports = {
             },
             { enforce: 'pre', test: /\.js$/, loader: 'source-map-loader' },
         ],
+    },
+
+    plugins: [new webpack.HotModuleReplacementPlugin()],
+
+    devServer: {
+        compress: true,
+        hot: true,
+        publicPath: '/dist/',
     },
 
     externals: {

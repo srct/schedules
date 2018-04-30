@@ -5,7 +5,7 @@
     "scripts": {
         "test": "echo \"Error: no tests specified\" && exit 1",
         "build": "webpack",
-        "start": "webpack-dev-server --hot"
+        "start": "webpack-dev-server"
     },
     "license": "Apache",
     "private": true,
