@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     end
 
     get 'search', controller: 'search', action: 'index'
-    get 'generate', controller: 'calendar_generator', action: 'generate'
+    post 'generate', controller: 'calendar_generator', action: 'generate'
   end
 
   root 'courses#index' # Set the root to be the courses API endpoint

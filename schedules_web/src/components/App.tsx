@@ -13,6 +13,7 @@ class App extends React.Component<any, State> {
         this.state = { currentSchedule: [] };
 
         this.addSectionToCurrentScheduleIfUnique = this.addSectionToCurrentScheduleIfUnique.bind(this);
+        this.generateSchedule = this.generateSchedule.bind(this);
     }
 
     addSectionToCurrentScheduleIfUnique(section: Section) {
@@ -23,12 +24,25 @@ class App extends React.Component<any, State> {
         }
     }
 
+    generateSchedule() {
+        fetch('http://localhost:3000/api/generate', {
+            method: 'POST',
+            body: JSON.stringify(this.state.currentSchedule),
+            headers: {
+                'Content-Type': 'text/plain',
+            },
+        })
+            .then(response => response.text())
+            .then(text => console.log(text));
+    }
+
     render() {
         return (
             <div>
                 <h1>Schedules</h1>
                 <Search addSearchResultCallback={this.addSectionToCurrentScheduleIfUnique} />
                 <SectionList sections={this.state.currentSchedule} />
+                <button onClick={this.generateSchedule}>Generate Schedule</button>
             </div>
         );
     }
