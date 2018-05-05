@@ -2,6 +2,7 @@ import * as React from 'react';
 import Section from '../section';
 import SectionList from './SectionList';
 import Search from './Search';
+import * as FileSaver from 'file-saver';
 
 interface State {
     currentSchedule: Section[];
@@ -33,7 +34,10 @@ class App extends React.Component<any, State> {
             },
         })
             .then(response => response.text())
-            .then(text => console.log(text));
+            .then(text => {
+                const blob = new Blob([text], { type: 'text/plain;charset=utf-9' });
+                FileSaver.saveAs(blob, 'GMU Fall 2018.ics');
+            });
     }
 
     render() {
