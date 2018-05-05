@@ -4,10 +4,10 @@ require 'time'
 class CalendarGeneratorController < ApplicationController
   def generate
     cal = Icalendar::Calendar.new
-    posted_sections = JSON.parse(request.body.read)
+    posted_crns = JSON.parse(request.body.read)
 
-    posted_sections.each do |posted_section|
-      section = Section.find_by_crn(posted_section["crn"])
+    posted_crns.each do |crn|
+      section = Section.find_by_crn(crn)
       event = generate_event_from_section(section)
       cal.add_event(event)
     end

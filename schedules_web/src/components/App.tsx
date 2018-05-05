@@ -26,9 +26,10 @@ class App extends React.Component<any, State> {
     }
 
     generateSchedule() {
+        const crns = this.state.currentSchedule.map(section => section.crn);
         fetch('http://localhost:3000/api/generate', {
             method: 'POST',
-            body: JSON.stringify(this.state.currentSchedule),
+            body: JSON.stringify(crns),
             headers: {
                 'Content-Type': 'text/plain',
             },
@@ -44,7 +45,9 @@ class App extends React.Component<any, State> {
         return (
             <div>
                 <h1>Schedules</h1>
+                <h2>Search</h2>
                 <Search addSearchResultCallback={this.addSectionToCurrentScheduleIfUnique} />
+                <h2>Your schedule</h2>
                 <SectionList sections={this.state.currentSchedule} />
                 <button onClick={this.generateSchedule}>Generate Schedule</button>
             </div>
