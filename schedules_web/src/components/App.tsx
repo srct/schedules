@@ -21,7 +21,11 @@ class App extends React.Component<any, State> {
                 <h2>Search</h2>
                 <Search addSearchResultCallback={this.addSectionToCurrentScheduleIfUnique} />
                 <h2>Your schedule</h2>
-                <SectionList sections={this.state.currentSchedule} />
+                <SectionList
+                    sections={this.state.currentSchedule}
+                    buttonText="Remove from schedule"
+                    selectSectionCallback={this.removeFromSchedule}
+                />
                 <button onClick={this.generateSchedule}>Generate Schedule</button>
             </div>
         );
@@ -46,9 +50,15 @@ class App extends React.Component<any, State> {
         })
             .then(response => response.text())
             .then(text => {
-                const blob = new Blob([text], { type: 'text/plain;charset=utf-9' });
+                const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
                 FileSaver.saveAs(blob, 'GMU Fall 2018.ics');
             });
+    };
+
+    removeFromSchedule = (section: Section) => {
+        this.setState({
+            currentSchedule: this.state.currentSchedule.filter(other => section !== other),
+        });
     };
 }
 export default App;

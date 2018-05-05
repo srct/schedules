@@ -23,6 +23,7 @@ export default class Search extends React.Component<Props, State> {
                 <SearchBar onSearch={this.searchForSections} />
                 <SectionList
                     sections={this.state.sections}
+                    buttonText="Add to schedule"
                     selectSectionCallback={this.props.addSearchResultCallback}
                 />
             </div>

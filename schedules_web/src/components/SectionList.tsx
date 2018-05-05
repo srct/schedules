@@ -3,6 +3,7 @@ import Section from '../section';
 
 interface Props {
     sections: Section[];
+    buttonText: string;
     selectSectionCallback?: (section: Section) => void;
 }
 
@@ -49,7 +50,9 @@ export default class SectionList extends React.Component<Props, any> {
             const sectionWithCRN = this.getSectionWithCRN(rowCRN);
             return (
                 <td>
-                    <button onClick={() => this.props.selectSectionCallback(sectionWithCRN)}>Add to schedule</button>
+                    <button onClick={() => this.props.selectSectionCallback(sectionWithCRN)}>
+                        {this.props.buttonText}
+                    </button>
                 </td>
             );
         } else {
