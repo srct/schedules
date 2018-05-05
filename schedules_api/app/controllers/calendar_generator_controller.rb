@@ -22,6 +22,7 @@ class CalendarGeneratorController < ApplicationController
     
     event.summary = section.name
     event.description = section.title
+    event.location = section.location
     event.dtstart = Icalendar::Values::DateTime.new(formatted_datetime_str(section.start_date, section.start_time))
     event.dtend = Icalendar::Values::DateTime.new(formatted_datetime_str(section.start_date, section.end_time))
     event.rrule = Icalendar::Values::Recur.new(recurrence_rule_str(section))
@@ -56,9 +57,18 @@ class CalendarGeneratorController < ApplicationController
   end
 
   def exdates_for_section(section)
-    Closure.where(semester: section.course.semester).map { |closure| 
+    exdates = Closure.where(semester: section.course.semester).map { |closure| 
       generate_exdate(closure.date.to_formatted_s(:number), section.start_time) 
     }
+
+    # Every section's start_date is the first Monday of the semester.
+    # So we need to add an exclusion for that day unless the class is held on Mondays
+    exdates << generate_exdate(
+        section.start_date.to_formatted_s(:number), 
+        section.start_time
+    ) unless section.days.start_with? "M"
+
+    exdates
   end
 
   def generate_exdate(date, time)
