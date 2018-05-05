@@ -7,13 +7,6 @@ interface Props {
 }
 
 export default class SectionList extends React.Component<Props, any> {
-    constructor(props: Props) {
-        super(props);
-
-        this.renderSelectSectionColumn = this.renderSelectSectionColumn.bind(this);
-        this.getSectionWithCRN = this.getSectionWithCRN.bind(this);
-    }
-
     render() {
         return (
             <table>

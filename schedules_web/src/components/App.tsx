@@ -12,33 +12,6 @@ class App extends React.Component<any, State> {
     constructor(props: any) {
         super(props);
         this.state = { currentSchedule: [] };
-
-        this.addSectionToCurrentScheduleIfUnique = this.addSectionToCurrentScheduleIfUnique.bind(this);
-        this.generateSchedule = this.generateSchedule.bind(this);
-    }
-
-    addSectionToCurrentScheduleIfUnique(section: Section) {
-        if (!this.state.currentSchedule.find(sectionInSchedule => section === sectionInSchedule)) {
-            this.setState({
-                currentSchedule: [...this.state.currentSchedule, section],
-            });
-        }
-    }
-
-    generateSchedule() {
-        const crns = this.state.currentSchedule.map(section => section.crn);
-        fetch('http://localhost:3000/api/generate', {
-            method: 'POST',
-            body: JSON.stringify(crns),
-            headers: {
-                'Content-Type': 'text/plain',
-            },
-        })
-            .then(response => response.text())
-            .then(text => {
-                const blob = new Blob([text], { type: 'text/plain;charset=utf-9' });
-                FileSaver.saveAs(blob, 'GMU Fall 2018.ics');
-            });
     }
 
     render() {
@@ -53,5 +26,29 @@ class App extends React.Component<any, State> {
             </div>
         );
     }
+
+    addSectionToCurrentScheduleIfUnique = (section: Section) => {
+        if (!this.state.currentSchedule.find(sectionInSchedule => section === sectionInSchedule)) {
+            this.setState({
+                currentSchedule: [...this.state.currentSchedule, section],
+            });
+        }
+    };
+
+    generateSchedule = () => {
+        const crns = this.state.currentSchedule.map(section => section.crn);
+        fetch('http://localhost:3000/api/generate', {
+            method: 'POST',
+            body: JSON.stringify(crns),
+            headers: {
+                'Content-Type': 'text/plain',
+            },
+        })
+            .then(response => response.text())
+            .then(text => {
+                const blob = new Blob([text], { type: 'text/plain;charset=utf-9' });
+                FileSaver.saveAs(blob, 'GMU Fall 2018.ics');
+            });
+    };
 }
 export default App;

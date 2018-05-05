@@ -12,20 +12,6 @@ export default class SearchBar extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = { searchTerm: '' };
-
-        this.onSearch = this.onSearch.bind(this);
-        this.updateSearchTerm = this.updateSearchTerm.bind(this);
-    }
-
-    updateSearchTerm(event: any) {
-        this.setState({
-            searchTerm: event.target.value,
-        });
-    }
-
-    onSearch(event: any) {
-        this.props.onSearch(this.state.searchTerm);
-        event.preventDefault();
     }
 
     render() {
@@ -41,4 +27,15 @@ export default class SearchBar extends React.Component<Props, State> {
             </form>
         );
     }
+
+    onSearch = (event: any) => {
+        this.props.onSearch(this.state.searchTerm);
+        event.preventDefault();
+    };
+
+    updateSearchTerm = (event: any) => {
+        this.setState({
+            searchTerm: event.target.value,
+        });
+    };
 }
