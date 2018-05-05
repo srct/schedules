@@ -17,23 +17,6 @@ class CalendarGeneratorController < ApplicationController
 
   private
 
-  NO_CLASSES = [
-    "20180903", 
-    "20181008", 
-    (21..25).map { |n| "201811#{n}" },
-    (10..19).map { |n| "201812#{n}" }
-  ].flatten.freeze
-
-  DAYS = {
-    "M" => "MO",
-    "T" => "TU",
-    "W" => "WE",
-    "R" => "TH",
-    "F" => "FR",
-    "S" => "SA",
-    "U" => "SU"
-  }.freeze
-
   def generate_event_from_section(section)
     event = Icalendar::Event.new
     
@@ -42,9 +25,7 @@ class CalendarGeneratorController < ApplicationController
     event.dtstart = Icalendar::Values::DateTime.new(formatted_datetime_str(section.start_date, section.start_time))
     event.dtend = Icalendar::Values::DateTime.new(formatted_datetime_str(section.start_date, section.end_time))
     event.rrule = Icalendar::Values::Recur.new(recurrence_rule_str(section))
-
-    
-    event.exdate = no_classes.map { |date| generate_exdate(date, section.start_time) }
+    event.exdate = exdates_for_section(section)
 
     event
   end
@@ -56,13 +37,28 @@ class CalendarGeneratorController < ApplicationController
     "#{formatted_date}T#{formatted_time}"
   end
 
-  
+  DAYS = {
+    "M" => "MO",
+    "T" => "TU",
+    "W" => "WE",
+    "R" => "TH",
+    "F" => "FR",
+    "S" => "SA",
+    "U" => "SU"
+  }.freeze
+
   def recurrence_rule_str(section)
     days = section.days.split("").map do |day|
       DAYS[day]
     end
 
     "FREQ=WEEKLY;UNTIL=#{formatted_datetime_str(section.end_date, section.end_time)};BYDAY=#{days.join(',')}"
+  end
+
+  def exdates_for_section(section)
+    Closure.where(semester: section.course.semester).map { |closure| 
+      generate_exdate(closure.date.to_formatted_s(:number), section.start_time) 
+    }
   end
 
   def generate_exdate(date, time)
