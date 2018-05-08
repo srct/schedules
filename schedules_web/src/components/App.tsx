@@ -1,8 +1,8 @@
+import * as FileSaver from 'file-saver';
 import * as React from 'react';
 import Section from '../section';
-import SectionList from './SectionList';
 import Search from './Search';
-import * as FileSaver from 'file-saver';
+import SectionList from './SectionList';
 
 interface State {
     currentSchedule: Section[];
