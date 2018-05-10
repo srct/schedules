@@ -14,13 +14,7 @@ interface State {
 export default class Search extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
-
         this.state = { sections: [] };
-        this.searchForSections = this.searchForSections.bind(this);
-    }
-
-    searchForSections(crn: string) {
-        fetchSectionWithCRN(crn).then(section => this.setState({ sections: [section] }));
     }
 
     render() {
@@ -29,9 +23,14 @@ export default class Search extends React.Component<Props, State> {
                 <SearchBar onSearch={this.searchForSections} />
                 <SectionList
                     sections={this.state.sections}
+                    buttonText="Add to schedule"
                     selectSectionCallback={this.props.addSearchResultCallback}
                 />
             </div>
         );
     }
+
+    searchForSections = (crn: string) => {
+        fetchSectionWithCRN(crn).then(section => this.setState({ sections: [section] }));
+    };
 }
