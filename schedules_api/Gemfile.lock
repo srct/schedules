@@ -185,18 +185,13 @@ PLATFORMS
 DEPENDENCIES
   byebug
   capybara (~> 2.13)
-<<<<<<< HEAD:schedules_api/Gemfile.lock
+  httparty
   icalendar
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)
+  nokogiri
   pry
   pry-doc
-=======
-  httparty
-  jbuilder (~> 2.5)
-  listen (>= 3.0.5, < 3.2)
-  nokogiri
->>>>>>> parser:schedules_api/Gemfile.lock
   puma (~> 3.7)
   rails (~> 5.1.6)
   rubyXL
