@@ -32,7 +32,7 @@ semester.save!
 
 total.each do |subject|
   subject.each_value do |section|
-    next unless (section.has_key? "date_range") && (section.has_key? "instructors")
+    next unless (section.key? "date_range") && (section.key? "instructors")
 
     course = Course.find_or_create_by(subject: section[:subj],
                                       course_number: section[:code])
@@ -43,18 +43,17 @@ total.each do |subject|
     section_name = "#{section[:subj]} #{section[:code]} #{section[:sect]} #{section[:name]}"
     puts "Adding #{section_name}..."
 
-    start_time = if section.has_key? "time"
+    start_time = if section.key? "time"
                    section["time"].split(' - ').first
                  else
                    "N/A"
                  end
 
-    end_time = if section.has_key? "time"
+    end_time = if section.key? "time"
                  section["time"].split(' - ').last
                else
                  "N/A"
                end
-
 
     Section.create!(name: section_name,
                     crn: section[:crn],
@@ -66,6 +65,5 @@ total.each do |subject|
                     end_time: end_time,
                     instructor: section["instructors"].split(' ').map { |word| word unless word.empty? }.join(' '),
                     course: course)
-
   end
 end
