@@ -19,9 +19,7 @@ loader = if Rails.env.test?
            ExcelLoader.new 'db/data/allsections.xlsx'
          end
 
-
 semester = Semester.where(season: "Fall", year: "2018").first
-
 
 Closure.create! date: Date.new(2018, 9, 3), semester: semester
 Closure.create! date: Date.new(2018, 10, 8), semester: semester
