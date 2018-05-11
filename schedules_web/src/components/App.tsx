@@ -32,12 +32,15 @@ class App extends React.Component<any, State> {
     }
 
     addSectionToCurrentScheduleIfUnique = (section: Section) => {
-        if (!this.state.currentSchedule.find(sectionInSchedule => section === sectionInSchedule)) {
+        if (!this.isSectionInSchedule(section)) {
             this.setState({
                 currentSchedule: [...this.state.currentSchedule, section],
             });
         }
     };
+
+    isSectionInSchedule = (section: Section) =>
+        this.state.currentSchedule.find(sectionInSchedule => section === sectionInSchedule);
 
     generateSchedule = () => {
         const crns = this.state.currentSchedule.map(section => section.crn);
@@ -45,7 +48,7 @@ class App extends React.Component<any, State> {
             method: 'POST',
             body: JSON.stringify(crns),
             headers: {
-                'Content-Type': 'text/plain',
+                'Content-Type': 'application/json',
             },
         })
             .then(response => response.text())
