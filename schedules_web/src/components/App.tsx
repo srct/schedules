@@ -1,6 +1,6 @@
-import * as FileSaver from 'file-saver';
 import * as React from 'react';
 import Section from '../section';
+import { ENDPOINTS, downloadCalendar, postData } from '../utilities';
 import Search from './Search';
 import SectionList from './SectionList';
 
@@ -33,29 +33,19 @@ class App extends React.Component<any, State> {
 
     addSectionToCurrentScheduleIfUnique = (section: Section) => {
         if (!this.isSectionInSchedule(section)) {
-            this.setState({
-                currentSchedule: [...this.state.currentSchedule, section],
-            });
+            this.setState({ currentSchedule: [...this.state.currentSchedule, section] });
         }
     };
 
     isSectionInSchedule = (section: Section) =>
-        this.state.currentSchedule.find(sectionInSchedule => section === sectionInSchedule);
+        this.state.currentSchedule.find(sectionInSchedule => section == sectionInSchedule);
 
     generateSchedule = () => {
         const crns = this.state.currentSchedule.map(section => section.crn);
-        fetch('http://localhost:3000/api/generate', {
-            method: 'POST',
-            body: JSON.stringify(crns),
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
+
+        postData(ENDPOINTS.generateCalendar, crns)
             .then(response => response.text())
-            .then(text => {
-                const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
-                FileSaver.saveAs(blob, 'GMU Fall 2018.ics');
-            });
+            .then(icalText => downloadCalendar(icalText));
     };
 
     removeFromSchedule = (section: Section) => {
@@ -64,4 +54,5 @@ class App extends React.Component<any, State> {
         });
     };
 }
+
 export default App;
