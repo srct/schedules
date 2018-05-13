@@ -1,7 +1,7 @@
 import * as FileSaver from 'file-saver';
 
 export const ENDPOINTS = {
-    generateCalendar: 'http:localhost:3000/api/generate',
+    generateCalendar: 'http://localhost:3000/api/generate',
 };
 
 export function postData(endpoint: string, data: any): Promise<Response> {
