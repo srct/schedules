@@ -2,61 +2,75 @@ require_relative 'patriot_web_networker'
 require 'nokogiri'
 
 class String
+  # Checks if a String is a alphanumeric
   def alpha?
     !!match(/^[[:alpha:]]+$/)
   end
 end
 
 module PatriotWeb
+  # Contains methods for parsing data retrieved from Patriot Web
   class Parser
     def initialize
       @networker = PatriotWeb::Networker.new
     end
-
+    
+    # Parses all semesters avaliable on Patriot Web
     def parse_semesters
-      response = @networker.fetch_page_containing_semester_data
-      searcher = Nokogiri::HTML(response)
+      response = @networker.fetch_page_containing_semester_data 
+      document = Nokogiri::HTML(response) # parse the document from the HTTP response
 
-      get_semesters_from_option_values(searcher).compact
+      get_semesters_from_option_values(document).compact
     end
 
+    # Parses subjects belonging to a given semester id
+    # @param semester_id [Integer]
     def parse_subjects(semester_id)
       response = @networker.fetch_subjects(semester_id)
-      searcher = Nokogiri::HTML(response)
-
-      get_alpha_option_values(searcher)
+      document = Nokogiri::HTML(response)
+      get_subject_codes_from_option_values(document)
     end
 
+    # Parses all courses belonging to a given subject
+    # @param subject [String]
     def parse_courses_in_subject(subject)
-      resp = @networker.fetch_courses_in_subject(subject)
-      searcher = Nokogiri::HTML(resp)
-      feed_course_info(searcher)
+      response = @networker.fetch_courses_in_subject(subject)
+      document = Nokogiri::HTML(response)
+      feed_course_info(document)
     end
 
     private
-
-    def get_alpha_option_values(searcher)
-      searcher.xpath('//*[@id="subj_id"]/option').map do |opt|
-        if opt.attr('value').strip.alpha?
-          opt.attr('value')
+    
+    # Parse the values of all different options on the Patriot Web
+    # semester select page
+    # @param document [Nokogiri::HTML::Document]
+    def get_semesters_from_option_values(document)
+      document.css('option').map do |opt| # for each option value
+        if opt.attr('value').start_with? '20' # ensure it is a semester value
+          opt.attr('value') # return the value
         end
       end
     end
 
-    def get_semesters_from_option_values(searcher)
-      searcher.css('option').map do |opt|
-        if opt.attr('value').start_with? '20'
-          opt.attr('value')
+    # Parse all subject codes from the select element on the Patriot Web
+    # subject select page
+    # @param document [Nokogiri::HTML::Document]
+    def get_subject_codes_from_option_values(document)
+      document.xpath('//*[@id="subj_id"]/option').map do |opt| # for each option value under "subj_id"
+        if opt.attr('value').strip.alpha? # if the value is alphanumeric
+          opt.attr('value') # return the value
         end
       end
     end
 
+    # TODO write docs
     def feed_course_info(searcher)
-      table = searcher.css('html body div.pagebodydiv table.datadisplaytable')
+      # find the table containing the courses
+      table = searcher.css('html body div.pagebodydiv table.datadisplaytable') 
       data = {}
       currentobj = nil
-      table.css('table.datadisplaytable').first.children.each do |row|
-        next unless row.name == 'tr'
+      table.css('table.datadisplaytable').first.children.each do |row| # for each row in the table
+        next unless row.name == 'tr' # only search table rows, ignore headers
         row.children.each do |item|
           currentobj = sort_item(item, currentobj, data)
         end
@@ -64,6 +78,7 @@ module PatriotWeb
       data
     end
 
+    # TODO break this up and write docs
     def sort_item(item, currentobj, data)
       if item.name == 'th'
         if item.to_html.include? '-'
@@ -104,7 +119,8 @@ module PatriotWeb
       end
       currentobj
     end
-
+    
+    # TODO break this up and write docs
     def get_details(data, titledetails, titledata)
       crn = titledetails[1].strip
       data[crn] = {} unless data[titledetails[1]]

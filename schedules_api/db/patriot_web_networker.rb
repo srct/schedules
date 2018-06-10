@@ -1,6 +1,7 @@
 require 'httparty'
 
 module PatriotWeb
+  # Contains utilities for making HTTP requests to PatriotWeb
   class Networker
     def fetch_page_containing_semester_data
       HTTParty.get('https://patriotweb.gmu.edu/pls/prod/bwckschd.p_disp_dyn_sched')

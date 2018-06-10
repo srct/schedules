@@ -1,3 +1,6 @@
+# This file is no longer being used.
+# Data is now being parsed from Patriot Web.
+
 require 'rubyXL'
 
 # Provides utilities for loading schedules from GMU's excel files.

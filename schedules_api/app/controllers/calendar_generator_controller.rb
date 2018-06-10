@@ -4,18 +4,20 @@ require 'time'
 class CalendarGeneratorController < ApplicationController
   def generate
     cal = Icalendar::Calendar.new
-
-    params[:_json].each do |crn|
+    
+    params[:_json].each do |crn| # for each CRN sent by the post request
       section = Section.find_by_crn(crn)
       event = generate_event_from_section(section)
       cal.add_event(event)
     end
 
-    render plain: cal.to_ical
+    render plain: cal.to_ical # render a plaintext iCal file
   end
 
   private
 
+  # Configures a calendar event from a given section
+  # @param section [Section]
   def generate_event_from_section(section)
     event = Icalendar::Event.new
 
@@ -30,6 +32,10 @@ class CalendarGeneratorController < ApplicationController
     event
   end
 
+  # Format a DateTime string based on a given date and time
+  # @param date [String]
+  # @param time [String]
+  # @return [String]
   def formatted_datetime_str(date, time)
     formatted_date = date.to_s.tr('-', '')
     formatted_time = Time.parse(time).strftime("%H%M%S")
@@ -37,6 +43,7 @@ class CalendarGeneratorController < ApplicationController
     "#{formatted_date}T#{formatted_time}"
   end
 
+  # Mapping of days as represented by GMU to the iCal standard
   DAYS = {
     "M" => "MO",
     "T" => "TU",
@@ -47,6 +54,10 @@ class CalendarGeneratorController < ApplicationController
     "U" => "SU"
   }.freeze
 
+  # Generates a recurrence rule string descripting which day the class event
+  # should take place on
+  # @param section [Section]
+  # @return [String]
   def recurrence_rule_str(section)
     days = section.days.split("").map do |day|
       DAYS[day]
@@ -55,8 +66,12 @@ class CalendarGeneratorController < ApplicationController
     "FREQ=WEEKLY;UNTIL=#{formatted_datetime_str(section.end_date, section.end_time)};BYDAY=#{days.join(',')}"
   end
 
+  # Get all dates that should excluded from the schedule
+  # @param section [Section]
+  # @return [Array]
   def exdates_for_section(section)
-    exdates = Closure.where(semester: section.course.semester).map { |closure|
+    # Generate exdates for all closures in a semester
+    exdates = Closure.where(semester: section.course.semester).map { |closure| 
       generate_exdate(closure.date.to_formatted_s(:number), section.start_time)
     }
 
@@ -72,7 +87,12 @@ class CalendarGeneratorController < ApplicationController
     exdates
   end
 
+  # Generate a DataTime to use as an exdate
+  # @param date [String]
+  # @param time [String]
+  # @return [Icalendar::Values::DateTime]
   def generate_exdate(date, time)
+    # format the time for use in a DateTime
     formatted_time = Time.parse(time).strftime("%H%M%S")
     Icalendar::Values::DateTime.new("#{date}T#{formatted_time}")
   end
