@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Section, { fetchSectionWithCRN } from '../section';
+import { fetchSectionWithCRN, Section } from '../ts/section';
 import SearchBar from './SearchBar';
 import SectionList from './SectionList';
 

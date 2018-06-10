@@ -14,7 +14,7 @@ export function postData(endpoint: string, data: any): Promise<Response> {
     });
 }
 
-export function downloadCalendar(calendarText: string) {
+export const downloadCalendar = (calendarText: string) => {
     const blob = new Blob([calendarText], { type: 'text/plain;charset=utf-8' });
     FileSaver.saveAs(blob, 'GMU Fall 2018.ics');
-}
+};

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Section from '../section';
+import { Section } from '../ts/section';
 
 interface Props {
     sections: Section[];
@@ -8,6 +8,11 @@ interface Props {
 }
 
 export default class SectionList extends React.Component<Props, any> {
+    constructor(props: Props) {
+        super(props);
+        this.state = {};
+    }
+
     render() {
         return (
             <table>

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import Section from '../section';
-import { ENDPOINTS, downloadCalendar, postData } from '../utilities';
+import { Section } from '../ts/section';
+import { downloadCalendar, ENDPOINTS, postData } from '../ts/utilities';
 import Search from './Search';
 import SectionList from './SectionList';
 
@@ -8,7 +8,7 @@ interface State {
     currentSchedule: Section[];
 }
 
-class App extends React.Component<any, State> {
+export default class App extends React.Component<any, State> {
     constructor(props: any) {
         super(props);
         this.state = { currentSchedule: [] };
@@ -54,5 +54,3 @@ class App extends React.Component<any, State> {
         });
     };
 }
-
-export default App;

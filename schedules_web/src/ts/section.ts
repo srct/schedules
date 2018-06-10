@@ -1,4 +1,4 @@
-export default interface Section {
+export interface Section {
     id: number;
     name: string;
     title: string;
