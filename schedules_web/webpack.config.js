@@ -1,42 +1,57 @@
 const path = require('path');
 const webpack = require('webpack');
+const CleanWebpackPlugin = require("clean-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+
+const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
+    template: "./index.html",
+    filename: "index.html",
+    inject: "body"
+});
+
 
 module.exports = {
+    mode: "development",
+    devtool: 'source-map',
+
     entry: './src/index.tsx',
+
     output: {
-        filename: 'bundle.js',
+        filename: '[name].[hash].js',
         path: path.resolve(__dirname, 'dist'),
     },
 
-    devtool: 'source-map',
 
     resolve: {
-        extensions: ['.ts', '.tsx', '.js', '.json'],
+        extensions: ['.js', '.json', '.ts', '.tsx'],
     },
 
     module: {
-        rules: [
-            {
+        rules: [{
                 test: /\.tsx?$/,
                 loader: 'awesome-typescript-loader',
                 exclude: /node_modules/,
             },
-            { enforce: 'pre', test: /\.js$/, loader: 'source-map-loader' },
+            {
+                enforce: 'pre',
+                test: /\.js$/,
+                loader: 'source-map-loader'
+            },
         ],
     },
 
-    plugins: [new webpack.HotModuleReplacementPlugin()],
+    plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+        new CleanWebpackPlugin(["dist"]),
+        HtmlWebpackPluginConfig
+    ],
 
     devServer: {
+        contentBase: path.resolve(__dirname, "dist"),
         compress: true,
+        port: 8080,
         hot: true,
-        publicPath: '/dist/',
-    },
-
-    externals: {
-        react: 'React',
-        'react-dom': 'ReactDOM',
-    },
-
-    mode: 'development',
+        publicPath: "/",
+        historyApiFallback: true
+    }
 };
