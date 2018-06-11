@@ -22,6 +22,7 @@
     "dependencies": {
         "@types/react": "^16.3.12",
         "@types/react-dom": "^16.0.5",
+        "@types/react-redux": "^6.0.2",
         "babel-loader": "^7.1.4",
         "clean-webpack-plugin": "^0.1.19",
         "css-loader": "^0.28.11",
@@ -31,6 +32,9 @@
         "masonstrap": "https://git.gmu.edu/srct/masonstrap.git",
         "react": "^16.3.2",
         "react-dom": "^16.3.2",
+        "react-redux": "^5.0.7",
+        "redux": "^4.0.0",
+        "redux-thunk": "^2.3.0",
         "style-loader": "^0.21.0",
         "url-loader": "^1.0.1"
     },
