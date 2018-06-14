@@ -1,11 +1,11 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
+import { removeSection } from '../actions/schedule/schedule.actions';
+import SectionList from '../components/SectionList';
+import { State } from '../reducers';
 import { Section } from '../ts/section';
 import { downloadCalendar, ENDPOINTS, postData } from '../ts/utilities';
 import Search from './Search';
-import SectionList from '../components/SectionList';
-import { connect } from 'react-redux';
-import {State} from '../reducers';
-import { removeSection } from '../actions/schedule/schedule.actions';
 
 interface AppProps {
     schedule: Section[];
@@ -20,7 +20,13 @@ class App extends React.Component<AppProps> {
     render() {
         return (
             <div>
-                <h1>Schedules</h1>
+                <h1 className="display-3">
+                    <span className="fa-stack mr-3">
+                        <i className="fas fa-circle fa-stack-2x" />
+                        <i className="fas fa-flag fa-stack-1x fa-inverse" />
+                    </span>
+                    Schedules
+                </h1>
                 <h2>Search</h2>
                 <Search />
                 <h2>Your schedule</h2>
@@ -44,10 +50,18 @@ class App extends React.Component<AppProps> {
     };
 }
 
+/**
+ * Take the current schedule in the store and map it to the <App /> component.
+ * @param state The current Redux store state.
+ */
 const mapStateToProps = (state: State) => ({
-    schedule: state.schedule
+    schedule: state.schedule,
 });
 
-export default connect(mapStateToProps, {
-    removeSection
-})(App);
+/**
+ * Ensure that the Redux state is passed into the component.
+ */
+export default connect(
+    mapStateToProps,
+    { removeSection }
+)(App);

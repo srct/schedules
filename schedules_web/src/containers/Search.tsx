@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { Section } from '../ts/section';
+import { connect } from 'react-redux';
+import { addSection } from '../actions/schedule/schedule.actions';
+import { searchSections } from '../actions/search/search.actions';
 import SearchBar from '../components/SearchBar';
 import SectionList from '../components/SectionList';
-import { connect } from 'react-redux';
 import { State } from '../reducers';
-import { searchSections } from '../actions/search/search.actions';
-import { addSection } from '../actions/schedule/schedule.actions';
+import { Section } from '../ts/section';
 
 interface SearchProps {
     searchedSections: Section[];
@@ -33,10 +33,10 @@ class Search extends React.Component<SearchProps> {
 }
 
 const mapStateToProps = (state: State) => ({
-    searchedSections: state.search.searchedSections
+    searchedSections: state.search.searchedSections,
 });
 
-export default connect(mapStateToProps, {
-    searchSections,
-    addSection
-})(Search);
+export default connect(
+    mapStateToProps,
+    { searchSections, addSection }
+)(Search);

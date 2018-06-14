@@ -10,7 +10,6 @@ interface Props {
 export default class SectionList extends React.Component<Props, any> {
     constructor(props: Props) {
         super(props);
-        this.state = {};
     }
 
     render() {

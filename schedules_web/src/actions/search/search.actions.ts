@@ -1,5 +1,5 @@
-import { SET_SEARCH_SECTIONS } from './search.action-types';
 import { Section } from '../../ts/section';
+import { SET_SEARCH_SECTIONS } from './search.action-types';
 
 export interface SearchAction {
     type: string;
@@ -24,6 +24,6 @@ export const searchSections = (crn: string) => async (dispatch: any) => {
 
     dispatch({
         type: SET_SEARCH_SECTIONS,
-        sections: [section]
+        sections: [section],
     });
-}
+};
