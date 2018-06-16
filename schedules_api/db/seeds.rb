@@ -8,22 +8,25 @@ require 'nokogiri'
 require 'json'
 
 threads = []
-total = []
+total = {}
 parser = PatriotWeb::Parser.new
 
-# get the first semester only -- no need to ddos patriot web
+# get the first semester only
 semester = parser.parse_semesters.first
 
+puts "DDOSing Patriot Web, buckle up kids
+"
 # parse all subjects and their courses in the semester
 parser.parse_subjects(semester).each do |subject|
+  puts "Getting courses for #{subject}"
   threads << Thread.new {
-    total << parser.parse_courses_in_subject(subject)
+    total[subject] = parser.parse_courses_in_subject(subject)    
   }
 end
 
 # For testing, only get first subject
 # subject = parser.parse_subjects(semester).first
-# total << parser.parse_courses_in_subject(subject)
+# total[subject] = parser.parse_courses_in_subject(subject)
 
 # wait for all the threads to finish
 ThreadsWait.all_waits(*threads)
@@ -38,46 +41,37 @@ Semester.delete_all
 semester = Semester.create! season: 'Fall', year: 2018
 semester.save!
 
-total.each do |subject| # for each course
-  subject.each_value do |section| # for each value in the subject hash
-    # ensure all necessary fields are present
-    next unless (section.key? "date_range") && (section.key? "instructors") && (section.key? "days")
-
-    # create a course and set its semester
+total.each do |subject, sections|
+  puts "Adding courses for #{subject}..."
+  sections.each do |section|
+    next if section.nil? || !section.key?(:subj) || !section.key?(:course_number)
+    
+    # Find or create a course and set its semester
+    # TODO: this breaks when you try to do more than one semester,
+    # since just the subject + course_number do not uniquely identify a course
+    # Check the semester as well
     course = Course.find_or_create_by(subject: section[:subj],
-                                      course_number: section[:code])
-
+                                      course_number: section[:course_number])
     course.semester = semester
     course.save!
 
-    section_name = "#{section[:subj]} #{section[:code]} #{section[:sect]}"
+    section_name = "#{section[:subj]} #{section[:course_number]} #{section[:section]}"
+    
     puts "Adding #{section_name}..."
-
-    # the start and end times are located in the "time" key and look like START_TIME - END_TIME
-    # so, split them by the dash and add them
-    start_time = if section.key? "time"
-                   section["time"].split(' - ').first
-                 else
-                   "N/A"
-                 end
-
-    end_time = if section.key? "time"
-                 section["time"].split(' - ').last
-               else
-                 "N/A"
-               end
 
     Section.create!(name: section_name,
                     crn: section[:crn],
-                    title: section[:name],
-                    location: section["where"],
-                    days: section["days"],
-                    start_date: section["date_range"].split(' - ').first,
-                    end_date: section["date_range"].split(' - ').last,
-                    start_time: start_time,
-                    end_time: end_time,
-                    instructor: section["instructors"].split(' ').map { |word| word unless word.empty? }.join(' '),
+                    section_type: section[:type],
+                    title: section[:title],
+                    instructor: section[:instructor],
+                    start_date: section[:start_date],
+                    end_date: section[:end_date],
+                    days: section[:days],
+                    start_time: section[:start_time],
+                    end_time: section[:end_time],
+                    location: section[:location],
                     course: course)
+                   
   end
 end
 

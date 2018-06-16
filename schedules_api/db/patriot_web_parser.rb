@@ -36,7 +36,7 @@ module PatriotWeb
     def parse_courses_in_subject(subject)
       response = @networker.fetch_courses_in_subject(subject)
       document = Nokogiri::HTML(response)
-      feed_course_info(document)
+      get_courses(document)
     end
 
     private
@@ -63,73 +63,57 @@ module PatriotWeb
       end
     end
 
-    # TODO write docs
-    def feed_course_info(searcher)
-      # find the table containing the courses
-      table = searcher.css('html body div.pagebodydiv table.datadisplaytable') 
-      data = {}
-      currentobj = nil
-      table.css('table.datadisplaytable').first.children.each do |row| # for each row in the table
-        next unless row.name == 'tr' # only search table rows, ignore headers
-        row.children.each do |item|
-          currentobj = sort_item(item, currentobj, data)
-        end
-      end
-      data
-    end
+    # Parse all courses from the subject search page 
+    # @param document [Nokogiri::HTML::Document]
+    # @return [Array] courses
+    def get_courses(document)
+      table = document.css('html body div.pagebodydiv table.datadisplaytable').first
+      rows = table.children.drop 2 # first two elements are junk
+      
+      # each section is represented by 6 rows in the table
+      (0..(rows.length/6 - 1)).map do |i|
+        start = i*6
+        data = {}
+        title = rows[start].text
+        # the title looks this: Survey of Accounting - 71117 - ACCT 203 - 001
+        # so split it by ' - ' and extract
+        title_elements = title.split(' - ')
+        data[:title] = title_elements[0].strip
+        data[:crn] = title_elements[1]
+        
+        full_name = title_elements[2].split(' ')
+        next unless full_name.length == 2
+        data[:subj] = title_elements[2].split(' ')[0]
+        data[:course_number] = title_elements[2].split(' ')[1]
+        
+        data[:section] = title_elements[3].strip
 
-    # TODO break this up and write docs
-    def sort_item(item, currentobj, data)
-      if item.name == 'th'
-        if item.to_html.include? '-'
-          titletxt = item.text
-          if item.text.include? ' - Honors'
-            titletxt = titletxt.gsub(' - Honors', ' (Honors)')
-          end
-          titledetails = titletxt.split(' - ')
-          if titledetails.count > 4
-            titledetails = ["#{titledetails[0]} #{titledetails[1]}", titledetails[2], titledetails[3], titledetails[4]]
-          end
-          titledata = titledetails[2].split(' ')
-          begin
-            data = get_details(data, titledetails, titledata)[0]
-            currentobj = get_details(data, titledetails, titledata)[1]
-          rescue StandardError => e
-            puts item
-            puts e
-            exit(1)
-          end
-          currentobj[:fields] = []
+        # rows 1 to 3 contain info about registration and drop dates.
+        # for now we're gonna ignore them and skip to row 4, which contains details
+        detail_rows = rows[start+4].css('tr')
+        next unless detail_rows.length > 0 # if there are no details, skip this item
+        details = detail_rows.last.text.split("\n").compact.reject(&:empty?) # skip empty strings
+        
+        times = details[1].split(' - ')
+        if (times.length == 1)
+          data[:start_time] = 'TBA'
+          data[:end_time] = 'TBA'
+        else
+          data[:start_time] = times[0]
+          data[:end_time] = times[1]
         end
-      elsif item.is_a? Nokogiri::XML::Element
-        item.css('th').each do |field|
-          currentobj[:fields].push(field.text.downcase.tr(' ', '_'))
-        end
-        iter = 0
-        if currentobj
-          if currentobj[:fields]
-            upper = currentobj[:fields].count - 1
-            while iter <= upper
-              assign = item.css('td')[iter].text
-              currentobj[currentobj[:fields][iter]] = assign
-              iter += 1
-            end
-          end
-        end
+
+        data[:days] = details[2].strip
+        data[:location] = details[3].strip
+        
+        dates = details[4].split(' - ')
+        data[:start_date] = dates[0]
+        data[:end_date] = dates[1]
+        
+        data[:type] = details[5]
+        data[:instructor] = details[6]
+        data
       end
-      currentobj
-    end
-    
-    # TODO break this up and write docs
-    def get_details(data, titledetails, titledata)
-      crn = titledetails[1].strip
-      data[crn] = {} unless data[titledetails[1]]
-      crsinfo = { 'name': titledetails[0].strip }
-      uniquedata = { 'sect': titledetails[3].strip, 'crn': titledetails[1].strip }
-      general = { 'subj': titledata[0].strip, 'code': titledata[1].strip }
-      data[crn] = general.merge(uniquedata.merge(crsinfo))
-      data[crn][:code] = titledetails[2].split(' ')[1]
-      [data, data[crn]]
     end
   end
 end
