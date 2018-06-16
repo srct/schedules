@@ -4,6 +4,5 @@
     "singleQuote": true,
     "useTabs": false,
     "jsxBracketSameLine": true,
-    "stylelintIntegration": true,
     "trailingComma": "es5"
 }

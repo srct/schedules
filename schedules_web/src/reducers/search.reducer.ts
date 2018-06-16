@@ -1,6 +1,12 @@
+/**
+ * reducers/search.reducer.ts
+ *
+ * Perform operations on the current state of the "search.searchedSections"
+ * list in the store and return a new definition of the state.
+ */
 import { SET_SEARCH_SECTIONS } from '../actions/search/search.action-types';
-import { SearchAction } from './../actions/search/search.actions';
-import { Section } from './../ts/section';
+import { SearchAction } from '../actions/search/search.actions';
+import { Section } from '../util/section';
 
 export interface SearchState {
     searchedSections: Section[];

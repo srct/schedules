@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Section } from '../ts/section';
+import { Section } from '../util/section';
 
 interface Props {
     sections: Section[];

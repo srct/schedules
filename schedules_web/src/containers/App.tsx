@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { removeSection } from '../actions/schedule/schedule.actions';
 import SectionList from '../components/SectionList';
 import { State } from '../reducers';
-import { Section } from '../ts/section';
-import { downloadCalendar, ENDPOINTS, postData } from '../ts/utilities';
+import { Section } from '../util/section';
+import { downloadCalendar, ENDPOINTS, postData } from '../util/utilities';
 import Search from './Search';
 
 interface AppProps {

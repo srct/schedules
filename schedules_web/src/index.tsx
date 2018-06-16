@@ -34,6 +34,7 @@ if (isProduction || !extension) {
     );
 }
 
+// Attach all reducers + addOns to the Redux store
 const store = createStore(allReducers, addOns);
 
 ReactDOM.render(

@@ -1,6 +1,12 @@
+/**
+ * reducers/schedule.reducer.ts
+ *
+ * Perform operations on the current state of the "Schedule" list in the store
+ * and return a new definition of the state.
+ */
 import { ADD_SECTION, REMOVE_SECTION } from '../actions/schedule/schedule.action-types';
 import { ScheduleAction } from '../actions/schedule/schedule.actions';
-import { Section } from '../ts/section';
+import { Section } from '../util/section';
 
 export type ScheduleState = Section[];
 

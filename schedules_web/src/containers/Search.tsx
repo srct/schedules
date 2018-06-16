@@ -5,7 +5,7 @@ import { searchSections } from '../actions/search/search.actions';
 import SearchBar from '../components/SearchBar';
 import SectionList from '../components/SectionList';
 import { State } from '../reducers';
-import { Section } from '../ts/section';
+import { Section } from '../util/section';
 
 interface SearchProps {
     searchedSections: Section[];
