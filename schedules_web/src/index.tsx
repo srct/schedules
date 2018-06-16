@@ -13,7 +13,7 @@ import * as ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { applyMiddleware, compose, createStore } from 'redux';
 import ReduxThunk from 'redux-thunk';
-import App from './containers/App';
+import App from './components/App';
 import { allReducers } from './reducers';
 
 declare global {

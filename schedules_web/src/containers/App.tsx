@@ -5,7 +5,6 @@ import SectionList from '../components/SectionList';
 import { State } from '../reducers';
 import { Section } from '../util/section';
 import { downloadCalendar, ENDPOINTS, postData } from '../util/utilities';
-import Search from './Search';
 
 interface AppProps {
     schedule: Section[];
@@ -20,15 +19,6 @@ class App extends React.Component<AppProps> {
     render() {
         return (
             <div>
-                <h1 className="display-3">
-                    <span className="fa-stack mr-3">
-                        <i className="fas fa-circle fa-stack-2x" />
-                        <i className="fas fa-flag fa-stack-1x fa-inverse" />
-                    </span>
-                    Schedules
-                </h1>
-                <h2>Search</h2>
-                <Search />
                 <h2>Your schedule</h2>
                 <SectionList
                     sections={this.props.schedule}
