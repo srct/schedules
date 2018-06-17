@@ -1,13 +1,16 @@
 import * as React from 'react';
-import Schedule from '../containers/Schedule';
-import Search from '../containers/Search';
+import { Container } from 'reactstrap';
 import Header from './Header';
+
+require('../css/core.css');
 
 const App = () => (
     <div>
-        <Header />
-        <Search />
-        <Schedule />
+        <Container>
+            <Header />
+            {/* <Search />
+            <Schedule /> */}
+        </Container>
     </div>
 );
 
