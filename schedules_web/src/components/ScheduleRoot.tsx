@@ -4,7 +4,7 @@ import ScheduleList from './ScheduleList';
 
 interface SearchRootProps {
     schedule: CourseSection[];
-    removeEntry: (CourseEntry: CourseSection) => any;
+    removeCourseSection: (courseSection: CourseSection) => any;
 }
 
 // const generateSchedule = (schedule: CourseEntry[]): void => {
@@ -15,9 +15,9 @@ interface SearchRootProps {
 //         .then(icalText => downloadCalendar(icalText));
 // };
 
-const ScheduleRoot = ({ schedule, removeEntry }: SearchRootProps) => (
+const ScheduleRoot = ({ schedule, removeCourseSection }: SearchRootProps) => (
     <div>
-        <ScheduleList courses={schedule} selectCourseCallback={removeEntry} />
+        <ScheduleList courses={schedule} selectCourseCallback={removeCourseSection} />
         {/* <button onClick={generateSchedule}>Generate Schedule</button> */}
     </div>
 );

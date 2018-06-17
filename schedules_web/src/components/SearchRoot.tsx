@@ -5,14 +5,14 @@ import { CourseSection } from '../util/CourseSection';
 
 interface SearchRootProps {
     searchResults: CourseSection[];
-    searchCourses: (crn: string) => void;
-    addEntry: (entry: CourseSection) => void;
+    searchCourseSections: (crn: string) => void;
+    addCourseSection: (courseSectionToAdd: CourseSection) => void;
 }
 
-const SearchRoot = ({ searchResults, searchCourses, addEntry }: SearchRootProps) => (
+const SearchRoot = ({ searchResults, searchCourseSections, addCourseSection }: SearchRootProps) => (
     <div>
-        <SearchBar onSearch={searchCourses} />
-        <SectionList courses={searchResults} selectCourseCallback={addEntry} />
+        <SearchBar onSearch={searchCourseSections} />
+        <SectionList courses={searchResults} selectCourseCallback={addCourseSection} />
     </div>
 );
 

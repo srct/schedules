@@ -3,7 +3,7 @@ import { CourseSection } from '../util/CourseSection';
 
 interface Props {
     courses: CourseSection[];
-    selectCourseCallback?: (entry: CourseSection) => void;
+    selectCourseCallback?: (courseSection: CourseSection) => void;
 }
 
 export default class ScheduleList extends React.Component<Props, any> {

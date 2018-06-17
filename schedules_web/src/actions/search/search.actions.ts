@@ -6,7 +6,7 @@ export interface SearchAction {
     searchResults: CourseSection[];
 }
 
-export const searchCourses = (crn: string) => async (dispatch: any) => {
+export const searchCourseSections = (crn: string) => async (dispatch: any) => {
     const response = await fetch(`http://localhost:3000/api/search?crn=${crn}`);
     const object = await response.json();
 

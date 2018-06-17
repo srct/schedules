@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { addEntry, removeEntry } from '../actions/schedule/schedule.actions';
+import { removeCourseSection } from '../actions/schedule/schedule.actions';
 import ScheduleRoot from '../components/ScheduleRoot';
 import { State } from '../reducers';
 
@@ -9,5 +9,5 @@ const mapStateToProps = (state: State) => ({
 
 export default connect(
     mapStateToProps,
-    { addEntry, removeEntry }
+    { removeCourseSection }
 )(ScheduleRoot);

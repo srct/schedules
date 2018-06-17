@@ -1,2 +1,2 @@
-export const ADD_ENTRY: string = '[Schedule] ADD_ENTRY';
-export const REMOVE_ENTRY: string = '[Schedule] REMOVE_ENTRY';
+export const ADD_COURSE_SECTION: string = '[Schedule] ADD_COURSE_SECTION';
+export const REMOVE_COURSE_SECTION: string = '[Schedule] REMOVE_COURSE_SECTION';
