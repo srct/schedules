@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { CourseEntry } from '../util/CourseEntry';
+import { CourseSection } from '../util/CourseSection';
 import ScheduleList from './ScheduleList';
 
 interface SearchRootProps {
-    schedule: CourseEntry[];
-    removeEntry: (CourseEntry: CourseEntry) => any;
+    schedule: CourseSection[];
+    removeEntry: (CourseEntry: CourseSection) => any;
 }
 
 // const generateSchedule = (schedule: CourseEntry[]): void => {

@@ -6,9 +6,9 @@
  */
 import { SET_SEARCH_RESULTS } from '../actions/search/search.action-types';
 import { SearchAction } from '../actions/search/search.actions';
-import { CourseEntry } from '../util/CourseEntry';
+import { CourseSection } from '../util/CourseSection';
 
-export type SearchState = CourseEntry[];
+export type SearchState = CourseSection[];
 
 export const search = (state: SearchState = [], action: SearchAction): SearchState => {
     switch (action.type) {

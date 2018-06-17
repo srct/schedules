@@ -1,12 +1,12 @@
 import * as React from 'react';
-import SearchBar from '../components/SearchBar';
 import SectionList from '../components/ScheduleList';
-import { CourseEntry } from '../util/CourseEntry';
+import SearchBar from '../components/SearchBar';
+import { CourseSection } from '../util/CourseSection';
 
 interface SearchRootProps {
-    searchResults: CourseEntry[];
+    searchResults: CourseSection[];
     searchCourses: (crn: string) => void;
-    addEntry: (entry: CourseEntry) => void;
+    addEntry: (entry: CourseSection) => void;
 }
 
 const SearchRoot = ({ searchResults, searchCourses, addEntry }: SearchRootProps) => (

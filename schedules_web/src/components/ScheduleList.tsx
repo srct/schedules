@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { CourseEntry } from '../util/CourseEntry';
+import { CourseSection } from '../util/CourseSection';
 
 interface Props {
-    courses: CourseEntry[];
-    selectCourseCallback?: (entry: CourseEntry) => void;
+    courses: CourseSection[];
+    selectCourseCallback?: (entry: CourseSection) => void;
 }
 
 export default class ScheduleList extends React.Component<Props, any> {
@@ -31,7 +31,7 @@ export default class ScheduleList extends React.Component<Props, any> {
         );
     }
 
-    renderRowsForCourses(courses: CourseEntry[]): JSX.Element[] {
+    renderRowsForCourses(courses: CourseSection[]): JSX.Element[] {
         return courses.map(course => {
             return (
                 <tr key={course.id}>
@@ -61,7 +61,7 @@ export default class ScheduleList extends React.Component<Props, any> {
         }
     }
 
-    getcourseWithCRN(crn: string): CourseEntry {
+    getcourseWithCRN(crn: string): CourseSection {
         return this.props.courses.find(course => course.crn === crn);
     }
 }

@@ -6,9 +6,9 @@
  */
 import { ADD_ENTRY, REMOVE_ENTRY } from '../actions/schedule/schedule.action-types';
 import { ScheduleAction } from '../actions/schedule/schedule.actions';
-import { CourseEntry } from '../util/CourseEntry';
+import { CourseSection } from '../util/CourseSection';
 
-export type ScheduleState = CourseEntry[];
+export type ScheduleState = CourseSection[];
 
 export const schedule = (state: ScheduleState = [], action: ScheduleAction) => {
     switch (action.type) {

@@ -1,9 +1,9 @@
 /**
- * util/CourseEntry.ts
+ * util/CourseSection.ts
  *
  * Common object interface for all "Section"s.
  */
-export interface CourseEntry {
+export interface CourseSection {
     id: number;
     name: string;
     title: string;
