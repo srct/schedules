@@ -8,7 +8,7 @@ import { search, SearchState } from './search.reducer';
 
 export interface State {
     schedule: ScheduleState;
-    search: SearchState;
+    searchResults: SearchState;
 }
 
 /**
@@ -16,9 +16,7 @@ export interface State {
  */
 const defaultState: State = {
     schedule: [],
-    search: {
-        searchedSections: [],
-    },
+    searchResults: [],
 };
 
 /**
@@ -28,5 +26,5 @@ const defaultState: State = {
  */
 export const allReducers = (state: State = defaultState, action: any) => ({
     schedule: schedule(state.schedule, action),
-    search: search(state.search, action),
+    searchResults: search(state.searchResults, action),
 });

@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 interface Props {
-    onSearch: (searchTerm: string) => void;
+    onSearch: (crn: string) => void;
 }
 
 interface State {

@@ -1,14 +1,14 @@
 import { connect } from 'react-redux';
-import { addSection } from '../actions/schedule/schedule.actions';
-import { searchSections } from '../actions/search/search.actions';
-import Search from '../components/Search';
+import { addEntry } from '../actions/schedule/schedule.actions';
+import { searchCourses } from '../actions/search/search.actions';
+import SearchRoot from '../components/SearchRoot';
 import { State } from '../reducers';
 
 const mapStateToProps = (state: State) => ({
-    searchedSections: state.search.searchedSections,
+    searchResults: state.searchResults,
 });
 
 export default connect(
     mapStateToProps,
-    { searchSections, addSection }
-)(Search);
+    { searchCourses, addEntry }
+)(SearchRoot);

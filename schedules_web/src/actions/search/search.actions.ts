@@ -1,16 +1,16 @@
-import { Section } from '../../util/section';
-import { SET_SEARCH_SECTIONS } from './search.action-types';
+import { CourseEntry } from '../../util/CourseEntry';
+import { SET_SEARCH_RESULTS } from './search.action-types';
 
 export interface SearchAction {
     type: string;
-    sections: Section[];
+    searchResults: CourseEntry[];
 }
 
-export const searchSections = (crn: string) => async (dispatch: any) => {
+export const searchCourses = (crn: string) => async (dispatch: any) => {
     const response = await fetch(`http://localhost:3000/api/search?crn=${crn}`);
     const object = await response.json();
 
-    const section: Section[] = [
+    const results: CourseEntry[] = [
         {
             id: object.id,
             name: object.name,
@@ -25,7 +25,7 @@ export const searchSections = (crn: string) => async (dispatch: any) => {
     ];
 
     dispatch({
-        type: SET_SEARCH_SECTIONS,
-        sections: section,
+        type: SET_SEARCH_RESULTS,
+        searchResults: results,
     });
 };
