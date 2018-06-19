@@ -1,9 +1,9 @@
 require 'test_helper'
 
-class SectionTest < ActiveSupport::TestCase
+class CourseSectionTest < ActiveSupport::TestCase
   test 'fails with improper data' do
     assert_raise do
-      Section.create! name: nil,
+      CourseSection.create! name: nil,
                       crn: nil,
                       title: nil,
                       start_date: nil,
@@ -13,7 +13,7 @@ class SectionTest < ActiveSupport::TestCase
   end
 
   test 'succeeds with proper data' do
-    Section.create! name: 'Test section',
+    CourseSection.create! name: 'Test section',
                     crn: '12345',
                     title: 'Test title',
                     start_date: Time.zone.today,

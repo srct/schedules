@@ -10,9 +10,9 @@ class Course < ApplicationRecord
   validates :subject, presence: true
   validates :semester_id, presence: true
 
-  # Returns all +Section+ objects that belong to this course.
+  # Returns all +CourseSection+ objects that belong to this course.
   # @return [Array]
-  def sections
-    Section.where course_id: id
+  def course_sections
+    CourseSection.where course_id: id
   end
 end

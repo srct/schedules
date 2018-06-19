@@ -2,7 +2,7 @@
 Rails.application.routes.draw do
   scope :api do # Register /api routes
     resources :courses, only: [:index] do # GET /api/courses
-      resources :sections, only: [:index] # GET /api/courses/:course_id/sections
+      resources :course_sections, only: [:index] # GET /api/courses/:course_id/sections
     end
 
     get 'search', controller: 'search', action: 'index'

@@ -33,7 +33,7 @@ ThreadsWait.all_waits(*threads)
 
 # delete everything in the current database
 Closure.delete_all
-Section.delete_all
+CourseSection.delete_all
 Course.delete_all
 Semester.delete_all
 
@@ -59,7 +59,7 @@ total.each do |subject, sections|
     
     puts "Adding #{section_name}..."
 
-    Section.create!(name: section_name,
+    CourseSection.create!(name: section_name,
                     crn: section[:crn],
                     section_type: section[:type],
                     title: section[:title],

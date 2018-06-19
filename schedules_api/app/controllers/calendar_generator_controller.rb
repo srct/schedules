@@ -6,7 +6,7 @@ class CalendarGeneratorController < ApplicationController
     cal = Icalendar::Calendar.new
     
     params[:_json].each do |crn| # for each CRN sent by the post request
-      section = Section.find_by_crn(crn)
+      section = CourseSection.find_by_crn(crn)
       event = generate_event_from_section(section)
       cal.add_event(event)
     end
@@ -17,7 +17,7 @@ class CalendarGeneratorController < ApplicationController
   private
 
   # Configures a calendar event from a given section
-  # @param section [Section]
+  # @param section [CourseSection]
   def generate_event_from_section(section)
     event = Icalendar::Event.new
 
@@ -56,7 +56,7 @@ class CalendarGeneratorController < ApplicationController
 
   # Generates a recurrence rule string descripting which day the class event
   # should take place on
-  # @param section [Section]
+  # @param section [CourseSection]
   # @return [String]
   def recurrence_rule_str(section)
     days = section.days.split("").map do |day|
@@ -67,7 +67,7 @@ class CalendarGeneratorController < ApplicationController
   end
 
   # Get all dates that should excluded from the schedule
-  # @param section [Section]
+  # @param section [CourseSection]
   # @return [Array]
   def exdates_for_section(section)
     # Generate exdates for all closures in a semester
