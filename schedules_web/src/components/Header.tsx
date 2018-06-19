@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Col, Row } from 'reactstrap';
 
-require('../css/iconbadge.css');
+require('../css/icon-badge.css');
 
 const Header = () => (
     <div>

@@ -47,7 +47,7 @@ class SearchBar extends React.Component<Props, State> {
                                     className="shadow mb-3 bg-white"
                                 />
                                 <InputGroupAddon addonType="append">
-                                    <Button className="shadow mb-3 bg-white">
+                                    <Button className="shadow-sm mb-3 bg-white">
                                         <i className="fas fa-search" />
                                     </Button>
                                 </InputGroupAddon>
