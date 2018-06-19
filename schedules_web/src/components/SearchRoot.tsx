@@ -1,5 +1,4 @@
 import * as React from 'react';
-import SectionList from '../components/ScheduleList';
 import SearchBar from '../components/SearchBar';
 import { CourseSection } from '../util/CourseSection';
 
@@ -12,7 +11,7 @@ interface SearchRootProps {
 const SearchRoot = ({ searchResults, searchCourseSections, addCourseSection }: SearchRootProps) => (
     <div>
         <SearchBar onSearch={searchCourseSections} />
-        <SectionList courses={searchResults} selectCourseCallback={addCourseSection} />
+        {/* <SectionList courses={searchResults} selectCourseCallback={addCourseSection} /> */}
     </div>
 );
 
