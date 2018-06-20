@@ -1,4 +1,4 @@
-import { CourseSection } from '../../util/CourseSection';
+import CourseSection from '../../util/CourseSection';
 import { SET_SEARCH_RESULTS } from './search.action-types';
 
 export interface SearchAction {

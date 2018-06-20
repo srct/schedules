@@ -1,4 +1,4 @@
-import { CourseSection } from '../../util/CourseSection';
+import CourseSection from '../../util/CourseSection';
 import { ADD_COURSE_SECTION, REMOVE_COURSE_SECTION } from './schedule.action-types';
 
 export interface ScheduleAction {

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CourseSection } from '../util/CourseSection';
+import CourseSection from '../util/CourseSection';
 
 interface Props {
     courses: CourseSection[];

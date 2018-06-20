@@ -6,7 +6,7 @@
  */
 import { ADD_COURSE_SECTION, REMOVE_COURSE_SECTION } from '../actions/schedule/schedule.action-types';
 import { ScheduleAction } from '../actions/schedule/schedule.actions';
-import { CourseSection } from '../util/CourseSection';
+import CourseSection from '../util/CourseSection';
 
 export type ScheduleState = CourseSection[];
 

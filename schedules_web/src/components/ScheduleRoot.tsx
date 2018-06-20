@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { CourseSection } from '../util/CourseSection';
-import ScheduleList from './ScheduleList';
+import CourseSection from '../util/CourseSection';
+import ScheduleBadge from './ScheduleBadge';
 
 interface SearchRootProps {
     schedule: CourseSection[];
@@ -17,7 +17,8 @@ interface SearchRootProps {
 
 const ScheduleRoot = ({ schedule, removeCourseSection }: SearchRootProps) => (
     <div>
-        <ScheduleList courses={schedule} selectCourseCallback={removeCourseSection} />
+        <ScheduleBadge schedule={schedule} />
+        {/* <ScheduleList courses={schedule} selectCourseCallback={removeCourseSection} /> */}
         {/* <button onClick={generateSchedule}>Generate Schedule</button> */}
     </div>
 );

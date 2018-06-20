@@ -1,6 +1,6 @@
 import * as React from 'react';
 import SearchBar from '../components/SearchBar';
-import { CourseSection } from '../util/CourseSection';
+import CourseSection from '../util/CourseSection';
 
 interface SearchRootProps {
     searchResults: CourseSection[];

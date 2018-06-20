@@ -5,12 +5,6 @@ require('../css/icon-badge.css');
 
 const Header = () => (
     <div>
-        {/* TODO Extract into its own components with state management. */}
-        <Row className="justify-content-end my-5 px-3">
-            <span className="fa-stack fa-3x has-badge" data-count="0">
-                <i className="fa fas fa-shopping-bag fa-stack-1x" />
-            </span>
-        </Row>
         <Row className="justify-content-center my-5">
             <h1>
                 <i className="far fa-calendar-alt" /> Schedules

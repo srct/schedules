@@ -3,7 +3,7 @@
  *
  * Common object interface for all "Section"s.
  */
-export interface CourseSection {
+interface CourseSection {
     id: number;
     name: string;
     title: string;
@@ -14,3 +14,5 @@ export interface CourseSection {
     startTime: string;
     endTime: string;
 }
+
+export default CourseSection;

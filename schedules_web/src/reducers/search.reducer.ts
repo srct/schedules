@@ -6,7 +6,7 @@
  */
 import { SET_SEARCH_RESULTS } from '../actions/search/search.action-types';
 import { SearchAction } from '../actions/search/search.actions';
-import { CourseSection } from '../util/CourseSection';
+import CourseSection from '../util/CourseSection';
 
 export type SearchState = CourseSection[];
 
