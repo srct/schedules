@@ -38,15 +38,15 @@ class ScheduleBadge extends React.Component<ScheduleBadgeProps, State> {
                     />
                 </Row>
                 <Collapse isOpen={this.state.collapse}>
-                    <Card>
+                    <Card shadow>
                         <CardTitle className="mt-3">
                             <Row className="justify-content-center">
-                                <Button size="sm" outline color="danger" className="ml-5" onClick={this.toggle}>
+                                <Button size="sm" outline color="danger" onClick={this.toggle}>
                                     Close
                                 </Button>
-                                <h1 className="pl-5">Your Schedule</h1>
-                                <Button size="sm" outline color="primary" className="mr-5">
-                                    Generate Schedule
+                                <h1 className="px-3">Your Schedule</h1>
+                                <Button size="sm" outline color="primary">
+                                    Generate
                                 </Button>
                             </Row>
                         </CardTitle>
