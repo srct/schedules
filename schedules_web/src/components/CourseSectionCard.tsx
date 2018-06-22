@@ -4,7 +4,7 @@ import { Button, Card, CardBody, CardTitle, Col, Row } from 'reactstrap';
 require('../css/button-text-override.css');
 
 const CourseSectionCard = () => (
-    <Row className="justify-content-center my-5">
+    <Row className="justify-content-center">
         <Col md="9">
             <Card>
                 <CardBody>

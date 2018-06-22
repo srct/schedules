@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { Col, Row } from 'reactstrap';
 
-require('../css/icon-badge.css');
-
 const Header = () => (
     <div>
         <Row className="justify-content-center my-5">
