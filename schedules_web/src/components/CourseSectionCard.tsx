@@ -1,9 +1,20 @@
 import * as React from 'react';
 import { Button, Card, CardBody, CardTitle, Col, Row } from 'reactstrap';
+import CourseSection from '../util/CourseSection';
+
+interface CourseSectionCardProps {
+    courseSectionAction: (courseSection: CourseSection) => void;
+    courseSection: CourseSection;
+    courseSectionActionButtonText: string;
+}
 
 require('../css/button-text-override.css');
 
-const CourseSectionCard = () => (
+const CourseSectionCard = ({
+    courseSection,
+    courseSectionAction,
+    courseSectionActionButtonText,
+}: CourseSectionCardProps) => (
     <Row className="justify-content-center">
         <Col md="9">
             <Card>
@@ -24,8 +35,13 @@ const CourseSectionCard = () => (
                             <i className="fas fa-school fa-fw" /> James Buchanan Hall D023
                         </Col>
                         <Col md="6">
-                            <Button color="primary" size="lg" block className="shadow-sm mt-3">
-                                <i className="fas fa-plus-circle mr-2 fa-fw" /> Add to schedule
+                            <Button
+                                onClick={() => courseSectionAction(courseSection)}
+                                color="primary"
+                                size="lg"
+                                block
+                                className="shadow-sm mt-3">
+                                <i className="fas fa-plus-circle mr-2 fa-fw" /> {courseSectionActionButtonText}
                             </Button>
                         </Col>
                     </Row>

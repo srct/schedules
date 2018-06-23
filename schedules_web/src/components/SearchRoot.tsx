@@ -1,6 +1,7 @@
 import * as React from 'react';
 import SearchBar from '../components/SearchBar';
 import CourseSection from '../util/CourseSection';
+import CourseSectionList from './CourseSectionList';
 
 interface SearchRootProps {
     searchResults: CourseSection[];
@@ -11,7 +12,11 @@ interface SearchRootProps {
 const SearchRoot = ({ searchResults, searchCourseSections, addCourseSection }: SearchRootProps) => (
     <div>
         <SearchBar onSearch={searchCourseSections} />
-        {/* <SectionList courses={searchResults} selectCourseCallback={addCourseSection} /> */}
+        <CourseSectionList
+            courseSectionActionButtonText="Add to section"
+            courseSections={searchResults}
+            courseSectionAction={addCourseSection}
+        />
     </div>
 );
 

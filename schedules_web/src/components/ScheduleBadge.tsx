@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Button, Card, CardBody, CardTitle, Collapse, Row } from 'reactstrap';
 import CourseSection from '../util/CourseSection';
-import CourseSectionCard from './CourseSectionCard';
 
 interface ScheduleBadgeProps {
     schedule: CourseSection[];
@@ -38,7 +37,7 @@ class ScheduleBadge extends React.Component<ScheduleBadgeProps, State> {
                     />
                 </Row>
                 <Collapse isOpen={this.state.collapse}>
-                    <Card shadow>
+                    <Card>
                         <CardTitle className="mt-3">
                             <Row className="justify-content-center">
                                 <Button size="sm" outline color="danger" onClick={this.toggle}>
@@ -51,13 +50,7 @@ class ScheduleBadge extends React.Component<ScheduleBadgeProps, State> {
                             </Row>
                         </CardTitle>
                         <legend />
-                        <CardBody>
-                            <CourseSectionCard />
-                            <CourseSectionCard />
-                            <CourseSectionCard />
-                            <CourseSectionCard />
-                            <CourseSectionCard />
-                        </CardBody>
+                        <CardBody />
                     </Card>
                 </Collapse>
             </div>

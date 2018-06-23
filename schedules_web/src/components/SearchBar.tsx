@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Button, Col, FormGroup, Input, InputGroup, InputGroupAddon, Row } from 'reactstrap';
+
 interface Props {
     onSearch: (crn: string) => void;
 }
