@@ -5,10 +5,7 @@ class CourseSectionTest < ActiveSupport::TestCase
     assert_raise do
       CourseSection.create! name: nil,
                       crn: nil,
-                      title: nil,
-                      start_date: nil,
-                      end_date: nil,
-                      days: nil
+                      title: nil
     end
   end
 
@@ -16,9 +13,6 @@ class CourseSectionTest < ActiveSupport::TestCase
     CourseSection.create! name: 'Test section',
                     crn: '12345',
                     title: 'Test title',
-                    start_date: Time.zone.today,
-                    end_date: Time.zone.today,
-                    days: 'MWF',
-                    course_id: 1
+                    course_id: courses(:cs211).id
   end
 end

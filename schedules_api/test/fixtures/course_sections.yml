@@ -1,7 +1,6 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  id: 1
+cs112001:
   name: MyString
   crn: MyString
   section_type: MyString
@@ -17,11 +16,11 @@ one:
   campus: MyString
   notes: MyString
   size_limit: 1
-  course: one
+  course: cs112
 
-two:
-  name: MyString
-  crn: MyString
+cs112002:
+  name: MyString2
+  crn: MyString2
   section_type: MyString
   title: MyString
   instructor: MyString
@@ -35,4 +34,22 @@ two:
   campus: MyString
   notes: MyString
   size_limit: 1
-  course: two
+  course: cs112
+
+cs211001:
+  name: MyString
+  crn: MyString3
+  section_type: MyString
+  title: MyString
+  instructor: MyString
+  start_date: 2018-04-07
+  end_date: 2018-04-07
+  days: MyString
+  start_time: MyString
+  end_time: MyString
+  location: MyString
+  status: MyString
+  campus: MyString
+  notes: MyString
+  size_limit: 1
+  course: cs211

@@ -3,8 +3,8 @@
 class CourseSectionsController < ApplicationController
   # Render JSON of all Sections belonging to a given Course.
   def index
-    @course = Course.find(params[:course_id])
-    @sections = @course.course_sections
+    @sections = CourseSection.where(course_id: params[:course_id])
+    
     render json: @sections
   end
 end

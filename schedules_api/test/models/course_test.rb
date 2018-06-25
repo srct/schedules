@@ -8,6 +8,10 @@ class CourseTest < ActiveSupport::TestCase
   end
 
   test 'creates with proper data' do
-    Course.create! course_number: '112', subject: 'CS', semester_id: 1
+    Course.create! course_number: '112', subject: 'CS', semester_id: semesters(:fall2018).id
+  end
+
+  test 'has correct number of sections' do
+    assert_equal 2, courses(:cs112).course_sections.count
   end
 end
