@@ -37,7 +37,7 @@ Execute `cd schedules_api/` to enter the API directory.
 To install the project dependencies, run the `bundle install` command.  
 
 ### Database
-To populate your local database, run `rake db:migrate:seed`. This sets up your local database and loads it with data from the Excel speadsheet(s) of GMU courses. **NOTE:** This may take a while!
+To populate your local database, run `rake db:migrate` and `rake db:seed`. This sets up your local database and loads it with data from the Excel speadsheet(s) of GMU courses. **NOTE:** This may take a while!
 
 ## Setting up client
 
