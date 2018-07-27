@@ -4,9 +4,10 @@ class CoursesController < ApplicationController
   def index
     @courses = Course.all
 
+    # filter by subject + course number if the params are included
     @courses = @courses.where(subject: params[:subject].upcase) if params.key?(:subject)
     @courses = @courses.where(course_number: params[:course_number]) if params.key?(:course_number)
-    
+
     render json: @courses
   end
 

@@ -1,10 +1,14 @@
 require 'icalendar'
 require 'time'
 
+# Contains functionality for generating schedules.
 class CalendarGeneratorController < ApplicationController
-  def generate
+  # Render an iCal file containing the schedules of all the 
+  # course sections with the given CRNs.
+  def new
     cal = Icalendar::Calendar.new
-    
+
+    # the intended format for the json is a list of CRNs
     params[:_json].each do |crn| # for each CRN sent by the post request
       section = CourseSection.find_by_crn(crn)
       event = generate_event_from_section(section)

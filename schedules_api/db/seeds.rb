@@ -14,8 +14,8 @@ parser = PatriotWeb::Parser.new
 # get the first semester only
 semester = parser.parse_semesters.first
 
-puts "DDOSing Patriot Web, buckle up kids
-"
+puts "DDOSing Patriot Web, buckle up kids"
+
 # parse all subjects and their courses in the semester
 parser.parse_subjects(semester).each do |subject|
   puts "Getting courses for #{subject}"

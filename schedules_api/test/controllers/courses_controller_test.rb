@@ -10,8 +10,8 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
     assert_equal courses_count, courses_returned.count
   end
 
-  test '#index should return filtered by subject' do
-    get courses_url subject: "CS"
+  test '#index should return filtered by subject case insensitive' do
+    get courses_url subject: "Cs"
     assert_response :success
 
     courses_returned = JSON.parse @response.body

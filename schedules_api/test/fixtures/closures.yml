@@ -1,9 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 may1st: # tuesday
-  date: 2018-05-01
-  semester: one
+  date: <%= Date.new(2018, 5, 30) %>
+  semester: fall2018
 
 may2nd: # wednesday
-  date: 2018-05-02
-  semester: two
+  date: <%= Date.new(2018, 5, 31) %>
+  semester: fall2018
