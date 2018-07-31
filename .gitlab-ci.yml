@@ -1,0 +1,14 @@
+image: docker:stable
+
+stages:
+  - test
+
+before_script:
+  - cd schedules_api/
+  - docker build . -t schedules_api
+
+schedules_api:
+  stage: test
+  script:
+    - docker run schedules_api rails test
+

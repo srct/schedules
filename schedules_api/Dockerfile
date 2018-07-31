@@ -4,5 +4,4 @@ RUN mkdir /api
 WORKDIR /api
 ADD . /api
 
-RUN bundle install --without development
-ENV RAILS_ENV=production
+RUN bundle install
