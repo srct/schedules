@@ -1,0 +1,12 @@
+stages:
+  - test_api
+ 
+api:
+  image: ruby:2.5
+  stage: test_api
+  script:
+    - cd schedules_api
+    - bundle install
+    - rails db:migrate
+    - rails test
+

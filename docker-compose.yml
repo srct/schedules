@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  api:
+    image: schedules_api
+    ports:
+      - "3000:3000"
+    command: ./start.sh
+    volumes:
+      - .:/api

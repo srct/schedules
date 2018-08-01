@@ -9,6 +9,6 @@ class ExcelLoaderTest < ActiveSupport::TestCase
 
     assert(Semester.count > NUMBER_ADDED_BY_FIXTURES, 'No semester loaded')
     assert(Course.count > NUMBER_ADDED_BY_FIXTURES, 'No courses loaded')
-    assert(Section.count > NUMBER_ADDED_BY_FIXTURES, 'No sections loaded')
+    assert(CourseSection.count > NUMBER_ADDED_BY_FIXTURES, 'No sections loaded')
   end
 end
