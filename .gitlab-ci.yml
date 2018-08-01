@@ -1,12 +1,13 @@
-image: docker:stable
+#image: docker:stable
 
 stages:
   - test
 
 before_script:
+  - docker info
   - cd schedules_api/
   - docker build . -t schedules_api
-
+ 
 schedules_api:
   stage: test
   script:
