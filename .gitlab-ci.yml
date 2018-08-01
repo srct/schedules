@@ -1,15 +1,12 @@
-#image: docker:stable
-
 stages:
-  - test
-
-before_script:
-  - docker info
-  - cd schedules_api/
-  - docker build . -t schedules_api
+  - test_api
  
-schedules_api:
-  stage: test
+api:
+  image: ruby:2.5
+  stage: test_api
   script:
-    - docker run schedules_api rails test
+    - cd schedules_api
+    - bundle install
+    - rails db:migrate
+    - rails test
 
