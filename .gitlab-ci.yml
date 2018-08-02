@@ -1,12 +1,19 @@
 stages:
-  - test_api
+  - test
  
-api:
+test_api:
   image: ruby:2.5
-  stage: test_api
+  stage: test
   script:
     - cd schedules_api
     - bundle install
     - rails db:migrate
     - rails test
 
+test_web:
+  image: node:9
+  stage: test
+  script:
+    - cd schedules_web
+    - yarn
+    - yarn build

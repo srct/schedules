@@ -1,92 +1,89 @@
-const path = require('path');
-const webpack = require('webpack');
+const path = require("path");
+const webpack = require("webpack");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
     template: "./index.html",
     filename: "index.html",
-    inject: "body"
+    inject: "body",
 });
-
 
 module.exports = {
     mode: "development",
-    devtool: 'source-map',
+    devtool: "source-map",
 
-    entry: './src/index.tsx',
+    entry: "./src/index.tsx",
 
     output: {
-        filename: '[name].[hash].js',
-        path: path.resolve(__dirname, 'dist'),
+        filename: "[name].[hash].js",
+        path: path.resolve(__dirname, "dist"),
     },
 
-
     resolve: {
-        extensions: ['.js', '.json', '.ts', '.tsx'],
+        extensions: [".js", ".json", ".ts", ".tsx"],
     },
 
     module: {
-        rules: [{
+        rules: [
+            {
                 test: /\.tsx?$/,
-                loader: 'awesome-typescript-loader',
+                loader: "awesome-typescript-loader",
                 exclude: /node_modules/,
             },
             {
-                enforce: 'pre',
+                enforce: "pre",
                 test: /\.js$/,
-                loader: 'source-map-loader'
+                loader: "source-map-loader",
             },
             {
                 test: /\.css$/,
-                use: [{
-                        loader: "style-loader"
+                use: [
+                    {
+                        loader: "style-loader",
                     },
                     {
-                        loader: "css-loader"
-                    }
-                ]
+                        loader: "css-loader",
+                    },
+                ],
             },
             {
                 test: /\.woff(\?.+)?$/,
-                use: 'url-loader?limit=10000&mimetype=application/font-woff'
+                use: "url-loader?limit=10000&mimetype=application/font-woff",
             },
             {
                 test: /\.woff2(\?.+)?$/,
-                use: 'url-loader?limit=10000&mimetype=application/font-woff'
+                use: "url-loader?limit=10000&mimetype=application/font-woff",
             },
             {
                 test: /\.ttf(\?.+)?$/,
-                use: 'file-loader'
+                use: "file-loader",
             },
             {
                 test: /\.eot(\?.+)?$/,
-                use: 'file-loader'
+                use: "file-loader",
             },
             {
                 test: /\.svg(\?.+)?$/,
-                use: 'file-loader'
+                use: "file-loader",
             },
             {
                 test: /\.(js)$/,
                 exclude: /(node_modules)/,
-                loader: "babel-loader"
+                loader: "babel-loader",
             },
         ],
     },
 
-    plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-        new CleanWebpackPlugin(["dist"]),
-        HtmlWebpackPluginConfig
-    ],
+    plugins: [new webpack.HotModuleReplacementPlugin(), new CleanWebpackPlugin(["dist"]), HtmlWebpackPluginConfig],
 
     devServer: {
         contentBase: path.resolve(__dirname, "dist"),
         compress: true,
+        host: "0.0.0.0",
         port: 8080,
         hot: true,
         publicPath: "/",
-        historyApiFallback: true
-    }
+        historyApiFallback: true,
+    },
 };
