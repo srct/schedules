@@ -7,11 +7,11 @@ export interface SearchAction {
 }
 
 export const searchCourseSections = (crn: string) => async (dispatch: any) => {
-    const response = await fetch(`http://localhost:3000/api/search?crn=${crn}`);
-    const object = await response.json();
+    const response = await fetch(`http://localhost:3000/api/course_sections?crn=${crn}`);
+    const objects = await response.json();
 
-    const results: CourseSection[] = [
-        {
+    const results: CourseSection[] = objects.map(
+        (object: any): CourseSection => ({
             id: object.id,
             name: object.name,
             title: object.title,
@@ -21,8 +21,8 @@ export const searchCourseSections = (crn: string) => async (dispatch: any) => {
             days: object.days,
             startTime: object.start_time,
             endTime: object.end_time,
-        },
-    ];
+        })
+    );
 
     dispatch({
         type: SET_SEARCH_RESULTS,

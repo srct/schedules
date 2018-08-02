@@ -20,19 +20,20 @@ const CourseSectionCard = ({
             <Card>
                 <CardBody>
                     <CardTitle className="mb-4">
-                        <i className="fas fa-hashtag" /> 78212
+                        <i className="fas fa-hashtag" /> {courseSection.crn}
                     </CardTitle>
                     <Row>
                         <Col md="6">
                             <div className="mb-4">
-                                <h4>Senior Adv Design Project I</h4>
-                                <p>CYSE 492 - 001</p>
+                                <h4>{courseSection.title}</h4>
+                                <p>{courseSection.name}</p>
                             </div>
-                            <i className="fas fa-chalkboard-teacher fa-fw" /> Gino J Manzo
+                            <i className="fas fa-chalkboard-teacher fa-fw" /> {courseSection.instructor}
                             <br />
-                            <i className="fas fa-clock fa-fw" /> Thursdays, 4:30 pm - 6:20 pm
+                            <i className="fas fa-clock fa-fw" /> {courseSection.days}, {courseSection.startTime} -{' '}
+                            {courseSection.endTime}
                             <br />
-                            <i className="fas fa-school fa-fw" /> James Buchanan Hall D023
+                            <i className="fas fa-school fa-fw" /> {courseSection.location}
                         </Col>
                         <Col md="6">
                             <Button
