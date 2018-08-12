@@ -47,7 +47,12 @@ class ScheduleBadge extends React.Component<ScheduleBadgeProps, State> {
                                     Close
                                 </Button>
                                 <h1 className="px-3">Your Schedule</h1>
-                                <Button size="sm" outline color="primary" onClick={() => generateCalendar(schedule)}>
+                                <Button
+                                    size="sm"
+                                    outline
+                                    color="primary"
+                                    onClick={() => generateCalendar(schedule)}
+                                    disabled={schedule.length === 0}>
                                     Generate
                                 </Button>
                             </Row>
