@@ -5,6 +5,7 @@ import CourseSectionList from './CourseSectionList';
 
 interface ScheduleBadgeProps {
     schedule: CourseSection[];
+    generateCalendar: (schedule: CourseSection[]) => Promise<void>;
     removeCourseSection: (courseSection: CourseSection) => void;
 }
 
@@ -24,7 +25,7 @@ class ScheduleBadge extends React.Component<ScheduleBadgeProps, State> {
     toggle = () => this.setState({ collapse: !this.state.collapse });
 
     render() {
-        const { schedule, removeCourseSection } = this.props;
+        const { schedule, removeCourseSection, generateCalendar } = this.props;
         return (
             <div>
                 <Row className="justify-content-end">
@@ -46,7 +47,7 @@ class ScheduleBadge extends React.Component<ScheduleBadgeProps, State> {
                                     Close
                                 </Button>
                                 <h1 className="px-3">Your Schedule</h1>
-                                <Button size="sm" outline color="primary">
+                                <Button size="sm" outline color="primary" onClick={() => generateCalendar(schedule)}>
                                     Generate
                                 </Button>
                             </Row>
