@@ -17,7 +17,7 @@ interface SearchRootProps {
 
 const ScheduleRoot = ({ schedule, removeCourseSection }: SearchRootProps) => (
     <div>
-        <ScheduleBadge schedule={schedule} />
+        <ScheduleBadge schedule={schedule} removeCourseSection={removeCourseSection} />
         {/* <ScheduleList courses={schedule} selectCourseCallback={removeCourseSection} /> */}
         {/* <button onClick={generateSchedule}>Generate Schedule</button> */}
     </div>

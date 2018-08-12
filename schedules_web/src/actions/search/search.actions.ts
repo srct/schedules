@@ -1,3 +1,4 @@
+import ApiService from '../../util/ApiService';
 import CourseSection from '../../util/CourseSection';
 import { SET_SEARCH_RESULTS } from './search.action-types';
 
@@ -7,8 +8,7 @@ export interface SearchAction {
 }
 
 export const searchCourseSections = (crn: string) => async (dispatch: any) => {
-    const response = await fetch(`http://localhost:3000/api/course_sections?crn=${crn}`);
-    const objects = await response.json();
+    const objects = await ApiService.searchCourseSections(crn);
 
     const results: CourseSection[] = objects.map(
         (object: any): CourseSection => ({

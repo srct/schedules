@@ -13,7 +13,7 @@ const SearchRoot = ({ searchResults, searchCourseSections, addCourseSection }: S
     <div>
         <SearchBar onSearch={searchCourseSections} />
         <CourseSectionList
-            courseSectionActionButtonText="Add to section"
+            courseSectionActionButtonText="Add to schedule"
             courseSections={searchResults}
             courseSectionAction={addCourseSection}
         />

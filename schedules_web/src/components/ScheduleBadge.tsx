@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { Button, Card, CardBody, CardTitle, Collapse, Row } from 'reactstrap';
 import CourseSection from '../util/CourseSection';
+import CourseSectionList from './CourseSectionList';
 
 interface ScheduleBadgeProps {
     schedule: CourseSection[];
+    removeCourseSection: (courseSection: CourseSection) => void;
 }
 
 interface State {
@@ -15,14 +17,14 @@ require('../css/icon-badge.css');
 class ScheduleBadge extends React.Component<ScheduleBadgeProps, State> {
     constructor(props: ScheduleBadgeProps) {
         super(props);
-        this.toggle = this.toggle.bind(this);
+
         this.state = { collapse: false };
     }
 
-    toggle() {
-        this.setState({ collapse: !this.state.collapse });
-    }
+    toggle = () => this.setState({ collapse: !this.state.collapse });
+
     render() {
+        const { schedule, removeCourseSection } = this.props;
         return (
             <div>
                 <Row className="justify-content-end">
@@ -50,7 +52,14 @@ class ScheduleBadge extends React.Component<ScheduleBadgeProps, State> {
                             </Row>
                         </CardTitle>
                         <legend />
-                        <CardBody />
+                        <CardBody>
+                            <CourseSectionList
+                                courseSections={schedule}
+                                courseSectionAction={removeCourseSection}
+                                courseSectionActionButtonText="Remove from schedule"
+                                destructive
+                            />
+                        </CardBody>
                     </Card>
                 </Collapse>
             </div>

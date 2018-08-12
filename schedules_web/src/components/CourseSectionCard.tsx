@@ -6,6 +6,7 @@ interface CourseSectionCardProps {
     courseSectionAction: (courseSection: CourseSection) => void;
     courseSection: CourseSection;
     courseSectionActionButtonText: string;
+    destructive?: boolean;
 }
 
 require('../css/button-text-override.css');
@@ -14,6 +15,7 @@ const CourseSectionCard = ({
     courseSection,
     courseSectionAction,
     courseSectionActionButtonText,
+    destructive,
 }: CourseSectionCardProps) => (
     <Row className="justify-content-center">
         <Col md="9">
@@ -38,11 +40,12 @@ const CourseSectionCard = ({
                         <Col md="6">
                             <Button
                                 onClick={() => courseSectionAction(courseSection)}
-                                color="primary"
+                                color={destructive ? 'danger' : 'primary'}
                                 size="lg"
                                 block
                                 className="shadow-sm mt-3">
-                                <i className="fas fa-plus-circle mr-2 fa-fw" /> {courseSectionActionButtonText}
+                                <i className={`fas fa-${destructive ? 'minus' : 'plus'}-circle mr-2 fa-fw`} />{' '}
+                                {courseSectionActionButtonText}
                             </Button>
                         </Col>
                     </Row>

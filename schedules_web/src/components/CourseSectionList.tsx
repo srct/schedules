@@ -6,12 +6,14 @@ interface CourseSectionListProps {
     courseSections: CourseSection[];
     courseSectionAction: (courseSection: CourseSection) => void;
     courseSectionActionButtonText: string;
+    destructive?: boolean;
 }
 
 const CourseSectionList = ({
     courseSections,
     courseSectionAction,
     courseSectionActionButtonText,
+    destructive,
 }: CourseSectionListProps) => (
     <div>
         {courseSections.map(courseSection => (
@@ -20,6 +22,7 @@ const CourseSectionList = ({
                 courseSection={courseSection}
                 courseSectionAction={courseSectionAction}
                 courseSectionActionButtonText={courseSectionActionButtonText}
+                destructive={destructive}
             />
         ))}
     </div>
