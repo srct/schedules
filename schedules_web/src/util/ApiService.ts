@@ -5,7 +5,7 @@ class ApiService {
         this.apiRoot = apiRoot;
     }
 
-    searchCourseSections = async (crn: string): Promise<string[]> =>
+    searchCourseSections = async (crn: string): Promise<any[]> =>
         fetchJson(`${this.apiRoot}/course_sections?crn=${crn}`);
     generateCalendar = async (crns: string[]): Promise<string> =>
         postJson(`${this.apiRoot}/generate`, crns).then(response => response.text());
