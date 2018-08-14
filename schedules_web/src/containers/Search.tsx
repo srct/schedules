@@ -5,7 +5,7 @@ import SearchRoot from '../components/SearchRoot';
 import { State } from '../reducers';
 
 const mapStateToProps = (state: State) => ({
-    searchResults: state.searchResults,
+    search: state.search,
 });
 
 export default connect(

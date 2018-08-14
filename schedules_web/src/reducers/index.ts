@@ -5,26 +5,15 @@
  */
 import { schedule, ScheduleState } from './schedule.reducer';
 import { search, SearchState } from './search.reducer';
+import { combineReducers } from 'redux';
 
+// The global state
 export interface State {
     schedule: ScheduleState;
-    searchResults: SearchState;
+    search: SearchState;
 }
 
 /**
- * If there is no current state passed in then initialize as nothing.
- */
-const defaultState: State = {
-    schedule: [],
-    searchResults: [],
-};
-
-/**
  * Combine all reducers into one object to attach to the store
- * @param state The current state, initialized as nothing
- * @param action The action to be applied to the reducers
  */
-export const allReducers = (state: State = defaultState, action: any) => ({
-    schedule: schedule(state.schedule, action),
-    searchResults: search(state.searchResults, action),
-});
+export const allReducers = combineReducers({ search, schedule });
