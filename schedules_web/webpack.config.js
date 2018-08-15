@@ -26,8 +26,7 @@ module.exports = {
     },
 
     module: {
-        rules: [
-            {
+        rules: [{
                 test: /\.tsx?$/,
                 loader: 'awesome-typescript-loader',
                 exclude: /node_modules/,
@@ -39,34 +38,13 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                use: [
-                    {
+                use: [{
                         loader: 'style-loader',
                     },
                     {
                         loader: 'css-loader',
                     },
                 ],
-            },
-            {
-                test: /\.woff(\?.+)?$/,
-                use: 'url-loader?limit=10000&mimetype=application/font-woff',
-            },
-            {
-                test: /\.woff2(\?.+)?$/,
-                use: 'url-loader?limit=10000&mimetype=application/font-woff',
-            },
-            {
-                test: /\.ttf(\?.+)?$/,
-                use: 'file-loader',
-            },
-            {
-                test: /\.eot(\?.+)?$/,
-                use: 'file-loader',
-            },
-            {
-                test: /\.svg(\?.+)?$/,
-                use: 'file-loader',
             },
             {
                 test: /\.(js)$/,

@@ -39,14 +39,25 @@ class ScheduleBadge extends React.Component<ScheduleBadgeProps, State> {
                         id="cart"
                     />
                 </Row>
+
                 <Collapse isOpen={this.state.collapse}>
                     <Card>
-                        <CardTitle className="mt-3">
-                            <Row className="justify-content-center">
-                                <Button size="sm" outline color="danger" onClick={this.toggle}>
+                        <CardBody>
+                            <Row className="my-3">
+                                <h1 className="px-5">Your Schedule</h1>
+
+                                <Button className="ml-auto px-5" outline color="danger" onClick={this.toggle}>
                                     Close
                                 </Button>
-                                <h1 className="px-3">Your Schedule</h1>
+                            </Row>
+
+                            <CourseSectionList
+                                courseSections={schedule}
+                                courseSectionAction={removeCourseSection}
+                                courseSectionActionButtonText="Remove from schedule"
+                                destructive
+                            />
+                            <Row className="justify-content-center">
                                 <Button
                                     size="sm"
                                     outline
@@ -56,15 +67,6 @@ class ScheduleBadge extends React.Component<ScheduleBadgeProps, State> {
                                     Generate
                                 </Button>
                             </Row>
-                        </CardTitle>
-                        <legend />
-                        <CardBody>
-                            <CourseSectionList
-                                courseSections={schedule}
-                                courseSectionAction={removeCourseSection}
-                                courseSectionActionButtonText="Remove from schedule"
-                                destructive
-                            />
                         </CardBody>
                     </Card>
                 </Collapse>

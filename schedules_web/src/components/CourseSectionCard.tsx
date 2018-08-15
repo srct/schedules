@@ -17,7 +17,7 @@ const CourseSectionCard = ({
     courseSectionActionButtonText,
     destructive,
 }: CourseSectionCardProps) => (
-    <Row className="justify-content-center">
+    <Row className="justify-content-center my-3">
         <Col md="9">
             <Card>
                 <CardBody>
