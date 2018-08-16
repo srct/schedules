@@ -11,8 +11,10 @@ class CalendarGeneratorController < ApplicationController
     # the intended format for the json is a list of CRNs
     params[:_json].each do |crn| # for each CRN sent by the post request
       section = CourseSection.find_by_crn(crn)
-      event = generate_event_from_section(section)
-      cal.add_event(event)
+      unless section.start_time == "TBA" || section.end_time == "TBA"
+        event = generate_event_from_section(section) 
+        cal.add_event(event)
+      end
     end
 
     render plain: cal.to_ical # render a plaintext iCal file
