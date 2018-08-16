@@ -8,3 +8,4 @@ EXPOSE 3000
 
 RUN bundle install
 RUN rails db:migrate
+RUN rails db:seed

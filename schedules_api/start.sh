@@ -10,5 +10,11 @@ export SECRET_KEY_BASE=$(rails secret)
 # rails db:migrate
 # rails db:seed
 
+# docker doesn't remove the server socket when the container is closed
+# so remove it if it's still there
+if [ -f tmp/pids/server.pid ]; then
+  rm tmp/pids/server.pid
+fi
+
 # start the server
 rails s

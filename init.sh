@@ -7,5 +7,4 @@ cd ../schedules_web
 docker build . -t 'schedules_web'
 
 cd ..
-docker-compose up -d
-docker-compose exec api rails db:seed
+docker-compose up
