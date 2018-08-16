@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Col, Row } from 'reactstrap';
+import { Col, Row, UncontrolledTooltip } from 'reactstrap';
 
 const Header = () => (
     <div>
@@ -10,8 +10,17 @@ const Header = () => (
             <div className="w-100 mb-3" />
             <Col md="6">
                 <p>
-                    This is a catchy slogan that concisely describes the site with a lot of words that looks good on
-                    mobile ahh.
+                    An application to generate a schedule
+                    {' ('}
+                    <span style={{ textDecoration: 'underline' }} id="UncontrolledTooltipExample">
+                        <i className="fas fa-question" />
+                    </span>
+                    <UncontrolledTooltip placement="right" target="UncontrolledTooltipExample">
+                        Find your class' CRNs on Patriot Web under Student Services > Registration > Student Schedule
+                    </UncontrolledTooltip>
+                    {') '}
+                    to place into your calendar populated with class times. Built and maintained by{' '}
+                    <a href="https://srct.gmu.edu">Mason SRCT</a>.
                 </p>
             </Col>
         </Row>
