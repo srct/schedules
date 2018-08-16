@@ -1,3 +1,6 @@
+# This file is no longer being used.
+# Data is now being parsed from Patriot Web.
+
 require 'rubyXL'
 
 # Provides utilities for loading schedules from GMU's excel files.
@@ -35,7 +38,7 @@ class ExcelLoader
   def delete_all_records
     Semester.delete_all
     Course.delete_all
-    Section.delete_all
+    CourseSection.delete_all
   end
 
   # Tries to create a course from a given row.
@@ -67,7 +70,7 @@ class ExcelLoader
       # So, split the times string by the - character
       times = row.cells[23]&.value
       time_strs = times.split('-')
-      section = Section.create name: section_name,
+      section = CourseSection.create name: section_name,
                                course: @current_course,
                                crn: row.cells[6]&.value,
                                section_type: row.cells[8]&.value,

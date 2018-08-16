@@ -1,12 +1,21 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  id: 1
-  subject: MyString
-  course_number: MyString
-  semester: one
+cs112:
+  subject: CS
+  course_number: 112
+  semester: fall2018
 
-two:
-  subject: MyString
-  course_number: MyString
-  semester: two
+cs211:
+  subject: CS
+  course_number: 211
+  semester: fall2018
+
+acct110:
+  subject: ACCT
+  course_number: 110
+  semester: spring2018
+
+cs110:
+  subject: CS
+  course_number: 110
+  semester: spring2018

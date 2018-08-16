@@ -4,14 +4,16 @@
 class Course < ApplicationRecord
   # Each course belongs to a +Semester+
   belongs_to :semester
+  has_many :course_sections
 
-  # Ensure all necessary fields are present.
+  # Ensure all necessary are fields present.
   validates :course_number, presence: true
   validates :subject, presence: true
   validates :semester_id, presence: true
 
-  # Returns all +Section+ objects that belong to this course.
-  def sections
-    Section.where course_id: id
+  # Returns all +CourseSection+ objects that belong to this course.
+  # @return [Array]
+  def course_sections
+    CourseSection.where course_id: id
   end
 end

@@ -1,0 +1,22 @@
+.fa-stack[data-count]:after {
+    position: absolute;
+    right: 0%;
+    top: 1%;
+    content: attr(data-count);
+    font-size: 30%;
+    padding: 0.6em;
+    border-radius: 999px;
+    line-height: 0.75em;
+    color: black;
+    background: rgba(164, 164, 164, 0.85);
+    text-align: center;
+    min-width: 2em;
+    font-weight: bold;
+}
+
+#cart {
+    color: black;
+    background: initial;
+    border-color: #e4e4e4;
+    box-shadow: initial;
+}

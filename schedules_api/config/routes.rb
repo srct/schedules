@@ -1,12 +1,10 @@
 # Registers all routes for the app.
 Rails.application.routes.draw do
   scope :api do # Register /api routes
-    resources :courses, only: [:index] do # GET /api/courses
-      resources :sections, only: [:index] # GET /api/courses/:course_id/sections
-    end
+    resources :courses, only: [:index, :show]
+    resources :course_sections, only: [:index]
 
-    get 'search', controller: 'search', action: 'index'
-    post 'generate', controller: 'calendar_generator', action: 'generate'
+    post 'generate', controller: 'calendar_generator', action: 'new'
   end
 
   root 'courses#index' # Set the root to be the courses API endpoint

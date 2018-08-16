@@ -1,10 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  id: 1
-  season: MyString
-  year: MyString
+fall2018:
+  season: Fall
+  year: 2018
 
-two:
-  season: MyString
-  year: MyString
+spring2018:
+  season: Spring
+  year: 2018

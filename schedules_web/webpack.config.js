@@ -1,17 +1,28 @@
 const path = require('path');
 const webpack = require('webpack');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
+    template: './index.html',
+    filename: 'index.html',
+    inject: 'body',
+    favicon: 'favicon.ico',
+});
 
 module.exports = {
+    mode: 'development',
+    devtool: 'source-map',
+
     entry: './src/index.tsx',
+
     output: {
-        filename: 'bundle.js',
+        filename: '[name].[hash].js',
         path: path.resolve(__dirname, 'dist'),
     },
 
-    devtool: 'source-map',
-
     resolve: {
-        extensions: ['.ts', '.tsx', '.js', '.json'],
+        extensions: ['.js', '.json', '.ts', '.tsx'],
     },
 
     module: {
@@ -21,22 +32,59 @@ module.exports = {
                 loader: 'awesome-typescript-loader',
                 exclude: /node_modules/,
             },
-            { enforce: 'pre', test: /\.js$/, loader: 'source-map-loader' },
+            {
+                enforce: 'pre',
+                test: /\.js$/,
+                loader: 'source-map-loader',
+            },
+            {
+                test: /\.css$/,
+                use: [
+                    {
+                        loader: 'style-loader',
+                    },
+                    {
+                        loader: 'css-loader',
+                    },
+                ],
+            },
+            {
+                test: /\.woff(\?.+)?$/,
+                use: 'url-loader?limit=10000&mimetype=application/font-woff',
+            },
+            {
+                test: /\.woff2(\?.+)?$/,
+                use: 'url-loader?limit=10000&mimetype=application/font-woff',
+            },
+            {
+                test: /\.ttf(\?.+)?$/,
+                use: 'file-loader',
+            },
+            {
+                test: /\.eot(\?.+)?$/,
+                use: 'file-loader',
+            },
+            {
+                test: /\.svg(\?.+)?$/,
+                use: 'file-loader',
+            },
+            {
+                test: /\.(js)$/,
+                exclude: /(node_modules)/,
+                loader: 'babel-loader',
+            },
         ],
     },
 
-    plugins: [new webpack.HotModuleReplacementPlugin()],
+    plugins: [new webpack.HotModuleReplacementPlugin(), new CleanWebpackPlugin(['dist']), HtmlWebpackPluginConfig],
 
     devServer: {
+        contentBase: path.resolve(__dirname, 'dist'),
         compress: true,
+        host: '0.0.0.0',
+        port: 8080,
         hot: true,
-        publicPath: '/dist/',
+        publicPath: '/',
+        historyApiFallback: true,
     },
-
-    externals: {
-        react: 'React',
-        'react-dom': 'ReactDOM',
-    },
-
-    mode: 'development',
 };

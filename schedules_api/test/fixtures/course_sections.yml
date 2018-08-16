@@ -1,0 +1,55 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+cs112001:
+  name: MyString
+  crn: MyString
+  section_type: MyString
+  title: MyString
+  instructor: MyString
+  start_date: 2018-05-21
+  end_date: 2018-06-04
+  days: MWF
+  start_time: 12:00 pm
+  end_time: 1:00 pm
+  location: MyString
+  status: MyString
+  campus: MyString
+  notes: MyString
+  size_limit: 1
+  course: cs112
+
+cs112002:
+  name: MyString2
+  crn: MyString2
+  section_type: MyString
+  title: MyString
+  instructor: MyString
+  start_date: 2018-05-21
+  end_date: 2018-06-04
+  days: TR
+  start_time: 11:00 am
+  end_time: 2:00 pm
+  location: MyString
+  status: MyString
+  campus: MyString
+  notes: MyString
+  size_limit: 1
+  course: cs112
+
+cs211001:
+  name: MyString3
+  crn: MyString3
+  section_type: MyString
+  title: MyString
+  instructor: MyString
+  start_date: 2018-05-21
+  end_date: 2018-06-04
+  days: TR
+  start_time: 2:30 pm
+  end_time: 3:00 pm
+  location: MyString
+  status: MyString
+  campus: MyString
+  notes: MyString
+  size_limit: 1
+  course: cs211
