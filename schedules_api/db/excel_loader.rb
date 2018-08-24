@@ -22,23 +22,26 @@ class ExcelLoader
       end
       configure_section?(row)&.save! # If this row contained a section, save it
     end
+
+    load_closures
   end
 
   private
-
+  
+  # create closures for the days there will be no classes
+  # see: https://registrar.gmu.edu/calendars/fall-2018/
+  def load_closures
+    Closure.create! date: Date.new(2018, 9, 3), semester: @semester
+    Closure.create! date: Date.new(2018, 10, 8), semester: @semester
+    (21..25).each { |n| Closure.create! date: Date.new(2018, 11, n), semester: @semester }
+    (10..19).each { |n| Closure.create! date: Date.new(2018, 12, n), semester: @semester }
+  end
+  
   # Prints the failure, deletes all data added during loading, and raises the failure error.
   def fail(error)
     logger.fatal error.message
     logger.fatal error.backtrace
-    delete_all_records
     raise error
-  end
-
-  # Deletes all records from the database.
-  def delete_all_records
-    Semester.delete_all
-    Course.delete_all
-    CourseSection.delete_all
   end
 
   # Tries to create a course from a given row.
@@ -64,27 +67,42 @@ class ExcelLoader
   # Tries to create a section from a given row.
   def configure_section?(row)
     section_name = row.cells[2]&.value
+    
     # If there is no valid section name, just continue to the next row
     unless section_name.blank? || section_name == 'Total'
       # The time field in the spreadsheet uses the format "start_time - end_time" i.e. "12:00 PM - 1:15 PM".
       # So, split the times string by the - character
       times = row.cells[23]&.value
       time_strs = times.split('-')
-      section = CourseSection.create name: section_name,
-                               course: @current_course,
-                               crn: row.cells[6]&.value,
-                               section_type: row.cells[8]&.value,
-                               title: row.cells[11]&.value,
-                               instructor: row.cells[16]&.value,
-                               start_date: row.cells[18]&.value,
-                               end_date: row.cells[21]&.value,
-                               days: row.cells[22]&.value,
-                               start_time: time_strs[0].strip,
-                               end_time: time_strs[1].strip,
-                               location: row.cells[25]&.value
+      
+      instructor_val = row.cells[16]
+      instructor = if instructor_val.nil? || instructor_val.value == "'-"
+                     "TBA"
+                   else
+                     instructor_val.value
+                   end
 
-      # TODO: Add campus, notes, and size limit fields
+      location_cell = row.cells[25]
+      location = if location_cell.nil? || location_cell.value.include?("'-")
+                   "TBA"
+                 else
+                   location_cell.value
+                 end
+      
+      section = CourseSection.create name: section_name,
+                                     course: @current_course,
+                                     crn: row.cells[6]&.value,
+                                     section_type: row.cells[8]&.value,
+                                     title: row.cells[11]&.value,
+                                     instructor: instructor,
+                                     start_date: row.cells[18]&.value,
+                                     end_date: row.cells[21]&.value,
+                                     days: row.cells[22]&.value,
+                                     start_time: time_strs[0].strip,
+                                     end_time: time_strs[1].strip,
+                                     location: location
+
+      section
     end
-    section
   end
 end

@@ -68,52 +68,64 @@ module PatriotWeb
     # @return [Array] courses
     def get_courses(document)
       table = document.css('html body div.pagebodydiv table.datadisplaytable').first
+      File.write('help', table)
       rows = table.children.drop 2 # first two elements are junk
+      # puts rows[0].text
+      # puts rows[2].css('table.datadisplaytable td').children.drop(1).map { |c| c.text }
+      # puts rows[3]
+      # puts rows[4]
+
+      (0..(rows.length/4 - 1)).map do |i|
+        start = i*4
+        puts rows[start].text
+        puts rows[start+2].css('table.datadisplaytable td').children.drop(1).map { |c| c.text }
+      end
       
       # each section is represented by 6 rows in the table
-      (0..(rows.length/6 - 1)).map do |i|
-        start = i*6
-        data = {}
-        title = rows[start].text
-        # the title looks this: Survey of Accounting - 71117 - ACCT 203 - 001
-        # so split it by ' - ' and extract
-        title_elements = title.split(' - ')
-        data[:title] = title_elements[0].strip
-        data[:crn] = title_elements[1]
+      # (0..(rows.length/6 - 1)).map do |i|
+      #   start = i*6
+      #   data = {}
+      #   title = rows[start].text
+      #   # the title looks this: Survey of Accounting - 71117 - ACCT 203 - 001
+      #   # so split it by ' - ' and extract
+      #   title_elements = title.split(' - ')
+      #   next unless title_elements.length == 4
+      #   data[:title] = title_elements[0].strip
+      #   data[:crn] = title_elements[1]
         
-        full_name = title_elements[2].split(' ')
-        next unless full_name.length == 2
-        data[:subj] = title_elements[2].split(' ')[0]
-        data[:course_number] = title_elements[2].split(' ')[1]
+      #   full_name = title_elements[2].split(' ')
+      #   next unless full_name.length == 2
+      #   data[:subj] = title_elements[2].split(' ')[0]
+      #   data[:course_number] = title_elements[2].split(' ')[1]
         
-        data[:section] = title_elements[3].strip
+      #   data[:section] = title_elements[3].strip
 
-        # rows 1 to 3 contain info about registration and drop dates.
-        # for now we're gonna ignore them and skip to row 4, which contains details
-        detail_rows = rows[start+4].css('tr')
-        next unless detail_rows.length > 0 # if there are no details, skip this item
-        details = detail_rows.last.text.split("\n").compact.reject(&:empty?) # skip empty strings
+      #   # rows 1 to 3 contain info about registration and drop dates.
+      #   # for now we're gonna ignore them and skip to row 4, which contains details
+      #   detail_rows = rows[start+4].css('tr')
+      #   next unless detail_rows.length > 0 # if there are no details, skip this item
+      #   details = detail_rows.last.text.split("\n").compact.reject(&:empty?) # skip empty strings
         
-        times = details[1].split(' - ')
-        if (times.length == 1)
-          data[:start_time] = 'TBA'
-          data[:end_time] = 'TBA'
-        else
-          data[:start_time] = times[0]
-          data[:end_time] = times[1]
-        end
+      #   times = details[1].split(' - ')
+      #   if (times.length == 1)
+      #     data[:start_time] = 'TBA'
+      #     data[:end_time] = 'TBA'
+      #   else
+      #     data[:start_time] = times[0]
+      #     data[:end_time] = times[1]
+      #   end
 
-        data[:days] = details[2].strip
-        data[:location] = details[3].strip
+      #   data[:days] = details[2].strip
+      #   data[:location] = details[3].strip
         
-        dates = details[4].split(' - ')
-        data[:start_date] = dates[0]
-        data[:end_date] = dates[1]
+      #   dates = details[4].split(' - ')
+      #   data[:start_date] = dates[0]
+      #   data[:end_date] = dates[1]
         
-        data[:type] = details[5]
-        data[:instructor] = details[6]
-        data
-      end
+      #   data[:type] = details[5]
+      #   data[:instructor] = details[6]
+      #   data
+      # end
     end
   end
 end
