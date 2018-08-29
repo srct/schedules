@@ -9,10 +9,9 @@ interface ScheduleRootProps {
     removeCourseSection: (courseSection: CourseSection) => any;
 }
 
-const generateSchedule = async (schedule: CourseSection[]): Promise<void> => {
+const generateSchedule = async (schedule: CourseSection[]) => {
     const crns = schedule.map(section => section.crn);
-    const calendar = await ApiService.generateCalendar(crns);
-    downloadFile(calendar, 'GMU Fall 2018.ics');
+    ApiService.subscribeToCalendar(crns);
 };
 
 const ScheduleRoot = ({ schedule, removeCourseSection }: ScheduleRootProps) => (
