@@ -15,6 +15,11 @@ class CalendarGeneratorController < ApplicationController
         event = generate_event_from_section(section) 
         cal.add_event(event)
       end
+
+      if section.days.start_with? "M"
+        col_day_makeup = generate_event_after_columbus_day(section)
+        cal.add_event(col_day_makeup)
+      end
     end
 
     render plain: cal.to_ical # render a plaintext iCal file
@@ -90,6 +95,14 @@ class CalendarGeneratorController < ApplicationController
       )
     end
 
+    # If the section meets on Tuesdays, add an exdate for the day after columbus day
+    if section.days.start_with? "T"
+      exdates << generate_exdate(
+        Date.new(2018, 10, 9).to_formatted_s(:number),
+        section.start_time
+      )
+    end
+
     exdates
   end
 
@@ -101,5 +114,21 @@ class CalendarGeneratorController < ApplicationController
     # format the time for use in a DateTime
     formatted_time = Time.parse(time).strftime("%H%M%S")
     Icalendar::Values::DateTime.new("#{date}T#{formatted_time}")
+  end
+
+  # Configures a calendar event for the day after columbus day
+  # @param section [CourseSection]
+  def generate_event_after_columbus_day(section)
+    event = Icalendar::Event.new
+
+    event.summary = section.name + " (Columbus Day makeup)"
+    event.description = section.title + " (Columbus Day makeup)"
+    event.location = section.location
+
+    after_columbus_day = Date.new 2018, 10, 9
+    event.dtstart = Icalendar::Values::DateTime.new(formatted_datetime_str(after_columbus_day, section.start_time))
+    event.dtend = Icalendar::Values::DateTime.new(formatted_datetime_str(after_columbus_day, section.end_time))
+
+    event
   end
 end

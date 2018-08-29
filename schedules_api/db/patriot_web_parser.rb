@@ -36,7 +36,7 @@ module PatriotWeb
     def parse_courses_in_subject(subject)
       response = @networker.fetch_courses_in_subject(subject)
       document = Nokogiri::HTML(response)
-      get_courses(document)
+      get_courses(document, subject)
     end
 
     private
@@ -66,54 +66,74 @@ module PatriotWeb
     # Parse all courses from the subject search page 
     # @param document [Nokogiri::HTML::Document]
     # @return [Array] courses
-    def get_courses(document)
-      table = document.css('html body div.pagebodydiv table.datadisplaytable').first
-      rows = table.children.drop 2 # first two elements are junk
+    def get_courses(document, subject)
+      table = document.css('html body div.pagebodydiv table.datadisplaytable')
+      rows = table.css('tr')
+      # rows[100..110].each_with_index do |row, i|
+      #   puts i
+      #   puts row
+      # end
+      data_from rows
+    end
+
+    def data_from(rows)
+      i = 0
+      title_index = 0
+      result = []
       
-      # each section is represented by 6 rows in the table
-      (0..(rows.length/6 - 1)).map do |i|
-        start = i*6
-        data = {}
-        title = rows[start].text
-        # the title looks this: Survey of Accounting - 71117 - ACCT 203 - 001
-        # so split it by ' - ' and extract
-        title_elements = title.split(' - ')
-        data[:title] = title_elements[0].strip
-        data[:crn] = title_elements[1]
-        
-        full_name = title_elements[2].split(' ')
-        next unless full_name.length == 2
-        data[:subj] = title_elements[2].split(' ')[0]
-        data[:course_number] = title_elements[2].split(' ')[1]
-        
-        data[:section] = title_elements[3].strip
+      while i < rows.length
+        if is_title(rows[i].text) # check if the row is a title
+          data = {}
 
-        # rows 1 to 3 contain info about registration and drop dates.
-        # for now we're gonna ignore them and skip to row 4, which contains details
-        detail_rows = rows[start+4].css('tr')
-        next unless detail_rows.length > 0 # if there are no details, skip this item
-        details = detail_rows.last.text.split("\n").compact.reject(&:empty?) # skip empty strings
-        
-        times = details[1].split(' - ')
-        if (times.length == 1)
-          data[:start_time] = 'TBA'
-          data[:end_time] = 'TBA'
+          title_elements = rows[i].text.split(' - ')
+          data[:title] = title_elements[0].strip
+          data[:crn] = title_elements[1]
+          full_name = title_elements[2].split(' ')
+          next unless full_name.length == 2
+          data[:subj] = full_name[0]
+          data[:course_number] = full_name[1]
+          data[:section] = title_elements[3].strip
+
+          details = rows[i+2].css('td table tr td')
+          unless details.length > 0
+            puts "#{full_name.join(' ')} is fake news"
+            i += 1
+            next
+          end
+          
+          times = details[1].text.split(' - ')
+          if (times.length == 1)
+            data[:start_time] = 'TBA'
+            data[:end_time] = 'TBA'
+          else
+            data[:start_time] = times[0]
+            data[:end_time] = times[1]
+          end
+
+          data[:days] = details[2].text.strip
+          data[:location] = details[3].text.strip
+          
+          dates = details[4].text.split(' - ')
+          data[:start_date] = dates[0]
+          data[:end_date] = dates[1]
+          
+          data[:type] = details[5].text
+          data[:instructor] = details[6].text
+
+          result << data
+          i += 5 # skip to what we think is the next title
         else
-          data[:start_time] = times[0]
-          data[:end_time] = times[1]
+          i += 1 # try the next row if this one was not a title
         end
-
-        data[:days] = details[2].strip
-        data[:location] = details[3].strip
-        
-        dates = details[4].split(' - ')
-        data[:start_date] = dates[0]
-        data[:end_date] = dates[1]
-        
-        data[:type] = details[5]
-        data[:instructor] = details[6]
-        data
       end
+      
+      result
+    end
+    
+    # a title looks this: Survey of Accounting - 71117 - ACCT 203 - 001
+    def is_title(text)
+      elements = text.split(' - ')
+      elements.length == 4 && elements[2].split(' ').length == 2
     end
   end
 end
