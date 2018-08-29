@@ -19,17 +19,17 @@ puts "DDOSing Patriot Web, buckle up kids"
 # parse all subjects and their courses in the semester
 parser.parse_subjects(semester).each do |subject|
   puts "Getting courses for #{subject}"
-  threads << Thread.new {
+  # threads << Thread.new {
     total[subject] = parser.parse_courses_in_subject(subject)    
-  }
+  # }
 end
 
 # For testing, only get first subject
-# subject = parser.parse_subjects(semester).first
+# subject = parser.parse_subjects(semester)[20]
 # total[subject] = parser.parse_courses_in_subject(subject)
 
 # wait for all the threads to finish
-ThreadsWait.all_waits(*threads)
+# ThreadsWait.all_waits(*threads)
 
 # delete everything in the current database
 Closure.delete_all
@@ -44,7 +44,10 @@ semester.save!
 total.each do |subject, sections|
   puts "Adding courses for #{subject}..."
   sections.each do |section|
-    next if section.nil? || !section.key?(:subj) || !section.key?(:course_number)
+    if section.nil? || !section.key?(:subj) || !section.key?(:course_number)
+      puts "#{subject} failed section: #{section.class}"
+      next
+    end
     
     # Find or create a course and set its semester
     # TODO: this breaks when you try to do more than one semester,
