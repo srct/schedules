@@ -7,3 +7,4 @@ ADD . /web
 EXPOSE 8080
 
 RUN yarn
+RUN yarn build
