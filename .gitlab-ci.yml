@@ -1,5 +1,6 @@
 stages:
   - test
+  - build
  
 test_api:
   image: ruby:2.5
