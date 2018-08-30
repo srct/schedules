@@ -1,31 +1,38 @@
 require 'icalendar'
 require 'time'
 
-# Contains functionality for generating schedules.
-class CalendarGeneratorController < ApplicationController
-  # Render an iCal file containing the schedules of all the 
-  # course sections with the given CRNs.
-  def new
-    cal = Icalendar::Calendar.new
+class Schedule
+  def initialize(crns)
+    @cal = Icalendar::Calendar.new
+    @cal.x_wr_calname = 'GMU Fall 2018'
+    
+    @course_sections = crns.map do |crn|
+      CourseSection.find_by crn: crn
+    end
+    @course_sections.compact!
 
-    # the intended format for the json is a list of CRNs
-    params[:_json].each do |crn| # for each CRN sent by the post request
-      section = CourseSection.find_by_crn(crn)
+    load_events
+  end
+
+  def to_ical
+    @cal.to_ical
+  end
+
+  private
+
+  def load_events
+    @course_sections.each do |section|
       unless section.start_time == "TBA" || section.end_time == "TBA"
         event = generate_event_from_section(section) 
-        cal.add_event(event)
+        @cal.add_event(event)
       end
 
       if section.days.start_with? "M"
         col_day_makeup = generate_event_after_columbus_day(section)
-        cal.add_event(col_day_makeup)
+        @cal.add_event(col_day_makeup)
       end
     end
-
-    render plain: cal.to_ical # render a plaintext iCal file
   end
-
-  private
 
   # Configures a calendar event from a given section
   # @param section [CourseSection]

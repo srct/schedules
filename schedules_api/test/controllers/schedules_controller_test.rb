@@ -1,9 +1,9 @@
 require 'test_helper'
 
-class CalendarGeneratorControllerTest < ActionDispatch::IntegrationTest
-  test "should get generate" do
+class SchedulesControllertest < ActionDispatch::IntegrationTest
+  test "should generate schedule" do
     crns = [course_sections(:cs112001).crn, course_sections(:cs112002).crn]
-    post "/api/generate", params: crns.to_json, headers: { 'CONTENT_TYPE' => 'application/json' }
+    get "/api/schedules?crns=#{crns.join(',')}"
 
     # DTSTAMP and UID lines uniquely identify events, so we can't test against them.
     # so remove all the lines starting with them.
