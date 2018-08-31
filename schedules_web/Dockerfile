@@ -1,10 +1,9 @@
 FROM node:9
 
-RUN mkdir /web
+COPY . /web
 WORKDIR /web
-ADD . /web
 
-EXPOSE 8080
+RUN yarn install && yarn run build
 
-RUN yarn
-RUN yarn build
+FROM nginx:1.15.0
+COPY --from=0 /web/dist /web

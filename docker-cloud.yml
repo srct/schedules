@@ -1,0 +1,28 @@
+version: "3.3"
+
+volumes:
+  dbdata:
+
+configs:
+  nginx_conf:
+    file: ./schedules_web/nginx.conf
+
+networks:
+  front:
+  back:
+
+services:
+  api:
+    image: registry.srct.gmu.edu/srct/schedules/api:0.1.0
+    networks:
+      back:
+
+  web:
+    image: registry.srct.gmu.edu/srct/schedules/web:0.1.0
+    networks:
+      front:
+      back:
+    volumes:
+      - ./schedules_web:/web
+    ports:
+      - 8085:80
