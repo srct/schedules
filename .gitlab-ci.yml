@@ -1,7 +1,7 @@
 stages:
   - test
   - build
- 
+
 test_api:
   image: ruby:2.5
   stage: test
@@ -10,6 +10,7 @@ test_api:
     - bundle install
     - rails db:migrate
     - rails test
+    - rubocop
 
 test_web:
   image: node:9
