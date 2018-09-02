@@ -3,7 +3,7 @@ require 'time'
 
 # Contains functionality for generating schedules.
 class SchedulesController < ApplicationController
-  # Render an iCal file containing the schedules of all the 
+  # Render an iCal file containing the schedules of all the
   # course sections with the given CRNs.
   def index
     crns = params["crns"].split ','

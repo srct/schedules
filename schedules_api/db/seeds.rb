@@ -7,7 +7,7 @@ require 'httparty'
 require 'nokogiri'
 require 'json'
 
-threads = []
+# threads = []
 total = {}
 parser = PatriotWeb::Parser.new
 
@@ -20,7 +20,7 @@ puts "DDOSing Patriot Web, buckle up kids"
 parser.parse_subjects(semester).each do |subject|
   puts "Getting courses for #{subject}"
   # threads << Thread.new {
-    total[subject] = parser.parse_courses_in_subject(subject)    
+  total[subject] = parser.parse_courses_in_subject(subject)
   # }
 end
 
@@ -48,7 +48,7 @@ total.each do |subject, sections|
       puts "#{subject} failed section: #{section.class}"
       next
     end
-    
+
     # Find or create a course and set its semester
     # TODO: this breaks when you try to do more than one semester,
     # since just the subject + course_number do not uniquely identify a course
@@ -59,22 +59,21 @@ total.each do |subject, sections|
     course.save!
 
     section_name = "#{section[:subj]} #{section[:course_number]} #{section[:section]}"
-    
+
     # puts "Adding #{section_name}..."
 
     CourseSection.create!(name: section_name,
-                    crn: section[:crn],
-                    section_type: section[:type],
-                    title: section[:title],
-                    instructor: section[:instructor],
-                    start_date: section[:start_date],
-                    end_date: section[:end_date],
-                    days: section[:days],
-                    start_time: section[:start_time],
-                    end_time: section[:end_time],
-                    location: section[:location],
-                    course: course)
-                   
+                          crn: section[:crn],
+                          section_type: section[:type],
+                          title: section[:title],
+                          instructor: section[:instructor],
+                          start_date: section[:start_date],
+                          end_date: section[:end_date],
+                          days: section[:days],
+                          start_time: section[:start_time],
+                          end_time: section[:end_time],
+                          location: section[:location],
+                          course: course)
   end
 end
 

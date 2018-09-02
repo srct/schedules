@@ -5,7 +5,7 @@ class Schedule
   def initialize(crns)
     @cal = Icalendar::Calendar.new
     @cal.x_wr_calname = 'GMU Fall 2018'
-    
+
     @course_sections = crns.map do |crn|
       CourseSection.find_by crn: crn
     end
@@ -23,7 +23,7 @@ class Schedule
   def load_events
     @course_sections.each do |section|
       unless section.start_time == "TBA" || section.end_time == "TBA"
-        event = generate_event_from_section(section) 
+        event = generate_event_from_section(section)
         @cal.add_event(event)
       end
 
@@ -89,7 +89,7 @@ class Schedule
   # @return [Array]
   def exdates_for_section(section)
     # Generate exdates for all closures in a semester
-    exdates = Closure.where(semester: section.course.semester).map { |closure| 
+    exdates = Closure.where(semester: section.course.semester).map { |closure|
       generate_exdate(closure.date.to_formatted_s(:number), section.start_time)
     }
 
