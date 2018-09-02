@@ -1,0 +1,44 @@
+{
+  "resources": [
+    {
+      "name": "Course Sections",
+      "explanation": "A way to search across the different course sections (i.e. CS 112 001, ECON 103 104) for each course",
+      "examples": [
+        {
+          "description": "Search by CRN",
+          "link": "course_sections/search_by_crn.json",
+          "groups": "all",
+          "route": "/api/course_sections",
+          "method": "get"
+        },
+        {
+          "description": "Search by course",
+          "link": "course_sections/search_by_course.json",
+          "groups": "all",
+          "route": "/api/course_sections",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "name": "Courses",
+      "explanation": "A way to search across the different courses (i.e. CS 112, ECON 103) offered at GMU.",
+      "examples": [
+        {
+          "description": "Filtered list of courses",
+          "link": "courses/filtered_list_of_courses.json",
+          "groups": "all",
+          "route": "/api/courses",
+          "method": "get"
+        },
+        {
+          "description": "Listing all courses",
+          "link": "courses/listing_all_courses.json",
+          "groups": "all",
+          "route": "/api/courses",
+          "method": "get"
+        }
+      ]
+    }
+  ]
+}

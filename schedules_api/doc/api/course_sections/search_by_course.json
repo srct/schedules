@@ -1,0 +1,43 @@
+{
+  "resource": "Course Sections",
+  "resource_explanation": "A way to search across the different course sections (i.e. CS 112 001, ECON 103 104) for each course",
+  "http_method": "GET",
+  "route": "/api/course_sections",
+  "description": "Search by course",
+  "explanation": null,
+  "parameters": [
+    {
+      "type": "number",
+      "name": "course_id",
+      "description": " course"
+    },
+    {
+      "type": "string",
+      "name": "crn",
+      "description": " crn"
+    }
+  ],
+  "response_fields": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "GET",
+      "request_path": "/api/course_sections?course_id=169421928",
+      "request_body": null,
+      "request_headers": {
+      },
+      "request_query_parameters": {
+        "course_id": "169421928"
+      },
+      "request_content_type": null,
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "[\n  {\n    \"id\": 91231435,\n    \"name\": \"MyString\",\n    \"crn\": \"MyString\",\n    \"section_type\": \"MyString\",\n    \"title\": \"MyString\",\n    \"instructor\": \"MyString\",\n    \"start_date\": \"2018-05-21\",\n    \"end_date\": \"2018-06-04\",\n    \"days\": \"MWF\",\n    \"start_time\": \"12:00 pm\",\n    \"end_time\": \"1:00 pm\",\n    \"location\": \"MyString\",\n    \"status\": \"MyString\",\n    \"campus\": \"MyString\",\n    \"notes\": \"MyString\",\n    \"size_limit\": 1,\n    \"course_id\": 169421928,\n    \"created_at\": \"2018-09-02T18:29:10.904Z\",\n    \"updated_at\": \"2018-09-02T18:29:10.904Z\"\n  },\n  {\n    \"id\": 477709683,\n    \"name\": \"MyString2\",\n    \"crn\": \"MyString2\",\n    \"section_type\": \"MyString\",\n    \"title\": \"MyString\",\n    \"instructor\": \"MyString\",\n    \"start_date\": \"2018-05-21\",\n    \"end_date\": \"2018-06-04\",\n    \"days\": \"TR\",\n    \"start_time\": \"11:00 am\",\n    \"end_time\": \"2:00 pm\",\n    \"location\": \"MyString\",\n    \"status\": \"MyString\",\n    \"campus\": \"MyString\",\n    \"notes\": \"MyString\",\n    \"size_limit\": 1,\n    \"course_id\": 169421928,\n    \"created_at\": \"2018-09-02T18:29:10.904Z\",\n    \"updated_at\": \"2018-09-02T18:29:10.904Z\"\n  }\n]",
+      "response_headers": {
+      },
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+    }
+  ]
+}

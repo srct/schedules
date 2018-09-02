@@ -1,0 +1,44 @@
+{
+  "resource": "Courses",
+  "resource_explanation": "A way to search across the different courses (i.e. CS 112, ECON 103) offered at GMU.",
+  "http_method": "GET",
+  "route": "/api/courses",
+  "description": "Filtered list of courses",
+  "explanation": null,
+  "parameters": [
+    {
+      "type": "string",
+      "name": "subject",
+      "description": " subject"
+    },
+    {
+      "type": "number",
+      "name": "course_number",
+      "description": " course number"
+    }
+  ],
+  "response_fields": [
+
+  ],
+  "requests": [
+    {
+      "request_method": "GET",
+      "request_path": "/api/courses?subject=CS&course_number=112",
+      "request_body": null,
+      "request_headers": {
+      },
+      "request_query_parameters": {
+        "subject": "CS",
+        "course_number": "112"
+      },
+      "request_content_type": null,
+      "response_status": 200,
+      "response_status_text": "OK",
+      "response_body": "[\n  {\n    \"id\": 169421928,\n    \"subject\": \"CS\",\n    \"course_number\": \"112\",\n    \"semester_id\": 763694850,\n    \"created_at\": \"2018-09-02T18:29:10.916Z\",\n    \"updated_at\": \"2018-09-02T18:29:10.916Z\"\n  }\n]",
+      "response_headers": {
+      },
+      "response_content_type": "application/json; charset=utf-8",
+      "curl": null
+    }
+  ]
+}

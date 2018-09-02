@@ -12,7 +12,7 @@ gem 'sqlite3'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 # Use SCSS for stylesheets
-
+gem 'sass-rails', '~> 5.0'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -47,10 +47,29 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
+# HTTP requests
 gem 'httparty'
+
+# Working with iCalendar
 gem 'icalendar'
+
+# Parsing HTML
 gem 'nokogiri'
+
+# Easily deal with CORS
 gem 'rack-cors', require: 'rack/cors'
+
+# Parsing Excel files
 gem 'rubyXL'
 
+# Linting
 gem "rubocop", "~> 0.58.2"
+
+# RSpec
+gem 'rspec-rails'
+
+# Generate API documentation
+gem 'rspec_api_documentation'
+
+# Pretty API docs
+gem "apitome"
