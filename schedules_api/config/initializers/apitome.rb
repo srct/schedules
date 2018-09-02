@@ -46,7 +46,7 @@ Apitome.setup do |config|
 
   # You can specify how urls are formatted using a Proc or other callable object.
   # Your proc will be called with a resource name or link, giving you the opportunity to modify it as necessary for in the documentation url.
-  config.url_formatter = -> (str) { str.gsub(/\.json$/, '').underscore.gsub(/[^0-9a-z\:]+/i, '-') }
+  config.url_formatter = ->(str) { str.gsub(/\.json$/, '').underscore.gsub(/[^0-9a-z\:]+/i, '-') }
 
   # You can setup the docs to be loaded from a remote URL if they are
   # not available in the application environment. This defaults to
