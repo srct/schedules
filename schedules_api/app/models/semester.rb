@@ -3,7 +3,7 @@
 # A +Semester+ is a simple model that consists of a +year+ and a +season+, e.g. "Fall 2018".
 class Semester < ApplicationRecord
   has_many :courses
-  
+
   # Ensure necessary fields are present.
   validates :year, presence: true
   validates :season, presence: true

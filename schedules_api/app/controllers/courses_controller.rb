@@ -1,6 +1,12 @@
 # Contains all actions having to do with Courses.
 class CoursesController < ApplicationController
-  # Renders JSON of courses matching params.
+  resource_description do
+    short 'Working with courses, e.g. CS 112'
+  end
+
+  api :GET, '/courses', "Get a list of courses."
+  param :subject, String, desc: 'Course subject, e.g. "CS" or "ACCT"'
+  param :course_number, Integer, desc: 'Course number, e.g. "112"'
   def index
     @courses = Course.all
 
@@ -11,7 +17,8 @@ class CoursesController < ApplicationController
     render json: @courses
   end
 
-  # Renders JSON of details of a singluar course, such as its sections
+  api :GET, '/courses/:id', "Get a list of all course sections for the course with the given id."
+  param :id, :number, desc: 'Course ID', required: true
   def show
     @sections = CourseSection.where(course_id: params[:id])
 

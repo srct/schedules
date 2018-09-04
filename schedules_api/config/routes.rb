@@ -6,5 +6,6 @@ Rails.application.routes.draw do
     resources :schedules, only: [:index]
   end
 
-  root 'courses#index' # Set the root to be the courses API endpoint
+  apipie # sets up API docs
+  get '/', to: redirect('/api') # redirect the root url to API docs
 end

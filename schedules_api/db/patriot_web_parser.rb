@@ -14,10 +14,10 @@ module PatriotWeb
     def initialize
       @networker = PatriotWeb::Networker.new
     end
-    
+
     # Parses all semesters avaliable on Patriot Web
     def parse_semesters
-      response = @networker.fetch_page_containing_semester_data 
+      response = @networker.fetch_page_containing_semester_data
       document = Nokogiri::HTML(response) # parse the document from the HTTP response
 
       get_semesters_from_option_values(document).compact
@@ -40,7 +40,7 @@ module PatriotWeb
     end
 
     private
-    
+
     # Parse the values of all different options on the Patriot Web
     # semester select page
     # @param document [Nokogiri::HTML::Document]
@@ -63,10 +63,10 @@ module PatriotWeb
       end
     end
 
-    # Parse all courses from the subject search page 
+    # Parse all courses from the subject search page
     # @param document [Nokogiri::HTML::Document]
     # @return [Array] courses
-    def get_courses(document, subject)
+    def get_courses(document, _subject)
       table = document.css('html body div.pagebodydiv table.datadisplaytable')
       rows = table.css('tr')
       # rows[100..110].each_with_index do |row, i|
@@ -78,11 +78,10 @@ module PatriotWeb
 
     def data_from(rows)
       i = 0
-      title_index = 0
       result = []
-      
+
       while i < rows.length
-        if is_title(rows[i].text) # check if the row is a title
+        if title?(rows[i].text) # check if the row is a title
           data = {}
 
           title_elements = rows[i].text.split(' - ')
@@ -94,15 +93,15 @@ module PatriotWeb
           data[:course_number] = full_name[1]
           data[:section] = title_elements[3].strip
 
-          details = rows[i+2].css('td table tr td')
-          unless details.length > 0
+          details = rows[i + 2].css('td table tr td')
+          unless !details.empty?
             puts "#{full_name.join(' ')} is fake news"
             i += 1
             next
           end
-          
+
           times = details[1].text.split(' - ')
-          if (times.length == 1)
+          if times.length == 1
             data[:start_time] = 'TBA'
             data[:end_time] = 'TBA'
           else
@@ -112,11 +111,11 @@ module PatriotWeb
 
           data[:days] = details[2].text.strip
           data[:location] = details[3].text.strip
-          
+
           dates = details[4].text.split(' - ')
           data[:start_date] = dates[0]
           data[:end_date] = dates[1]
-          
+
           data[:type] = details[5].text
           data[:instructor] = details[6].text
 
@@ -126,12 +125,12 @@ module PatriotWeb
           i += 1 # try the next row if this one was not a title
         end
       end
-      
+
       result
     end
-    
+
     # a title looks this: Survey of Accounting - 71117 - ACCT 203 - 001
-    def is_title(text)
+    def title?(text)
       elements = text.split(' - ')
       elements.length == 4 && elements[2].split(' ').length == 2
     end
