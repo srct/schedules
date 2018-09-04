@@ -6,5 +6,6 @@ Rails.application.routes.draw do
     resources :schedules, only: [:index]
   end
 
-  get '/', to: redirect('/api')
+  apipie # sets up API docs
+  get '/', to: redirect('/api') # redirect the root url to API docs
 end

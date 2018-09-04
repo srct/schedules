@@ -65,11 +65,4 @@ gem 'rubyXL'
 # Linting
 gem "rubocop", "~> 0.58.2"
 
-# RSpec
-gem 'rspec-rails'
-
-# Generate API documentation
-gem 'rspec_api_documentation'
-
-# Pretty API docs
-gem "apitome"
+gem 'apipie-rails'

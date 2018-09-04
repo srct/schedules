@@ -11,4 +11,3 @@ ENV RAILS_ENV production
 RUN bundle install
 RUN rails db:migrate
 RUN rails db:seed
-RUN rails docs:generate

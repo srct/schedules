@@ -1,7 +1,13 @@
 # Contains all actions having to do with CourseSections.
 # This is a nested controller -- see +config/routes.rb+ for details
 class CourseSectionsController < ApplicationController
-  # Render JSON of all Sections belonging to a given Course.
+  resource_description do
+      short 'Working with course sections, e.g. CS 112 001'
+  end
+  
+  api :GET, '/courses_sections', 'Get a list of course sections'
+  param :course_id, Fixnum, desc: "Only get the course sections belonging to the course with this ID"
+  param :crn, String, desc: "Get the course section with this CRN"
   def index
     @sections = CourseSection.all
 
