@@ -65,4 +65,8 @@ gem 'rubyXL'
 # Linting
 gem "rubocop", "~> 0.58.2"
 
+# API documentation
 gem 'apipie-rails'
+
+# Markdown for API docs
+gem 'maruku'
