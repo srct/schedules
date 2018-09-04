@@ -24,7 +24,7 @@ const postJson = (endpoint: string, data: any): Promise<Response> =>
     });
 
 const local = 'localhost:3000/api';
-const remote = 'schedules.zacwood.me/api';
+const remote = `${window.location.hostname}/api`
 
 const apiUrl = process.env.NODE_ENV === 'development' ? `http://${local}` : `https://${remote}`;
 const webcalUrl = process.env.NODE_ENV === 'development' ? `webcal://${local}` : `webcal://${remote}`;
