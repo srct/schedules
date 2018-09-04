@@ -9,10 +9,8 @@ class IntegerValidator < Apipie::Validator::BaseValidator
     !!(value.to_s =~ /^[-+]?[0-9]+$/)
   end
 
-  def self.build(param_description, argument, options, block)
-    if argument == Integer
-      self.new(param_description, argument)
-    end
+  def self.build(param_description, argument, _options, _block)
+    new(param_description, argument) if argument == Integer
   end
 
   def description
