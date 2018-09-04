@@ -6,7 +6,7 @@ class CourseSectionsController < ApplicationController
   end
   
   api :GET, '/courses_sections', 'Get a list of course sections'
-  param :course_id, Fixnum, desc: "Only get the course sections belonging to the course with this ID"
+  param :course_id, Integer, desc: "Only get the course sections belonging to the course with this ID"
   param :crn, String, desc: "Get the course section with this CRN"
   def index
     @sections = CourseSection.all

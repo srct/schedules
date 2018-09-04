@@ -9,7 +9,7 @@ class SchedulesController < ApplicationController
   # Render an iCal file containing the schedules of all the
   # course sections with the given CRNs.
   api :GET, '/schedules', 'Generate an iCal file with events for the given CRNs'
-  param :crns, Array, of: String, desc: 'Array of CRNs to include as events in the calendar', required: true
+  param :crns, String, desc: 'Comma separated list of CRNs to include as events in the calendar', required: true
   def index
     crns = params["crns"].split ','
     @schedule = Schedule.new crns
