@@ -53,20 +53,18 @@ total.each do |subject, sections|
 
     section_name = "#{section[:subj]} #{section[:course_number]} #{section[:section]}"
 
-    all_sections.push({
-      name: section_name,
-      crn: section[:crn],
-      section_type: section[:type],
-      title: section[:title],
-      instructor: section[:instructor],
-      start_date: section[:start_date],
-      end_date: section[:end_date],
-      days: section[:days],
-      start_time: section[:start_time], 
-      end_time: section[:end_time],
-      location: section[:location],
-      course: course
-    })
+    all_sections.push(name: section_name,
+                      crn: section[:crn],
+                      section_type: section[:type],
+                      title: section[:title],
+                      instructor: section[:instructor],
+                      start_date: section[:start_date],
+                      end_date: section[:end_date],
+                      days: section[:days],
+                      start_time: section[:start_time],
+                      end_time: section[:end_time],
+                      location: section[:location],
+                      course: course)
 
     # Find or create a course and set its semester
     # TODO: this breaks when you try to do more than one semester,
