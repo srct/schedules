@@ -41,6 +41,8 @@ Semester.delete_all
 semester = Semester.create! season: 'Fall', year: 2018
 semester.save!
 
+all_sections = []
+
 total.each do |subject, sections|
   puts "Adding courses for #{subject}..."
   sections.each do |section|
@@ -48,6 +50,23 @@ total.each do |subject, sections|
       puts "#{subject} failed section: #{section.class}"
       next
     end
+
+    section_name = "#{section[:subj]} #{section[:course_number]} #{section[:section]}"
+
+    all_sections.push({
+      name: section_name,
+      crn: section[:crn],
+      section_type: section[:type],
+      title: section[:title],
+      instructor: section[:instructor],
+      start_date: section[:start_date],
+      end_date: section[:end_date],
+      days: section[:days],
+      start_time: section[:start_time], 
+      end_time: section[:end_time],
+      location: section[:location],
+      course: course
+    })
 
     # Find or create a course and set its semester
     # TODO: this breaks when you try to do more than one semester,
@@ -58,24 +77,11 @@ total.each do |subject, sections|
     course.semester = semester
     course.save!
 
-    section_name = "#{section[:subj]} #{section[:course_number]} #{section[:section]}"
-
     # puts "Adding #{section_name}..."
-
-    CourseSection.create!(name: section_name,
-                          crn: section[:crn],
-                          section_type: section[:type],
-                          title: section[:title],
-                          instructor: section[:instructor],
-                          start_date: section[:start_date],
-                          end_date: section[:end_date],
-                          days: section[:days],
-                          start_time: section[:start_time],
-                          end_time: section[:end_time],
-                          location: section[:location],
-                          course: course)
   end
 end
+
+CourseSection.create!(all_sections)
 
 # create closures for the days there will be no classes
 # see: https://registrar.gmu.edu/calendars/fall-2018/
