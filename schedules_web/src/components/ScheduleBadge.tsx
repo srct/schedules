@@ -6,8 +6,10 @@ import ExportModal from './ExportModal';
 
 interface ScheduleBadgeProps {
     schedule: CourseSection[];
-    generateCalendar: (schedule: CourseSection[]) => Promise<void>;
     removeCourseSection: (courseSection: CourseSection) => void;
+    generateCalendarUrl: () => string;
+    openCalendarAsWebcal: () => void;
+    downloadIcs: () => Promise<void>;
 }
 
 interface State {
@@ -28,7 +30,7 @@ class ScheduleBadge extends React.Component<ScheduleBadgeProps, State> {
     toggleModal = () => this.setState({ isModalOpen: !this.state.isModalOpen });
 
     render() {
-        const { schedule, removeCourseSection, generateCalendar } = this.props;
+        const { schedule, removeCourseSection, generateCalendarUrl, openCalendarAsWebcal, downloadIcs } = this.props;
         return (
             <div>
                 <Row className="justify-content-end">
@@ -73,7 +75,13 @@ class ScheduleBadge extends React.Component<ScheduleBadgeProps, State> {
                         </CardBody>
                     </Card>
                 </Collapse>
-                <ExportModal isModalOpen={this.state.isModalOpen} toggleModal={this.toggleModal} />
+                <ExportModal
+                    isModalOpen={this.state.isModalOpen}
+                    toggleModal={this.toggleModal}
+                    calendarUrl={generateCalendarUrl}
+                    openCalendarAsWebcal={openCalendarAsWebcal}
+                    downloadIcs={downloadIcs}
+                />
             </div>
         );
     }
