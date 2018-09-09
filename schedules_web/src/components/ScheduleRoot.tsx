@@ -10,6 +10,11 @@ interface ScheduleRootProps {
     downloadIcs: () => Promise<void>;
 }
 
+/**
+ * Weird component that renders the ScheduleBadge
+ *
+ * TODO: Remove this component? Or maybe refactor some of ScheduleBadge into this
+ */
 const ScheduleRoot = ({
     schedule,
     removeCourseSection,

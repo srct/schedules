@@ -19,6 +19,12 @@ interface State {
 
 require('../css/icon-badge.css');
 
+/**
+ * Contains all functionality for viewing your schedule, such as the
+ * shopping cart, list of course sections, and the generate calendar modal.
+ *
+ * TODO: Split this component up
+ */
 class ScheduleBadge extends React.Component<ScheduleBadgeProps, State> {
     constructor(props: ScheduleBadgeProps) {
         super(props);
