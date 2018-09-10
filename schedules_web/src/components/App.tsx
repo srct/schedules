@@ -6,6 +6,9 @@ import Header from './Header';
 
 require('../css/core.css');
 
+/**
+ * The root component for the app
+ */
 const App = () => (
     <div>
         <Container>

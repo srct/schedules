@@ -9,6 +9,10 @@ interface CourseSectionListProps {
     destructive?: boolean;
 }
 
+/**
+ * Renders a list of CourseSectionCards for every course section in
+ * the current schedule.
+ */
 const CourseSectionList = ({
     courseSections,
     courseSectionAction,

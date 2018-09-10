@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { Col, Row, UncontrolledTooltip } from 'reactstrap';
 
+/**
+ * Renders the app header with information and instructions for using Schedules.
+ */
 const Header = () => (
     <div>
         <Row className="justify-content-center my-5">

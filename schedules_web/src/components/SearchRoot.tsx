@@ -11,6 +11,10 @@ interface SearchRootProps {
     addCourseSection: (courseSectionToAdd: CourseSection) => void;
 }
 
+/**
+ * Renders the SearchBar and a list of CourseSections returned from the Search.
+ * Also renders an error if there is one.
+ */
 const SearchRoot = ({ search, searchCourseSections, addCourseSection }: SearchRootProps) => (
     <div>
         <SearchBar onSearch={searchCourseSections} />
@@ -26,6 +30,9 @@ const SearchRoot = ({ search, searchCourseSections, addCourseSection }: SearchRo
     </div>
 );
 
+/**
+ * Renders a basic error message.
+ */
 const Error = () => (
     <Row className="justify-content-center">
         <Col md="8">

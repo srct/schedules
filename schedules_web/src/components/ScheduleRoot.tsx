@@ -1,25 +1,34 @@
 import * as React from 'react';
 import CourseSection from '../util/CourseSection';
 import ScheduleBadge from './ScheduleBadge';
-import ApiService from '../util/ApiService';
-import { downloadFile } from '../util/utilities';
 
 interface ScheduleRootProps {
     schedule: CourseSection[];
     removeCourseSection: (courseSection: CourseSection) => any;
+    generateCalendarUrl: () => string;
+    openCalendarAsWebcal: () => void;
+    downloadIcs: () => Promise<void>;
 }
 
-const generateSchedule = async (schedule: CourseSection[]) => {
-    const crns = schedule.map(section => section.crn);
-    ApiService.subscribeToCalendar(crns);
-};
-
-const ScheduleRoot = ({ schedule, removeCourseSection }: ScheduleRootProps) => (
+/**
+ * Weird component that renders the ScheduleBadge
+ *
+ * TODO: Remove this component? Or maybe refactor some of ScheduleBadge into this
+ */
+const ScheduleRoot = ({
+    schedule,
+    removeCourseSection,
+    generateCalendarUrl,
+    openCalendarAsWebcal,
+    downloadIcs,
+}: ScheduleRootProps) => (
     <div>
         <ScheduleBadge
             schedule={schedule}
             removeCourseSection={removeCourseSection}
-            generateCalendar={generateSchedule}
+            generateCalendarUrl={generateCalendarUrl}
+            openCalendarAsWebcal={openCalendarAsWebcal}
+            downloadIcs={downloadIcs}
         />
         {/* <ScheduleList courses={schedule} selectCourseCallback={removeCourseSection} /> */}
         {/* <button onClick={generateSchedule}>Generate Schedule</button> */}

@@ -2,30 +2,41 @@ import * as React from 'react';
 import { Button, Card, CardBody, CardTitle, Collapse, Row } from 'reactstrap';
 import CourseSection from '../util/CourseSection';
 import CourseSectionList from './CourseSectionList';
+import ExportModal from './ExportModal';
 
 interface ScheduleBadgeProps {
     schedule: CourseSection[];
-    generateCalendar: (schedule: CourseSection[]) => Promise<void>;
     removeCourseSection: (courseSection: CourseSection) => void;
+    generateCalendarUrl: () => string;
+    openCalendarAsWebcal: () => void;
+    downloadIcs: () => Promise<void>;
 }
 
 interface State {
     collapse: boolean;
+    isModalOpen: boolean;
 }
 
 require('../css/icon-badge.css');
 
+/**
+ * Contains all functionality for viewing your schedule, such as the
+ * shopping cart, list of course sections, and the generate calendar modal.
+ *
+ * TODO: Split this component up
+ */
 class ScheduleBadge extends React.Component<ScheduleBadgeProps, State> {
     constructor(props: ScheduleBadgeProps) {
         super(props);
 
-        this.state = { collapse: false };
+        this.state = { collapse: false, isModalOpen: false };
     }
 
-    toggle = () => this.setState({ collapse: !this.state.collapse });
+    toggleCollapse = () => this.setState({ collapse: !this.state.collapse });
+    toggleModal = () => this.setState({ isModalOpen: !this.state.isModalOpen });
 
     render() {
-        const { schedule, removeCourseSection, generateCalendar } = this.props;
+        const { schedule, removeCourseSection, generateCalendarUrl, openCalendarAsWebcal, downloadIcs } = this.props;
         return (
             <div>
                 <Row className="justify-content-end">
@@ -35,7 +46,7 @@ class ScheduleBadge extends React.Component<ScheduleBadgeProps, State> {
                                 <i className="fa fas fa-shopping-bag fa-stack-1x" />
                             </span>
                         }
-                        onClick={this.toggle}
+                        onClick={this.toggleCollapse}
                         id="cart"
                     />
                 </Row>
@@ -46,7 +57,7 @@ class ScheduleBadge extends React.Component<ScheduleBadgeProps, State> {
                             <Row className="my-3">
                                 <h1 className="px-5">Your Schedule</h1>
 
-                                <Button className="ml-auto px-5" outline color="danger" onClick={this.toggle}>
+                                <Button className="ml-auto px-5" outline color="danger" onClick={this.toggleCollapse}>
                                     Close
                                 </Button>
                             </Row>
@@ -62,7 +73,7 @@ class ScheduleBadge extends React.Component<ScheduleBadgeProps, State> {
                                     size="sm"
                                     outline
                                     color="primary"
-                                    onClick={() => generateCalendar(schedule)}
+                                    onClick={this.toggleModal}
                                     disabled={schedule.length === 0}>
                                     Generate
                                 </Button>
@@ -70,6 +81,13 @@ class ScheduleBadge extends React.Component<ScheduleBadgeProps, State> {
                         </CardBody>
                     </Card>
                 </Collapse>
+                <ExportModal
+                    isModalOpen={this.state.isModalOpen}
+                    toggleModal={this.toggleModal}
+                    calendarUrl={generateCalendarUrl}
+                    openCalendarAsWebcal={openCalendarAsWebcal}
+                    downloadIcs={downloadIcs}
+                />
             </div>
         );
     }

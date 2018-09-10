@@ -11,6 +11,10 @@ interface CourseSectionCardProps {
 
 require('../css/button-text-override.css');
 
+/**
+ * Renders information about a single course section, and includes a
+ * button for adding/removing it from the current schedule.
+ */
 const CourseSectionCard = ({
     courseSection,
     courseSectionAction,
