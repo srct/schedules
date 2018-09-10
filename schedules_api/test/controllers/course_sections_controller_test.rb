@@ -18,4 +18,12 @@ class CourseSectionsControllerTest < ActionDispatch::IntegrationTest
     sections_returned = JSON.parse @response.body
     assert_equal course_sections(:cs112001).name, sections_returned[0]["name"]
   end
+
+  test 'should filter by professor' do
+    get course_sections_url instructor: "king"
+    assert_response :success
+
+    sections_returned = JSON.parse @response.body
+    assert_equal course_sections(:cs112001).id, sections_returned[0]["id"]
+  end
 end

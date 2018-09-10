@@ -25,7 +25,7 @@ parser.parse_subjects(semester).each do |subject|
 end
 
 # For testing, only get first subject
-# subject = parser.parse_subjects(semester)[20]
+# subject = parser.parse_subjects(semester)[0]
 # total[subject] = parser.parse_courses_in_subject(subject)
 
 # wait for all the threads to finish
@@ -58,6 +58,8 @@ total.each do |subject, sections|
     course.semester = semester
     course.save!
 
+    instructor = Instructor.find_or_create_by!(name: section[:instructor])
+
     section_name = "#{section[:subj]} #{section[:course_number]} #{section[:section]}"
 
     # puts "Adding #{section_name}..."
@@ -66,14 +68,14 @@ total.each do |subject, sections|
                           crn: section[:crn],
                           section_type: section[:type],
                           title: section[:title],
-                          instructor: section[:instructor],
                           start_date: section[:start_date],
                           end_date: section[:end_date],
                           days: section[:days],
                           start_time: section[:start_time],
                           end_time: section[:end_time],
                           location: section[:location],
-                          course: course)
+                          course: course,
+                          instructor: instructor)
   end
 end
 

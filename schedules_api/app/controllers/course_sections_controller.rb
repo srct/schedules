@@ -8,8 +8,9 @@ class CourseSectionsController < ApplicationController
   api :GET, '/courses_sections', 'Get a list of course sections'
   param :course_id, Integer, desc: "Only get the course sections belonging to the course with this ID"
   param :crn, String, desc: "Get the course section with this CRN"
+  param :instructor, String, desc: "Get course sections being taught by this instructor"
   def index
-    @sections = CourseSection.all
+    @sections = CourseSection.with_instructor(name: params[:instructor])
 
     @sections = @sections.where(course_id: params[:course_id]) if params.key?(:course_id)
     @sections = @sections.where(crn: params[:crn]) if params.key?(:crn)
