@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180619011649) do
+ActiveRecord::Schema.define(version: 20180910210737) do
 
   create_table "closures", force: :cascade do |t|
     t.date "date"
@@ -25,7 +25,6 @@ ActiveRecord::Schema.define(version: 20180619011649) do
     t.string "crn"
     t.string "section_type"
     t.string "title"
-    t.string "instructor"
     t.date "start_date"
     t.date "end_date"
     t.string "days"
@@ -39,7 +38,9 @@ ActiveRecord::Schema.define(version: 20180619011649) do
     t.integer "course_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "instructor_id"
     t.index ["course_id"], name: "index_course_sections_on_course_id"
+    t.index ["instructor_id"], name: "index_course_sections_on_instructor_id"
   end
 
   create_table "courses", force: :cascade do |t|
@@ -49,6 +50,12 @@ ActiveRecord::Schema.define(version: 20180619011649) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["semester_id"], name: "index_courses_on_semester_id"
+  end
+
+  create_table "instructors", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "semesters", force: :cascade do |t|
