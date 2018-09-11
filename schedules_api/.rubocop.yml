@@ -11,3 +11,5 @@ Style/FrozenStringLiteralComment:
 Style/SymbolArray:
   EnforcedStyle: brackets # [:symbol1, :symbol2]
 
+Metrics/BlockLength:
+  Enabled: false
