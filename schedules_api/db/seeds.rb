@@ -46,7 +46,7 @@ semester.save!
 # course. If it is, grab the pre-existing database entry.
 def get_course(course, all_courses)
   all_courses.each do |c|
-    if c[:section] == course[:section]
+    if c[:course_number] == course[:course_number]
       return c[:db_object]
     end
   end
