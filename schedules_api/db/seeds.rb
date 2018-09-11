@@ -7,7 +7,7 @@ require 'httparty'
 require 'nokogiri'
 require 'json'
 
-# threads = []
+threads = []
 total = {}
 parser = PatriotWeb::Parser.new
 
@@ -19,9 +19,9 @@ puts "DDOSing Patriot Web, buckle up kids"
 # parse all subjects and their courses in the semester
 parser.parse_subjects(semester).each do |subject|
   puts "Getting courses for #{subject}"
-  # threads << Thread.new {
-  total[subject] = parser.parse_courses_in_subject(subject)
-  # }
+  threads << Thread.new {
+    total[subject] = parser.parse_courses_in_subject(subject)
+  }
 end
 
 # For testing, only get first subject
@@ -29,7 +29,7 @@ end
 # total[subject] = parser.parse_courses_in_subject(subject)
 
 # wait for all the threads to finish
-# ThreadsWait.all_waits(*threads)
+ThreadsWait.all_waits(*threads)
 
 # delete everything in the current database
 Closure.delete_all
