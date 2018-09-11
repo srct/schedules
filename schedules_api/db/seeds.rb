@@ -41,15 +41,35 @@ Semester.delete_all
 semester = Semester.create! season: 'Fall', year: 2018
 semester.save!
 
-all_sections = []
+# Taking a course and a list of courses, checks if the course is already in that
+# list. If it isn't, create an active record and store it in the list for that
+# course. If it is, grab the pre-existing database entry.
+def get_course(course, all_courses)
+  all_courses.each do |c|
+    if c[:section] == course[:section]
+      return c[:db_object]
+    end
+  end
+
+  course[:db_object] = Course.create!(course)
+  all_courses.push(course)
+  course[:db_object]
+end
 
 total.each do |subject, sections|
   puts "Adding courses for #{subject}..."
+  all_sections = []
+  all_courses = []
+
   sections.each do |section|
     if section.nil? || !section.key?(:subj) || !section.key?(:course_number)
       puts "#{subject} failed section: #{section.class}"
       next
     end
+
+    course = get_course({ subject: section[:subj],
+                          course_number: section[:course_number],
+                          semester: semester }, all_courses)
 
     section_name = "#{section[:subj]} #{section[:course_number]} #{section[:section]}"
 
@@ -65,21 +85,10 @@ total.each do |subject, sections|
                       end_time: section[:end_time],
                       location: section[:location],
                       course: course)
-
-    # Find or create a course and set its semester
-    # TODO: this breaks when you try to do more than one semester,
-    # since just the subject + course_number do not uniquely identify a course
-    # Check the semester as well
-    course = Course.find_or_create_by(subject: section[:subj],
-                                      course_number: section[:course_number])
-    course.semester = semester
-    course.save!
-
-    # puts "Adding #{section_name}..."
   end
-end
 
-CourseSection.create!(all_sections)
+  CourseSection.create!(all_sections)
+end
 
 # create closures for the days there will be no classes
 # see: https://registrar.gmu.edu/calendars/fall-2018/
