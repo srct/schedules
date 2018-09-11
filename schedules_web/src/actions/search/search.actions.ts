@@ -17,7 +17,7 @@ export const searchCourseSections = (crn: string) => async (dispatch: any) => {
             name: object.name,
             title: object.title,
             crn: object.crn,
-            instructor: object.instructor,
+            instructor: object.instructor_name,
             location: object.location,
             days: object.days,
             startTime: object.start_time,
