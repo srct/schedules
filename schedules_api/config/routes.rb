@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   scope :api do # Register /api routes
     resources :courses, only: [:index, :show]
     resources :course_sections, only: [:index]
+    resources :course_listing, only: [:index]
     resources :schedules, only: [:index]
   end
 
