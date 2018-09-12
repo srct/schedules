@@ -117,7 +117,9 @@ module PatriotWeb
           data[:end_date] = dates[1]
 
           data[:type] = details[5].text
-          data[:instructor] = details[6].text
+          
+          # Get rid of extra spaces and parentheses at the end of prof. names
+          data[:instructor] = details[6].text.gsub(/ *\(.*\).*/, "").gsub(/ +/, " ")
 
           result << data
           i += 5 # skip to what we think is the next title
