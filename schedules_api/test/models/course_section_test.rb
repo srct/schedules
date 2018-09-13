@@ -13,6 +13,12 @@ class CourseSectionTest < ActiveSupport::TestCase
     CourseSection.create! name: 'Test section',
                           crn: '12345',
                           title: 'Test title',
-                          course_id: courses(:cs211).id
+                          course_id: courses(:cs211).id,
+                          instructor_id: instructors(:luke).id
+  end
+
+  test '#with_instructor filters correctly' do
+    section = CourseSection.with_instructor.first
+    assert section.instructor_name != ""
   end
 end
