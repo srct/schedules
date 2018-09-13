@@ -1,7 +1,7 @@
 # Registers all routes for the app.
 Rails.application.routes.draw do
   scope :api do # Register /api routes
-    resources :courses, only: [:index, :show]
+    resources :courses, only: [:index, :show, :listing]
     resources :course_sections, only: [:index]
     resources :course_listing, only: [:index]
     resources :schedules, only: [:index]
