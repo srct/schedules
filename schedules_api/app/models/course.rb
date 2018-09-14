@@ -41,7 +41,7 @@ class Course < ApplicationRecord
   # be used to run a query with fetch()
   def self.parse_generic_query(query)
     # In the future when there is more info, this will be more complex to
-    # include class names
+    # include class names/descriptions
     filters = {}
     q = query.gsub(" ", "")
     /[a-zA-Z]+/.match(q) { |a| filters["subject"] = a.to_s }
