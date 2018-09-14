@@ -17,17 +17,35 @@ class Course < ApplicationRecord
     CourseSection.where course_id: id
   end
   
-  def fetch(filters)
+  # Given a list of filters, collect a list of matching elements. This makes it
+  # so you can just pass the arguments straight thru
+  def self.fetch(filters)
     query = Course.select("*")
+    filter_list = Course.parse_generic_query(filters["query"]) if filters.include? "query" else filters
     
-    filters.each do |filter, value|
+    filter_list.each do |filter, value|
       if Course.column_names.include? filter
         case filter
-        when :subject
-          query.where("subject = ?", value)
-        when :course_number
-          query.where("course_number = ?", value)
-
-  end
+        when "subject"
+          query = query.where("subject = ?", value.upcase)
+        when "course_number"
+          query = query.where("course_number = ?", value)
+        end
+      end
+    end
     
+    return query.all
+  end
+  
+  # Splits a generic string (i.e. "CS 211") into a series of components that can
+  # be used to run a query with fetch()
+  def self.parse_generic_query(query)
+    # In the future when there is more info, this will be more complex to
+    # include class names
+    filters = {}
+    q = query.gsub(" ", "")
+    /[a-zA-Z]+/.match(q) { |a| filters["subject"] = a.to_s }
+    /\d+/.match(q) { |a| filters["course_number"] = a.to_s }
+    return filters
+  end
 end

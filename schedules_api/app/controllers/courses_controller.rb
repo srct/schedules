@@ -7,13 +7,9 @@ class CoursesController < ApplicationController
   api :GET, '/courses', "Get a list of courses."
   param :subject, String, desc: 'Course subject, e.g. "CS" or "ACCT"'
   param :course_number, Integer, desc: 'Course number, e.g. "112"'
+  param :query, String, desc: 'A generic query ex. "CS 110"'
   def index
-    @courses = Course.all
-
-    # filter by subject + course number if the params are included
-    @courses = @courses.where(subject: params[:subject].upcase) if params.key?(:subject)
-    @courses = @courses.where(course_number: params[:course_number]) if params.key?(:course_number)
-
+    @courses = Course.fetch(params)
     render json: @courses
   end
 
