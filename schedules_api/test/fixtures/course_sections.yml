@@ -4,7 +4,6 @@ cs112001:
   name: CS 112 001
   crn: 70192
   title: Introduction to Computing
-  instructor: Kinga
   start_date: 2018-05-21
   end_date: 2018-06-04
   days: MWF
@@ -12,12 +11,12 @@ cs112001:
   end_time: 1:00 pm
   location: Innovation Hall 204
   course: cs112
+  instructor: kinga
 
 cs112002:
   name: CS 112 002
   crn: 70193
   title: Introduction to Computing
-  instructor: Luke
   start_date: 2018-05-21
   end_date: 2018-06-04
   location: Merten Hall 102
@@ -25,12 +24,12 @@ cs112002:
   start_time: 11:00 am
   end_time: 2:00 pm
   course: cs112
+  instructor: luke
 
 cs211001:
   name: CS 211 001
   crn: 70194
   title: Object Oriented Programming
-  instructor: Otten
   start_date: 2018-05-21
   end_date: 2018-06-04
   days: TR
@@ -38,3 +37,4 @@ cs211001:
   end_time: 3:00 pm
   location: ENGR 200
   course: cs211
+  instructor: otten
