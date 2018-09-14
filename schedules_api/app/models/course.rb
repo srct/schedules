@@ -16,4 +16,18 @@ class Course < ApplicationRecord
   def course_sections
     CourseSection.where course_id: id
   end
+  
+  def fetch(filters)
+    query = Course.select("*")
+    
+    filters.each do |filter, value|
+      if Course.column_names.include? filter
+        case filter
+        when :subject
+          query.where("subject = ?", value)
+        when :course_number
+          query.where("course_number = ?", value)
+
+  end
+    
 end
