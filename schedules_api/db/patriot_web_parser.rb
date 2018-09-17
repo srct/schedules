@@ -76,6 +76,7 @@ module PatriotWeb
       data_from rows
     end
 
+    # Extract data about all course sections from the rows
     def data_from(rows)
       i = 0
       result = []
@@ -95,7 +96,7 @@ module PatriotWeb
 
           details = rows[i + 2].css('td table tr td')
           unless !details.empty?
-            puts "#{full_name.join(' ')} is fake news"
+            # puts "#{full_name.join(' ')} is fake news"
             i += 1
             next
           end
