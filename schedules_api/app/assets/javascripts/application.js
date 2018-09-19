@@ -13,3 +13,11 @@
 //= require rails-ujs
 //= require turbolinks
 //= require_tree .
+// require jquery3
+// require popper
+// require bootstrap-sprockets
+
+const elementFromString = string => {
+    const html = new DOMParser().parseFromString(string, 'text/html');
+    return html.body.firstChild;
+};

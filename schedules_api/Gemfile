@@ -70,3 +70,7 @@ gem 'apipie-rails'
 
 # Markdown for API docs
 gem 'maruku'
+
+# gem 'jquery-rails'
+
+# gem 'font-awesome-sass', '~> 5.3.1'
