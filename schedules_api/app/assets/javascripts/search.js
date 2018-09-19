@@ -15,6 +15,7 @@ class Schedule {
         this._ids = ids;
 
         document.getElementById('course-counter').innerText = ids.length;
+        fetch('/search/update?ids=' + ids.join(','));
     }
 
     toggle() {
@@ -37,8 +38,6 @@ class Schedule {
 
         this.ids = [...this.ids, section.id];
 
-        fetch('/search/add/' + section.id);
-
         const courses = document.getElementById('cart-list');
         const newCourseCard = this._constructSectionCard(section);
         courses.appendChild(newCourseCard);
@@ -51,13 +50,11 @@ class Schedule {
         cart.removeChild(children[withId]);
 
         this.ids = this.ids.filter(_id => _id != Number(id));
-
-        fetch('/search/remove/' + id);
     }
 
     _constructSectionCard(section) {
         const str = `
-	      <li id="${section.id}" class="list-group-item" onclick="removeFromSchedule(this)">
+	      <li id="${section.id}" class="list-group-item schedule-section-card" onclick="removeFromSchedule(this)">
 	        <span style="float:left"><b class="subj">${section.name}</b>: ${section.title}</span>
 	        <span style="float:right"><i class="fas fa-map-marker-alt"></i> ${section.location} </span>
 	        <div style="clear: both"></div>
@@ -71,27 +68,23 @@ class Schedule {
 }
 
 class Search {
-    constructor() {
-        const searchItems = Array.from(document.getElementById('search-list').children);
-        this.courses = searchItems.map(s => JSON.parse(s.dataset.course));
-        console.log(this.courses);
-    }
-
-    courseWithId(id) {
-        return this.courses.filter(c => c.id == id)[0];
+    sectionWithId(sectionId) {
+        return document.getElementById('search-list').querySelector(`#section-${Number(sectionId)}`);
     }
 }
 
 const toggleSchedule = () => this.schedule.toggle();
 
 const addToSchedule = (event, section) => {
-    console.log(section.dataset.section);
+    section.classList.add('selected');
+
     this.schedule.addToSchedule(JSON.parse(section.dataset.section));
 
     event.stopPropagation();
 };
 
 const removeFromSchedule = section => {
+    this.search.sectionWithId(section.id).classList.remove('selected');
     this.schedule.removeFromSchedule(section.id);
 };
 

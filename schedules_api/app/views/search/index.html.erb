@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row align-left align-sm-center align-md-right" id="navbar">
 	<div class="col-8 col-sm align-center">
-	    <a href="" id="logo">
+	    <a href="/search" id="logo">
 		<i class="fas fa-calendar-alt"></i>
 		Schedules
 	    </a>
@@ -40,7 +40,7 @@
 	<!-- List of Courses -->
 	<div class="col-lg-7 col-md-10 mx-auto order-2 order-lg-0" id="search-list">
 	    <% @courses.each do |course| %>
-		<div class="card" id="<%= course.id %>" onclick="toggleSections(this)" data-course="<%= course.to_json %>">
+		<div class="card" id="course-<%= course.id %>" onclick="toggleSections(this)" data-course="<%= course.to_json %>">
 		    <div class="card-body">
 			<div>
 			    <h3 style="float: left"><%= "#{course.subject} #{course.course_number}" %></h3>
@@ -58,7 +58,11 @@
 			<!-- List of Course Sections -->
 			<ul class="list-group list-group-flush" id="sections" style="display:none">
 			    <% course.course_sections.each do |section| %>
-				<li id="<%= section.id %>" class="list-group-item section-item" data-section="<%= section.to_json %>" onclick="addToSchedule(event, this)">
+				<li id="section-<%= section.id %>"
+				    class="list-group-item section-item <%= "selected" if @cart.include? section %>"
+				    data-section="<%= section.to_json %>"
+				    onclick="addToSchedule(event, this)"
+				>
 				    <span style="float:left"><b class="subj"><%= "#{section.name}" %></b>:  <%= section.title %></span>
 				    <span style="float:right"><i class="fas fa-map-marker-alt"></i> <%= section.location %></span>
 				    <div style="clear: both"></div>
@@ -80,7 +84,7 @@
 		</div>
 		<ul class="list-group list-group-flush" id="cart-list">
 		    <% @cart.each do |section| %>
-			<li id="<%= section.id %>" class="list-group-item" data-section="<%= section.to_json %>" onclick="removeFromSchedule(this)">
+			<li id="<%= section.id %>" class="list-group-item schedule-section-card" data-section="<%= section.to_json %>" onclick="removeFromSchedule(this)">
 			    <span style="float:left"><b class="subj"><%= "#{section.name}" %></b>:  <%= section.title %></span>
 			    <span style="float:right"><i class="fas fa-map-marker-alt"></i> <%= section.location %></span>
 			    <div style="clear: both"></div>

@@ -1,25 +1,32 @@
 class SearchController < ApplicationController
   def index
-    @courses = Course.where(subject: 'HNRS')
+    @courses = Course.where(subject: 'GEOL').select do |course|
+      course.course_sections.count > 0
+    end
     
     @cart = cookies[:ids].split(',').map do |id|
       CourseSection.find_by_id id
     end
   end
 
-  def add
-    ids = cookies[:ids].split(',').to_set
-    ids.add(params[:id])
-    
-    cookies[:ids] = ids.to_a.join(',')
+  def update
+    puts params[:ids]
+    cookies[:ids] = params[:ids]
   end
-
-  def remove
-    ids = cookies[:ids].split(',').to_set
-    ids.delete(params[:id])
-
-    puts ids
+  
+  # def add
+  #   ids = cookies[:ids].split(',').to_set
+  #   ids.add(params[:id])
     
-    cookies[:ids] = ids.to_a.join(',')
-  end
+  #   cookies[:ids] = ids.to_a.join(',')
+  # end
+
+  # def remove
+  #   ids = cookies[:ids].split(',').to_set
+  #   ids.delete(params[:id])
+
+  #   puts ids
+    
+  #   cookies[:ids] = ids.to_a.join(',')
+  # end
 end

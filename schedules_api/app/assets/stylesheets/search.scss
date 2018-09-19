@@ -27,6 +27,20 @@ body {
     box-shadow: 0 0 20px rgba(0,0,0,0.4);
 }
 
+.list-group-item:hover {
+    transition: 0.15s;
+    background-color: lightgray;
+}
+
+.list-group-item.selected {
+    background-color: lightgreen;
+}
+
+.schedule-section-card:hover {
+    transition: 0.15s;
+    background-color: red;
+}
+
 .align-vertical {
     display: flex;
     align-items: center;
