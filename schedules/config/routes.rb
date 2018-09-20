@@ -10,6 +10,6 @@ Rails.application.routes.draw do
   end
 
   apipie # sets up API docs
-  
+
   root to: 'home#index'
 end
