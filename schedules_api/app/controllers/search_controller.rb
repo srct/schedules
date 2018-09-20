@@ -4,8 +4,8 @@ class SearchController < ApplicationController
       course.course_sections.count > 0
     end
     
-    @cart = cookies[:ids].split(',').map do |id|
-      CourseSection.find_by_id id
+    @cart = cookies[:ids].split(',').map do |crn|
+      CourseSection.find_by_crn crn
     end
   end
 
@@ -13,20 +13,4 @@ class SearchController < ApplicationController
     puts params[:ids]
     cookies[:ids] = params[:ids]
   end
-  
-  # def add
-  #   ids = cookies[:ids].split(',').to_set
-  #   ids.add(params[:id])
-    
-  #   cookies[:ids] = ids.to_a.join(',')
-  # end
-
-  # def remove
-  #   ids = cookies[:ids].split(',').to_set
-  #   ids.delete(params[:id])
-
-  #   puts ids
-    
-  #   cookies[:ids] = ids.to_a.join(',')
-  # end
 end
