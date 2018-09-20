@@ -4,7 +4,7 @@
 class Schedule {
     constructor() {
         this.isOpen = false;
-        this._ids = Array.from(document.getElementById('cart-list').children).map(e => Number(e.id.split('-')[1]));
+        this._ids = Array.from(document.getElementById('schedule').children).map(e => Number(e.id.split('-')[1]));
     }
 
     get ids() {
@@ -19,7 +19,7 @@ class Schedule {
     }
 
     toggle() {
-        const list = document.getElementById('schedule-list');
+        const list = document.getElementById('cart');
         const icon = document.getElementById('schedule-icon');
 
         if (this.isOpen) {
@@ -38,18 +38,16 @@ class Schedule {
 
         this.ids = [...this.ids, section.dataset.crn];
 
-        const courses = document.getElementById('cart-list');
-        // const newCourseCard = this._constructSectionCard(section);
-        // courses.appendChild(newCourseCard);
         section.classList.remove('section-item');
         section.classList.remove('selected');
         section.classList.add('schedule-section-card');
         section.onclick = () => removeFromSchedule(section);
-        courses.appendChild(section);
+
+        document.getElementById('schedule').appendChild(section);
     }
 
     removeFromSchedule(id) {
-        const cart = document.getElementById('cart-list');
+        const cart = document.getElementById('schedule');
         const section = cart.querySelector(`#section-${id}`);
         cart.removeChild(section);
 

@@ -1,6 +1,6 @@
 class SearchController < ApplicationController
   def index
-    @courses = Course.where(subject: 'GEOL').select do |course|
+    @courses = Course.where(subject: params[:q]).select do |course|
       course.course_sections.count.positive?
     end
 
