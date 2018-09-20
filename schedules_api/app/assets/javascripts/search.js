@@ -34,13 +34,18 @@ class Schedule {
     }
 
     addToSchedule(section) {
-        if (this.ids.includes(section.crn)) return;
+        if (this.ids.includes(section.dataset.crn)) return;
 
-        this.ids = [...this.ids, section.crn];
+        this.ids = [...this.ids, section.dataset.crn];
 
         const courses = document.getElementById('cart-list');
-        const newCourseCard = this._constructSectionCard(section);
-        courses.appendChild(newCourseCard);
+        // const newCourseCard = this._constructSectionCard(section);
+        // courses.appendChild(newCourseCard);
+        section.classList.remove('section-item');
+        section.classList.remove('selected');
+        section.classList.add('schedule-section-card');
+        section.onclick = () => removeFromSchedule(section);
+        courses.appendChild(section);
     }
 
     removeFromSchedule(id) {
@@ -77,7 +82,8 @@ const toggleSchedule = () => this.schedule.toggle();
 const addToSchedule = (event, section) => {
     section.classList.add('selected');
 
-    this.schedule.addToSchedule(JSON.parse(section.dataset.section));
+    // this.schedule.addToSchedule(JSON.parse(section.dataset.section));
+    this.schedule.addToSchedule(section.cloneNode(true));
 
     event.stopPropagation();
 };

@@ -1,102 +1,21 @@
-<div class="container-fluid">
-    <div class="row align-left align-sm-center align-md-right" id="navbar">
-	<div class="col-8 col-sm align-center">
-	    <a href="/search" id="logo">
-		<i class="fas fa-calendar-alt"></i>
-		Schedules
-	    </a>
-	</div>
+<%= render partial: 'navbar' %>
 
-	<div class="col-4 col-sm align-center order-0 order-sm-1" onclick="toggleSchedule()">
-	    <h1 style="margin-top:24px">
-	    <!-- <h2><i class="fas fa-shopping-cart" id="schedule-icon"></i></h2> -->
-		<span class="fa-layers fa-fw" id="schedule-icon">
-		    <i class="fas fa-shopping-cart"></i>
-		    <span class="fa-layers fa-fw">
-			<i class="fas fa-circle" data-fa-transform="shrink-3 up-12 right-12" style="color:gray"></i>
-			<span id="course-counter" class="fa-layers-text fa-inverse" data-fa-transform="shrink-10 up-12 right-12" style="font-weight:600">
-			    <%= @cart.length %>
-			</span>
-		    </span>
-		</span>
-	    </h1>
+<div class="container-fluid">
+    <!-- The main screen consists of a row with two columns: the search results, and the cart -->
+    <div class="row">
+	<!-- Search result, List of Courses -->
+	<div class="col-lg-7 col-md-10 mx-auto order-2 order-lg-0" id="search-list">
+	    <%= render partial: 'course', collection: @courses %>
 	</div>
 	
-	<div class="col-12 col-sm align-center order-1 order-sm-0">
-	    <div class="input-group">
-		<input type="text" class="form-control" placeholder="Search by CRN, course, professor..." aria-describedby="basic-addon2">
-		<div class="input-group-append">
-		    <button class="btn btn-secondary" type="button">
-			<i class="fas fa-search"></i>
-		    </button>
-		</div>
-	    </div>
-	</div>
-    </div>
-</div>
-
-<div class="container-fluid">
-    <div class="row">
-	<!-- List of Courses -->
-	<div class="col-lg-7 col-md-10 mx-auto order-2 order-lg-0" id="search-list">
-	    <% @courses.each do |course| %>
-		<div class="card" id="course-<%= course.id %>" onclick="toggleSections(this)" data-course="<%= course.to_json %>">
-		    <div class="card-body">
-			<div>
-			    <h3 style="float: left"><%= "#{course.subject} #{course.course_number}" %></h3>
-			    <h5 style="float: right"><em><%= course.title %></em>. <%= course.credits %> credits.</h5>
-			</div>
-
-			<div style="clear: both"> </div>
-
-			<p class="description"><%= course.description %></p>
-
-			<div class="d-block" style="text-align: center">
-			    <i class="fas fa-chevron-down"></i>
-			</div>
-
-			<!-- List of Course Sections -->
-			<ul class="list-group list-group-flush" id="sections" style="display:none">
-			    <% course.course_sections.each do |section| %>
-				<li id="section-<%= section.crn %>"
-				    class="list-group-item section-item <%= "selected" if @cart.include? section %>"
-				    data-section="<%= section.to_json %>"
-				    data-name="<%= section.name %>"
-				    data-title="<%= section.title %>"
-				    data-instructor="<%= section.instructor.name %>"
-				    data-time="<%= "#{section.days}, #{section.start_time}-#{section.end_time}" %>"
-				    onclick="addToSchedule(event, this)"
-				>
-				    <span style="float:left"><b class="subj"><%= "#{section.name}" %></b>:  <%= section.title %></span>
-				    <span style="float:right"><i class="fas fa-map-marker-alt"></i> <%= section.location %></span>
-				    <div style="clear: both"></div>
-				    <span style="float:left"><i class="fas fa-chalkboard-teacher"></i> <%= section.instructor.name %></span>
-				    <span style="float:right"><i class="fas fa-clock"></i> <%= "#{section.days}, #{section.start_time}-#{section.end_time}" %></span>
-				    <div style="clear: both"></div>
-				</li>
-			    <% end %>
-			</ul>
-		    </div>
-		</div>
-	    <% end %>
-	</div>
+	<!-- List of sections in the cart -->
 	<div class="col order-1 order-lg-1" id="schedule-list">
 	    <div class="card">
 		<div class="card-body">
 		    <h3 class="card-title">Your Schedule</h3>
-		    <div style="clear: both"> </div>
 		</div>
 		<ul class="list-group list-group-flush" id="cart-list">
-		    <% @cart.each do |section| %>
-			<li id="section-<%= section.crn %>" class="list-group-item schedule-section-card" data-section="<%= section.to_json %>" onclick="removeFromSchedule(this)">
-			    <span style="float:left"><b class="subj"><%= "#{section.name}" %></b>:  <%= section.title %></span>
-			    <span style="float:right"><i class="fas fa-map-marker-alt"></i> <%= section.location %></span>
-			    <div style="clear: both"></div>
-			    <span style="float:left"><i class="fas fa-chalkboard-teacher"></i> <%= section.instructor.name %></span>
-			    <span style="float:right"><i class="fas fa-clock"></i> <%= "#{section.days}, #{section.start_time}-#{section.end_time}" %></span>
-			    <div style="clear: both"></div>
-			</li>
-		    <% end %>		
+		    <%= render partial: 'section', collection: @cart, locals: { in_cart: true } %>
 		</ul>
 		<div class="card-body">
 		    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" onclick="setUrlInModal()">
