@@ -10,5 +10,6 @@ Rails.application.routes.draw do
   end
 
   apipie # sets up API docs
-  get '/', to: redirect('/api') # redirect the root url to API docs
+  
+  root to: 'home#index'
 end
