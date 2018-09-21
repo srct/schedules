@@ -15,7 +15,7 @@ class CoursesController < ApplicationController
   api :GET, '/courses/:id', "Get a list of all course sections for the course with the given id."
   param :id, :number, desc: 'Course ID', required: true
   def show
-    @sections = CourseSection.fetch(params).all
+    @sections = CourseSection.where(course_id: params[:id]).all
 
     render json: @sections
   end

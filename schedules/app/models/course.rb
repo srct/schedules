@@ -16,21 +16,21 @@ class Course < ApplicationRecord
   def course_sections
     CourseSection.where course_id: id
   end
-  
+
   def self.from_subject(base_query, subject)
     base_query.where("courses.subject = ?", subject.upcase)
   end
-  
+
   def self.from_course_number(base_query, course_number)
-    query = base_query.where("courses.course_number = ?", course_number)
+    base_query.where("courses.course_number = ?", course_number)
   end
-  
+
   def self.from_title(base_query, title)
     # Temporary really disgusting regex that I hate with all my heart
-    title = (title + " ").gsub(" 1", " I").gsub(" 2", " II").gsub(" 3", " III").upcase.gsub(/(I+) +/, '\1$').gsub(/ +/, "% ").gsub('$', ' ')
+    title = (title + " ").gsub(" 1", " I").gsub(" 2", " II").gsub(" 3", " III").upcase.gsub(/(I+) +/, '\1$').gsub(/ +/, "% ").tr('$', ' ')
     base_query.where("UPPER(courses.title) LIKE UPPER(?) or UPPER(courses.title) LIKE UPPER(?)", "%#{title.strip}", "%#{title}%")
   end
-  
+
   # Given a list of filters, collect a list of matching elements. This makes it
   # so you can just pass the arguments straight thru
   def self.fetch(filters)
@@ -50,19 +50,19 @@ class Course < ApplicationRecord
         query = from_title(query, value)
       end
     end
-    
+
     query
   end
-  
+
   # Splits a generic string (i.e. "CS 211") into a series of components that can
   # be used to run a query with fetch()
   def self.parse_generic_query(query)
     # In the future when there is more info, this will be more complex to
     # include class names/descriptions
     filters = {}
-    q = query.gsub(" ", "")
+    q = query.delete(" ")
     /[a-zA-Z]+/.match(q) { |a| filters["subject"] = a.to_s }
     /\d+/.match(q) { |a| filters["course_number"] = a.to_s }
-    return filters
+    filters
   end
 end

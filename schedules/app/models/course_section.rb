@@ -16,22 +16,22 @@ class CourseSection < ApplicationRecord
   def self.with_instructor(name: "")
     joins(:instructor).where("instructors.name LIKE ?", "%#{name}%").select('course_sections.*, instructors.name as instructor_name')
   end
-  
+
   def self.from_crn(base_query, crn)
-    base_query.where("course_sections.crn = ?", value)
+    base_query.where("course_sections.crn = ?", crn)
   end
-  
+
   def self.from_course_id(base_query, course_id)
-    base_query.where("course_sections.course_id = ?")
+    base_query.where("course_sections.course_id = ?", course_id)
   end
-  
+
   # Select all revelevant course sections given the provided filters
   def self.fetch(filters)
     query = CourseSection.joins(:course).select("course_sections.*")
     if filters.include? "query"
       filters = CourseSection.parse_generic_query(filters["query"])
     end
-    
+
     filters.each do |filter, value|
       case filter
       when "crn"
@@ -46,15 +46,15 @@ class CourseSection < ApplicationRecord
         query = Course.from_title(query, value)
       end
     end
-    
+
     query
   end
-    
-  def self.parse_generic_query(query) 
+
+  def self.parse_generic_query(query)
     filters = {}
-    
+
     # If there is a number in the query
-    /\d+/.match(query) { |a| 
+    /\d+/.match(query) { |a|
       m = a.to_s
       if m.length == query.length # Does the number take up the entire query
         if m.length == 5 # Check if it is a CRN
@@ -62,14 +62,13 @@ class CourseSection < ApplicationRecord
         else # Just assume course_id
           filters["course_id"] = Integer(m)
         end
-  
+
         return filters
       end
     }
-    
+
     # If it's not a number, just assume it's the title
     filters["title"] = query
     filters
   end
-      
 end
