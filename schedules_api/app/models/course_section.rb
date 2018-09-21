@@ -17,25 +17,61 @@ class CourseSection < ApplicationRecord
     joins(:instructor).where("instructors.name LIKE ?", "%#{name}%").select('course_sections.*, instructors.name as instructor_name')
   end
   
+  def self.from_crn(base_query, crn)
+    base_query.where("course_sections.crn = ?", value)
+  end
+  
+  def self.from_course_id(base_query, course_id)
+    base_query.where("course_sections.course_id = ?")
+  end
+  
+  def self.from_name(base_query, name)
+    base_query.where("name LIKE ?", "%#{name}%")
+  end
+  
   # Select all revelevant course sections given the provided filters
   def self.fetch(filters)
-    query = CourseSection.select("*")
-    filter_list = CourseSection.parse_generic_query(filters["query"]) if filters.include? "query" else filters
+    query = CourseSection.joins(:course).select("course_sections.*")
+    if filters.include? "query"
+      filters = CourseSection.parse_generic_query(filters["query"])
+    end
     
-    filter_list.each do |filter, value|
-      if CourseSection.column_names.include? filter
-        case filter
-        when "crn"
-          query = query.where("crn = ?", value.upcase)
-        when "course_id"
-          query = query.where("course_id = ?", value)
-        end
+    filters.each do |filter, value|
+      case filter
+      when "crn"
+        query = from_crn(query, value)
+      when "course_id"
+        query = from_course_id(query, value)
+      when "name"
+        query = from_name(query, value)
+      when "subject"
+        query = Course.from_subject(query, value)
       end
     end
+    
+    query
   end
     
   def self.parse_generic_query(query) 
+    filters = {}
     
+    # If there is a number in the query
+    /\d+/.match(query) { |a| 
+      m = a.to_s
+      if m.length == query.length # Does the number take up the entire query
+        if m.length == 5 # Check if it is a CRN
+          filters["crn"] = m
+        else # Just assume course_id
+          filters["course_id"] = Integer(m)
+        end
+  
+        return filters
+      end
+    }
+    
+    # If it's not a number, just assume it's the name
+    filters["name"] = query
+    filters
   end
       
 end

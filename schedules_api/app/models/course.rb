@@ -17,24 +17,34 @@ class Course < ApplicationRecord
     CourseSection.where course_id: id
   end
   
+  def self.from_subject(base_query, subject)
+    base_query.where("courses.subject = ?", subject.upcase)
+  end
+  
+  def self.from_course_number(base_query, course_number)
+    query = query.where("courses.course_number = ?", value)
+  end
+  
   # Given a list of filters, collect a list of matching elements. This makes it
   # so you can just pass the arguments straight thru
   def self.fetch(filters)
     query = Course.select("*")
-    filter_list = Course.parse_generic_query(filters["query"]) if filters.include? "query" else filters
-    
-    filter_list.each do |filter, value|
+    if filters.include? "query"
+      filters = Course.parse_generic_query(filters["query"])
+    end
+
+    filters.each do |filter, value|
       if Course.column_names.include? filter
         case filter
         when "subject"
-          query = query.where("subject = ?", value.upcase)
+          query = from_subject(query, value)
         when "course_number"
-          query = query.where("course_number = ?", value)
+          query = from_course_number(query, value)
         end
       end
     end
     
-    return query.all
+    query
   end
   
   # Splits a generic string (i.e. "CS 211") into a series of components that can

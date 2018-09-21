@@ -7,16 +7,15 @@ class CoursesController < ApplicationController
   api :GET, '/courses', "Get a list of courses."
   param :subject, String, desc: 'Course subject, e.g. "CS" or "ACCT"'
   param :course_number, Integer, desc: 'Course number, e.g. "112"'
-  param :query, String, desc: 'A generic query ex. "CS 110"'
   def index
-    @courses = Course.fetch(params)
+    @courses = Course.fetch(params).all
     render json: @courses
   end
 
   api :GET, '/courses/:id', "Get a list of all course sections for the course with the given id."
   param :id, :number, desc: 'Course ID', required: true
   def show
-    @sections = CourseSection.where(course_id: params[:id])
+    @sections = CourseSection.fetch(params).all
 
     render json: @sections
   end

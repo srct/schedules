@@ -12,11 +12,7 @@ class CourseSectionsController < ApplicationController
   param :query, String, desc: 'A generic query ex. "CS 110"'
 
   def index
-    @sections = CourseSection.with_instructor(name: params[:instructor])
-
-    @sections = @sections.where(course_id: params[:course_id]) if params.key?(:course_id)
-    @sections = @sections.where(crn: params[:crn]) if params.key?(:crn)
-
+    @sections = CourseSection.fetch(params).all
     render json: @sections
   end
 end
