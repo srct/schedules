@@ -25,10 +25,6 @@ class CourseSection < ApplicationRecord
     base_query.where("course_sections.course_id = ?")
   end
   
-  def self.from_name(base_query, name)
-    base_query.where("name LIKE ?", "%#{name}%")
-  end
-  
   # Select all revelevant course sections given the provided filters
   def self.fetch(filters)
     query = CourseSection.joins(:course).select("course_sections.*")
@@ -42,10 +38,12 @@ class CourseSection < ApplicationRecord
         query = from_crn(query, value)
       when "course_id"
         query = from_course_id(query, value)
-      when "name"
-        query = from_name(query, value)
+      when "course_number"
+        query = Course.from_course_number(query, value)
       when "subject"
         query = Course.from_subject(query, value)
+      when "title"
+        query = Course.from_title(query, value)
       end
     end
     
@@ -69,8 +67,8 @@ class CourseSection < ApplicationRecord
       end
     }
     
-    # If it's not a number, just assume it's the name
-    filters["name"] = query
+    # If it's not a number, just assume it's the title
+    filters["title"] = query
     filters
   end
       

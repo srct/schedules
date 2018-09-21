@@ -22,7 +22,13 @@ class Course < ApplicationRecord
   end
   
   def self.from_course_number(base_query, course_number)
-    query = query.where("courses.course_number = ?", value)
+    query = base_query.where("courses.course_number = ?", course_number)
+  end
+  
+  def self.from_title(base_query, title)
+    # Temporary really disgusting regex that I hate with all my heart
+    title = (title + " ").gsub(" 1", " I").gsub(" 2", " II").gsub(" 3", " III").upcase.gsub(/(I+) +/, '\1$').gsub(/ +/, "% ").gsub('$', ' ')
+    base_query.where("UPPER(courses.title) LIKE UPPER(?) or UPPER(courses.title) LIKE UPPER(?)", "%#{title.strip}", "%#{title}%").order('COUNT("course_sections".course_id)').where('"course_sections".course_id = "courses".id')
   end
   
   # Given a list of filters, collect a list of matching elements. This makes it
@@ -34,13 +40,13 @@ class Course < ApplicationRecord
     end
 
     filters.each do |filter, value|
-      if Course.column_names.include? filter
-        case filter
-        when "subject"
-          query = from_subject(query, value)
-        when "course_number"
-          query = from_course_number(query, value)
-        end
+      case filter
+      when "subject"
+        query = from_subject(query, value)
+      when "course_number"
+        query = from_course_number(query, value)
+      when "title"
+        query = from_title(query, value)
       end
     end
     
