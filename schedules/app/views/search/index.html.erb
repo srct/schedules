@@ -1,0 +1,73 @@
+<%= render partial: 'shared/navbar' %>
+
+<div class="container-fluid">
+    <!-- The main screen consists of a row with two columns: the search results, and the cart -->
+    <div class="row">
+	
+	<!-- Search result, List of Courses -->
+	<div class="col-lg-7 col-md-10 mx-auto order-2 order-lg-0" id="search-list">
+	    <% if @courses.any? %>
+		<%= render partial: 'shared/course', collection: @courses %>
+	    <% else %>
+		<h1>Sorry, we couldn't find anything matching your search.</h1>
+		<p>Please try again!</p>
+	    <% end %>
+	</div>
+	
+	<!-- List of sections in the cart -->
+	<div class="col order-1 order-lg-1" id="cart">
+	    <div class="card">
+		<div class="card-body">
+		    <h3 class="card-title">Your Schedule</h3>
+		</div>
+		<ul class="list-group list-group-flush" id="schedule">
+		    <%= render partial: 'shared/section', collection: @cart, locals: { in_cart: true } %>
+		</ul>
+		<div class="card-body">
+		    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" onclick="setUrlInModal()">
+			Export schedule
+		    </button>
+		</div>
+	    </div>
+	</div>
+    </div>
+</div>
+
+<!-- Export Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+	<div class="modal-content">
+	    <div class="modal-header">
+		<h5 class="modal-title" id="exampleModalLabel">Your calendar has been generated!</h5>
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		    <span aria-hidden="true">&times;</span>
+		</button>
+	    </div>
+	    <div class="modal-body">
+		<h5>Apple Calendar</h5>
+		To add your schedule to Apple Calendar, click the "Add to calendar" button below. If you are on a device
+		running macOS or iOS, this will open a dialogue which will walk you through adding the calendar.
+		<hr />
+		<h5>Google Calendar</h5>
+		<strong>On desktop:</strong>
+		<br />
+		Open your <a href="https://calendar.google.com/">Google Calendar</a>. Click the "Settings" button in the top
+		right, and then click the Settings tab. In the menu on the left, click "Add calendar" and "From URL". Now,
+		paste the following link inside the text box: <br />
+		<code id="calendar-link"></code>
+		<br />
+		<strong>On mobile (Android only):</strong>
+		<br />
+		Click the "Download calendar file" button. This will download the calendar file which you may then open and
+		add to your calendar.
+		<hr />
+		<h5>.ics file</h5>
+		To download a .ics file containing your schedule, click the "Download calendar file" button below.
+	    </div>
+	    <div class="modal-footer">
+		<button type="button" class="btn btn-secondary" onclick="downloadIcs()">Download calendar file</button>
+		<button type="button" class="btn btn-primary" onclick="addToSystemCalendar()">Add to system calendar</button>
+	    </div>
+	</div>
+    </div>
+</div>
