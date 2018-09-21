@@ -28,13 +28,14 @@ class Course < ApplicationRecord
   def self.from_title(base_query, title)
     # Temporary really disgusting regex that I hate with all my heart
     title = (title + " ").gsub(" 1", " I").gsub(" 2", " II").gsub(" 3", " III").upcase.gsub(/(I+) +/, '\1$').gsub(/ +/, "% ").gsub('$', ' ')
-    base_query.where("UPPER(courses.title) LIKE UPPER(?) or UPPER(courses.title) LIKE UPPER(?)", "%#{title.strip}", "%#{title}%").order('COUNT("course_sections".course_id)').where('"course_sections".course_id = "courses".id')
+    base_query.where("UPPER(courses.title) LIKE UPPER(?) or UPPER(courses.title) LIKE UPPER(?)", "%#{title.strip}", "%#{title}%")
   end
   
   # Given a list of filters, collect a list of matching elements. This makes it
   # so you can just pass the arguments straight thru
   def self.fetch(filters)
-    query = Course.select("*")
+    # join with course_sections so that we can get a section count for each course and then sort by that
+    query = Course.left_outer_joins(:course_sections).select("courses.*, COUNT(course_sections.id) AS section_count").group("courses.id").order("section_count DESC")
     if filters.include? "query"
       filters = Course.parse_generic_query(filters["query"])
     end
