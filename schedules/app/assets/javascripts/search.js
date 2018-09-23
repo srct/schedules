@@ -4,7 +4,7 @@
 class Schedule {
     constructor() {
         this.isOpen = false;
-        this._ids = Array.from(document.getElementById('schedule').children).map(e => Number(e.dataset.crn));
+        this._ids = Array.from(document.getElementById('schedule').children).map(e => e.dataset.crn);
     }
 
     get ids() {
@@ -51,7 +51,7 @@ class Schedule {
         const section = cart.querySelector(`#section-${id}`);
         cart.removeChild(section);
 
-        this.ids = this.ids.filter(_id => _id != Number(id));
+        this.ids = this.ids.filter(_id => _id != id);
     }
 
     _constructSectionCard(section) {
