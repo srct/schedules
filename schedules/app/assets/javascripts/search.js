@@ -4,7 +4,7 @@
 class Schedule {
     constructor() {
         this.isOpen = false;
-        this._ids = Array.from(document.getElementById('schedule').children).map(e => Number(e.id.split('-')[1]));
+        this._ids = Array.from(document.getElementById('schedule').children).map(e => e.dataset.crn);
     }
 
     get ids() {
@@ -51,7 +51,7 @@ class Schedule {
         const section = cart.querySelector(`#section-${id}`);
         cart.removeChild(section);
 
-        this.ids = this.ids.filter(_id => _id != Number(id));
+        this.ids = this.ids.filter(_id => _id != id);
     }
 
     _constructSectionCard(section) {
@@ -70,8 +70,8 @@ class Schedule {
 }
 
 class Search {
-    sectionWithId(sectionId) {
-        return document.getElementById('search-list').querySelector(`#${sectionId}`);
+    sectionWithCrn(crn) {
+        return document.getElementById('search-list').querySelector(`[data-crn="${crn}"]`);
     }
 }
 
@@ -80,14 +80,13 @@ const toggleSchedule = () => this.schedule.toggle();
 const addToSchedule = (event, section) => {
     section.classList.add('selected');
 
-    // this.schedule.addToSchedule(JSON.parse(section.dataset.section));
     this.schedule.addToSchedule(section.cloneNode(true));
 
     event.stopPropagation();
 };
 
 const removeFromSchedule = section => {
-    this.search.sectionWithId(section.id).classList.remove('selected');
+    this.search.sectionWithCrn(section.dataset.crn).classList.remove('selected');
     this.schedule.removeFromSchedule(section.id.split('-')[1]);
 };
 
@@ -115,8 +114,3 @@ const addToSystemCalendar = async () => {
     const url = `webcal://${window.location.hostname}/api/schedule?crns=${this.schedule.ids.join(',')}`;
     window.open(url, '_self');
 };
-
-document.addEventListener('DOMContentLoaded', () => {
-    this.schedule = new Schedule();
-    this.search = new Search();
-});

@@ -6,7 +6,6 @@ class SearchController < ApplicationController
   end
 
   def update
-    puts params[:ids]
     cookies[:ids] = params[:ids]
   end
 end
