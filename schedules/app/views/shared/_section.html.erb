@@ -7,21 +7,21 @@
 	<span style="float:left"><b class="subj"><%= "#{section.name}" %></b>:  <%= section.title %></span>
 	<span style="float:right"><i class="fas fa-map-marker-alt"></i> <%= section.location %></span>
 	<div style="clear: both"></div>
-	<span style="float:left"><i class="fas fa-chalkboard-teacher"></i> <%= section.instructor.name %></span>
+	<span style="float:left"><i class="fas fa-chalkboard-teacher"></i> <%= link_to section.instructor.name, instructor_path(section.instructor) %> </span>
 	<span style="float:right"><i class="fas fa-clock"></i> <%= "#{section.days}, #{section.start_time}-#{section.end_time}" %></span>
 	<div style="clear: both"></div>
     </li>
 
 <% else %>
     <li id="section-<%= section.crn %>"
-	    class="list-group-item section-item <%= "selected" if @cart.include? section %>"
-	    data-crn="<%= section.crn %>"
-	    onclick="addToSchedule(event, this)"
+	class="list-group-item section-item <%= "selected" if @cart.include? section %>"
+	data-crn="<%= section.crn %>"
+	onclick="addToSchedule(event, this)"
     >
 	<span style="float:left"><b class="subj"><%= "#{section.name}" %></b>:  <%= section.title %></span>
 	<span style="float:right"><i class="fas fa-map-marker-alt"></i> <%= section.location %></span>
 	<div style="clear: both"></div>
-	<span style="float:left"><i class="fas fa-chalkboard-teacher"></i> <%= section.instructor.name %></span>
+	<span style="float:left"><i class="fas fa-chalkboard-teacher"></i> <%= link_to section.instructor.name, instructor_path(section.instructor) %></span>
 	<span style="float:right"><i class="fas fa-clock"></i> <%= "#{section.days}, #{section.start_time}-#{section.end_time}" %></span>
 	<div style="clear: both"></div>
     </li>

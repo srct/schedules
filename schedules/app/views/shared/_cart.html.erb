@@ -21,3 +21,42 @@
 </div>
 </div>
 
+
+<!-- Export Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+	<div class="modal-content">
+	    <div class="modal-header">
+		<h5 class="modal-title" id="exampleModalLabel">Your calendar has been generated!</h5>
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		    <span aria-hidden="true">&times;</span>
+		</button>
+	    </div>
+	    <div class="modal-body">
+		<h5>Apple Calendar</h5>
+		To add your schedule to Apple Calendar, click the "Add to calendar" button below. If you are on a device
+		running macOS or iOS, this will open a dialogue which will walk you through adding the calendar.
+		<hr />
+		<h5>Google Calendar</h5>
+		<strong>On desktop:</strong>
+		<br />
+		Open your <a href="https://calendar.google.com/">Google Calendar</a>. Click the "Settings" button in the top
+		right, and then click the Settings tab. In the menu on the left, click "Add calendar" and "From URL". Now,
+		paste the following link inside the text box: <br />
+		<code id="calendar-link"></code>
+		<br />
+		<strong>On mobile (Android only):</strong>
+		<br />
+		Click the "Download calendar file" button. This will download the calendar file which you may then open and
+		add to your calendar.
+		<hr />
+		<h5>.ics file</h5>
+		To download a .ics file containing your schedule, click the "Download calendar file" button below.
+	    </div>
+	    <div class="modal-footer">
+		<button type="button" class="btn btn-secondary" onclick="downloadIcs()">Download calendar file</button>
+		<button type="button" class="btn btn-primary" onclick="addToSystemCalendar()">Add to system calendar</button>
+	    </div>
+	</div>
+    </div>
+</div>
