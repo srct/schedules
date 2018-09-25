@@ -1,3 +1,5 @@
+<% expanded = false unless defined? expanded %>
+
 <div class="card" id="course-<%= course.id %>" onclick="toggleSections(this)" data-course="<%= course.to_json %>">
   <div class="card-body">
     <div>
@@ -14,8 +16,12 @@
     </div>
 
     <!-- List of Course Sections -->
-    <ul class="list-group list-group-flush" id="sections" style="display:none">
-	<%= render partial: 'shared/section', collection: course.course_sections, locals: { in_cart: false } %>
+    <ul class="list-group list-group-flush" id="sections" style="display: <%= expanded ? "block" : "none" %>">
+	<% if defined?(@instructor) %>
+	    <%= render partial: 'shared/section', collection: course.course_sections.where(instructor: @instructor), locals: { in_cart: false } %>
+	<% else %>
+	    <%= render partial: 'shared/section', collection: course.course_sections, locals: { in_cart: false } %>
+	<% end %>
     </ul>
   </div>
 </div>

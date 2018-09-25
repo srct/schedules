@@ -1,2 +1,7 @@
-<h1>Instructors#show</h1>
-<p>Find me in app/views/instructors/show.html.erb</p>
+<h1><%= @instructor.name %></h1>
+
+<% if @courses.any? %>
+    <%= render partial: 'shared/course', collection: @courses, locals: { expanded: true } %>
+<% else %>
+    <p><%= @instructor.name %> has not taught any courses...</p>
+<% end %>
