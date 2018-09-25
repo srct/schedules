@@ -1,6 +1,9 @@
 # Contains logic regarding the +Course+ model.
 #
 # TODO: Add more docs
+
+require("course_replacement_helper.rb")
+
 class Course < ApplicationRecord
   # Each course belongs to a +Semester+
   belongs_to :semester
@@ -26,8 +29,9 @@ class Course < ApplicationRecord
   end
 
   def self.from_title(base_query, title)
+    puts title
     # Temporary really disgusting regex that I hate with all my heart
-    title = (title + " ").gsub(" 1", " I").gsub(" 2", " II").gsub(" 3", " III").upcase.gsub(/(I+) +/, '\1$').gsub(/ +/, "% ").tr('$', ' ')
+    title = (title + " ").upcase.gsub(/(I+) +/, '\1$').gsub(/ +/, "% ").tr('$', ' ')
     base_query.where("UPPER(courses.title) LIKE UPPER(?) or UPPER(courses.title) LIKE UPPER(?)", "%#{title.strip}", "%#{title}%")
   end
 
@@ -57,12 +61,28 @@ class Course < ApplicationRecord
   # Splits a generic string (i.e. "CS 211") into a series of components that can
   # be used to run a query with fetch()
   def self.parse_generic_query(query)
-    # In the future when there is more info, this will be more complex to
-    # include class names/descriptions
+    query.upcase!
+    CourseReplacementHelper.replace!(query)
+    
     filters = {}
-    q = query.delete(" ")
-    /[a-zA-Z]+/.match(q) { |a| filters["subject"] = a.to_s }
-    /\d+/.match(q) { |a| filters["course_number"] = a.to_s }
+    query.scan(/(?<= |^)([a-zA-Z]{2,4})(?=$| )/).each do |a|
+      s = a[0]
+      if from_subject(select("*"), s).count > 0
+        filters["subject"] = s
+        query.remove!(s)
+      end
+    end
+    
+    query.scan(/(?<= |^)(\d{3})(?=$| )/).each do |a|
+      s = a[0]
+      if filters.include? "subject" and from_course_number(from_subject(select("*"), filters["subject"]), s).count > 0
+        filters["course_number"] = s
+        query.remove!(s)
+        return filters
+      end
+    end
+    
+    filters["title"] = query.gsub(/ +/, " ").strip
     filters
   end
 end
