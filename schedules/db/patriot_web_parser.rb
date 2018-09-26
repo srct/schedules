@@ -19,7 +19,6 @@ module PatriotWeb
     def parse_semesters
       response = @networker.fetch_page_containing_semester_data
       document = Nokogiri::HTML(response) # parse the document from the HTTP response
-
       get_semesters_from_option_values(document).compact
     end
 
@@ -33,8 +32,8 @@ module PatriotWeb
 
     # Parses all courses belonging to a given subject
     # @param subject [String]
-    def parse_courses_in_subject(subject)
-      response = @networker.fetch_courses_in_subject(subject)
+    def parse_courses_in_subject(semester, subject)
+      response = @networker.fetch_courses_in_subject(semester, subject)
       document = Nokogiri::HTML(response)
       get_courses(document, subject)
     end
@@ -46,9 +45,10 @@ module PatriotWeb
     # @param document [Nokogiri::HTML::Document]
     def get_semesters_from_option_values(document)
       document.css('option').map do |opt| # for each option value
-        if opt.attr('value').start_with? '20' # ensure it is a semester value
-          opt.attr('value') # return the value
-        end
+        next unless opt.attr('value').start_with? '20' # ensure it is a semester value
+        text = opt.text.gsub(/ *\(.*\).*/, "").gsub(/ +/, " ")
+        season, year = text.split
+        { value: opt.attr('value'), season: season, year: year }
       end
     end
 
@@ -57,9 +57,7 @@ module PatriotWeb
     # @param document [Nokogiri::HTML::Document]
     def get_subject_codes_from_option_values(document)
       document.xpath('//*[@id="subj_id"]/option').map do |opt| # for each option value under "subj_id"
-        if opt.attr('value').strip.alpha? # if the value is alphanumeric
-          opt.attr('value') # return the value
-        end
+          opt.attr('value') if opt.attr('value').strip.alpha? # return the value if the value is alphanumeric
       end
     end
 
@@ -69,10 +67,6 @@ module PatriotWeb
     def get_courses(document, _subject)
       table = document.css('html body div.pagebodydiv table.datadisplaytable')
       rows = table.css('tr')
-      # rows[100..110].each_with_index do |row, i|
-      #   puts i
-      #   puts row
-      # end
       data_from rows
     end
 
@@ -95,7 +89,7 @@ module PatriotWeb
           data[:section] = title_elements[3].strip
 
           details = rows[i + 2].css('td table tr td')
-          unless !details.empty?
+          if details.empty?
             # puts "#{full_name.join(' ')} is fake news"
             i += 1
             next

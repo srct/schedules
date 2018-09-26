@@ -36,5 +36,31 @@ cs211001:
   start_time: 2:30 pm
   end_time: 3:00 pm
   location: ENGR 200
-  course: cs211
+  course: cs211spring
   instructor: otten
+
+cs112001spring:
+  name: CS 112 001
+  crn: 70192
+  title: Introduction to Computing
+  start_date: 2018-05-21
+  end_date: 2018-06-04
+  days: MWF
+  start_time: 12:00 pm
+  end_time: 1:00 pm
+  location: Innovation Hall 204
+  course: cs112spring
+  instructor: kinga
+
+acct110001:
+  name: ACCT 110 001
+  crn: 71926
+  title: Business
+  start_date: 2018-05-21
+  end_date: 2018-06-04
+  days: MWF
+  start_time: 12:00 pm
+  end_time: 1:00 pm
+  location: Innovation Hall 204
+  course: acct110spring
+  instructor: business_man
