@@ -1,6 +1,7 @@
 require 'icalendar'
 require 'time'
 
+# Creates a iCal object given a list of CRNs
 class Schedule
   def initialize(crns)
     @cal = Icalendar::Calendar.new

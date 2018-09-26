@@ -1,7 +1,7 @@
 # Registers all routes for the app.
 Rails.application.routes.draw do
   get 'search', to: 'search#index'
-  get 'search/update', to: 'search#update'
+  get 'search/update', to: 'search#update', as: 'update_cookie'
 
   resources :instructors, only: [:index, :show]
 
