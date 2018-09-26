@@ -65,25 +65,24 @@ class Course < ApplicationRecord
   def self.parse_generic_query(query)
     query.upcase!
     CourseReplacementHelper.replace!(query)
-    
+
     filters = {}
     query.scan(/(?<= |^)([a-zA-Z]{2,4})(?=$| )/).each do |a|
       s = a[0]
-      if from_subject(select("*"), s).count > 0
+      if from_subject(select("*"), s).count.positive?
         filters["subject"] = s
         query.remove!(s)
       end
     end
-    
+
     query.scan(/(?<= |^)(\d{3})(?=$| )/).each do |a|
       s = a[0]
-      if filters.include? "subject" and from_course_number(from_subject(select("*"), filters["subject"]), s).count > 0
-        filters["course_number"] = s
-        query.remove!(s)
-        return filters
-      end
+      next unless filters.include?("subject") || from_course_number(from_subject(select("*"), filters["subject"]), s).count.positive?
+      filters["course_number"] = s
+      query.remove!(s)
+      return filters
     end
-    
+
     filters["title"] = query.gsub(/ +/, " ").strip
     filters
   end

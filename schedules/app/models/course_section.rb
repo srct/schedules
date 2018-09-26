@@ -57,7 +57,7 @@ class CourseSection < ApplicationRecord
     /\d+/.match(query) { |a|
       m = a.to_s
       if m.length == query.length # Does the number take up the entire query
-        if m.length == 5 and from_crn(select("*"), m).count != 0 # Check if it is a CRN
+        if m.length == 5 && from_crn(select("*"), m).count != 0 # Check if it is a CRN
           filters["crn"] = m
         else # Just assume course_id
           filters["course_id"] = Integer(m)
