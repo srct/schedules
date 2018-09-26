@@ -74,10 +74,10 @@ class Course < ApplicationRecord
         query.remove!(s)
       end
     end
-
+ 
     query.scan(/(?<= |^)(\d{3})(?=$| )/).each do |a|
       s = a[0]
-      next unless filters.include?("subject") || from_course_number(from_subject(select("*"), filters["subject"]), s).count.positive?
+      next unless filters.include?("subject") && from_course_number(from_subject(select("*"), filters["subject"]), s).count.positive?
       filters["course_number"] = s
       query.remove!(s)
       return filters
