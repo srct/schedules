@@ -1,6 +1,6 @@
 <% expanded = false unless defined? expanded %>
 
-<div class="card" id="course-<%= course.id %>" onclick="toggleSections(this)" data-course="<%= course.to_json %>">
+<div class="card" id="course-<%= course.id %>" onclick="toggleSections(this)">
   <div class="card-body">
     <div>
       <h3 style="float: left"><%= "#{course.subject} #{course.course_number}" %></h3>

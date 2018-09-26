@@ -22,3 +22,11 @@ const elementFromString = string => {
     const html = new DOMParser().parseFromString(string, 'text/html');
     return html.body.firstChild;
 };
+
+document.addEventListener('DOMContentLoaded', () => {
+    this.schedule = new Schedule();
+});
+
+document.addEventListener('turbolinks:load', () => {
+    FontAwesome.dom.i2svg();
+});
