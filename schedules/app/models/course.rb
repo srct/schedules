@@ -52,6 +52,8 @@ class Course < ApplicationRecord
         query = from_course_number(query, value)
       when "title"
         query = from_title(query, value)
+      when "instructor"
+        query = Instructor.from_name(query.joins("INNER JOIN instructors ON course_sections.instructor_id = instructors.id"), value)
       end
     end
 
