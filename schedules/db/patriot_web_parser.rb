@@ -57,7 +57,7 @@ module PatriotWeb
     # @param document [Nokogiri::HTML::Document]
     def get_subject_codes_from_option_values(document)
       document.xpath('//*[@id="subj_id"]/option').map do |opt| # for each option value under "subj_id"
-          opt.attr('value') if opt.attr('value').strip.alpha? # return the value if the value is alphanumeric
+        opt.attr('value') if opt.attr('value').strip.alpha? # return the value if the value is alphanumeric
       end
     end
 
