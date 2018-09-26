@@ -54,7 +54,7 @@ class CourseSection < ApplicationRecord
     filters = {}
 
     # If there is a number in the query
-    /\d+/.match(query) { |a|
+    /\d+/.match(query) do |a|
       m = a.to_s
       if m.length == query.length # Does the number take up the entire query
         if m.length == 5 && from_crn(select("*"), m).count != 0 # Check if it is a CRN
@@ -65,7 +65,7 @@ class CourseSection < ApplicationRecord
 
         return filters
       end
-    }
+    end
 
     # If it's not a number, just assume it's the title
     filters["title"] = query
