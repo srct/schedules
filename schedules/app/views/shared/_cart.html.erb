@@ -1,0 +1,23 @@
+</div>
+
+<!-- List of sections in the cart -->
+<div class="col order-1 order-lg-1" id="cart">
+    <div class="card">
+	<div class="card-body">
+	    <h3 class="card-title">Your Schedule</h3>
+	</div>
+	<ul class="list-group list-group-flush" id="schedule">
+	    <%= render partial: 'shared/section', collection: @cart, locals: { in_cart: true } %>
+	</ul>
+	<div class="card-body">
+	    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" onclick="setUrlInModal()">
+		Export schedule
+	    </button>
+	</div>
+    </div>
+</div>
+
+
+</div>
+</div>
+
