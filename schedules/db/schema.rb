@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180927133105) do
+ActiveRecord::Schema.define(version: 20180927140017) do
 
   create_table "closures", force: :cascade do |t|
     t.date "date"
@@ -51,8 +51,6 @@ ActiveRecord::Schema.define(version: 20180927133105) do
     t.datetime "updated_at", null: false
     t.string "description"
     t.string "credits"
-    t.string "prerequisite"
-    t.string "restrictions"
     t.string "title"
     t.string "prereqs"
     t.index ["semester_id"], name: "index_courses_on_semester_id"
