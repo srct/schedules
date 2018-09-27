@@ -30,6 +30,7 @@ def load_courses(courses, semester)
       course_number: course[:course_number],
       credits: course[:credits],
       description: course[:description],
+      prereqs: course[:prereqs],
       semester: semester
     }
   end

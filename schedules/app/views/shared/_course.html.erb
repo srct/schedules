@@ -11,8 +11,15 @@
 
     <p class="description"><%= course.description %></p>
 
+    <% unless course.prereqs.empty? %>
+	<% first, rest = course.prereqs.split(':') %>
+	<% prereqs, note = rest.split('.') %>
+	<p><strong><%= first %>:</strong> <%= prereqs %> <sub><%= note %></sub></p>
+    <% end %>
+
     <div class="d-block" style="text-align: center">
-      <i class="fas fa-chevron-down"></i>
+	<p style="margin-bottom:-4px; font-size: 10px;">Expand</p>
+	<i class="fas fa-chevron-down"></i>
     </div>
 
     <!-- List of Course Sections -->
