@@ -1,6 +1,6 @@
 # Schedules
 
-Schedules is a web app that allows students to import their class schedules into popular calendar managers. It consists of an API written in Ruby on Rails and a web client built with React.
+Schedules is a web app that is written with Ruby on Rails and allows students to import their class schedules into popular calendar managers. 
 
 The project manager for Schedules is Zac Wood.
 
@@ -29,9 +29,9 @@ the SRCT code respository, with SSH.
 
 Run `cd schedules/` to enter the cloned directory
 
-## Setting up API
+## Setting up Project
 
-Execute `cd schedules_api/` to enter the API directory.
+Execute `cd schedules/` to enter the Project directory.
 
 ### Install dependencies
 To install the project dependencies, run the `bundle install` command.  
@@ -41,32 +41,20 @@ To populate your local database, run `rake db:migrate` and `rake db:seed`. This 
 **NOTE:** Sometimes Patriot Web doesn't appriciate being parsed. If you're having problems,
 please let us know in [Slack](https://srct.slack.com/)!
 
-## Setting up client
-
-### Install dependencies
-
-To install the React client's dependencies, run the `yarn` command from the `/schedules_web` directory.
 
 ## Development servers
 
-While developing for schedules, it is useful to have development servers for both the React client and the Ruby on Rails API running.
+While developing for schedules, it is useful to have development servers running.
 
-### API
-To start the API, run the `rails server` command in the `/schedules_api` directory. The API should now be accessible from `localhost:3000`
+To start the Project, run the `rails server` command in the `/schedules` directory. The website should now be accessible from `localhost:3000`
 
-### Client
-To start the development server for the React client, run the `yarn start` command from the `/schedules_web` directory. The client should now be available from `localhost:8080`.
 
 ## Testing
 Before you make a commit, you should ensure you new code passes the project's tests. 
 
 It is recommended that you write tests for any new code you add, but this is not required.  
 
-### API
-To run the API's tests, run the command `rails test` from the `schedules_api` directory.
-
-### Client
-To run the client's test, run the `yarn test` command from the `schedules_web` directory.
+To run the Project's tests, run the command `rails test` from the `schedules` directory.
 
 ## Opening issues
 
@@ -80,4 +68,4 @@ A great tool for making sure your code meets the project's style is [RuboCop](ht
     
     gem install rubocop
     
-Then, when inside the `/schedules_api/` directory, you can run the command `rubocop` to see where your style does not match the project's.
+Then, when inside the `/schedules/` directory, you can run the command `rubocop` to see where your style does not match the project's.
