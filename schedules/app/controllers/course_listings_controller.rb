@@ -8,7 +8,7 @@ class CourseListingsController < ApplicationController
   param :number, Integer, desc: 'Course number, e.g. "112"'
   def index
     # Make a separate list so that we can include sections
-    @courses = CourseListing.wrap(Course.fetch(params).all)
+    @courses = CourseListingsHelper::CourseListing.wrap(Course.fetch(params).all)
 
     render json: @courses
   end

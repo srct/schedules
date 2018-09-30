@@ -2,7 +2,11 @@ module CourseListingsHelper
   class CourseListing
     def initialize(course)
       @course = course
-      @sections = course
+      @sections = course.course_sections
+    end
+    
+    def self.name
+      :course
     end
     
     def self.wrap(course_list)

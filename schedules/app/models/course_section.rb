@@ -28,9 +28,6 @@ class CourseSection < ApplicationRecord
   # Select all revelevant course sections given the provided filters
   def self.fetch(filters)
     query = CourseSection.joins(:course).select("course_sections.*")
-    if filters.include? "query"
-      filters = CourseSection.parse_generic_query(filters["query"])
-    end
 
     filters.each do |filter, value|
       case filter
@@ -48,27 +45,5 @@ class CourseSection < ApplicationRecord
     end
 
     query
-  end
-
-  def self.parse_generic_query(query)
-    filters = {}
-
-    # If there is a number in the query
-    /\d+/.match(query) do |a|
-      m = a.to_s
-      if m.length == query.length # Does the number take up the entire query
-        if m.length == 5 && from_crn(select("*"), m).count != 0 # Check if it is a CRN
-          filters["crn"] = m
-        else # Just assume course_id
-          filters["course_id"] = Integer(m)
-        end
-
-        return filters
-      end
-    end
-
-    # If it's not a number, just assume it's the title
-    filters["title"] = query
-    filters
   end
 end

@@ -39,10 +39,10 @@ class Course < ApplicationRecord
   # so you can just pass the arguments straight thru
   def self.fetch(filters)
     # join with course_sections so that we can get a section count for each course and then sort by that
-    query = Course.left_outer_joins(:course_sections).select("courses.*, COUNT(course_sections.id) AS section_count").group("courses.id").order("section_count DESC")
-    if filters.include? "query"
-      filters = Course.parse_generic_query(filters["query"])
-    end
+    query = Course.left_outer_joins(:course_sections)
+                  .select("courses.*, COUNT(course_sections.id) AS section_count")
+                  .group("courses.id")
+                  .order("section_count DESC")
 
     filters.each do |filter, value|
       case filter
@@ -58,32 +58,5 @@ class Course < ApplicationRecord
     end
 
     query
-  end
-
-  # Splits a generic string (i.e. "CS 211") into a series of components that can
-  # be used to run a query with fetch()
-  def self.parse_generic_query(query)
-    query.upcase!
-    CourseReplacementHelper.replace!(query)
-
-    filters = {}
-    query.scan(/(?<= |^)([a-zA-Z]{2,4})(?=$| )/).each do |a|
-      s = a[0]
-      if from_subject(select("*"), s).count.positive?
-        filters["subject"] = s
-        query.remove!(s)
-      end
-    end
- 
-    query.scan(/(?<= |^)(\d{3})(?=$| )/).each do |a|
-      s = a[0]
-      next unless filters.include?("subject") && from_course_number(from_subject(select("*"), filters["subject"]), s).count.positive?
-      filters["course_number"] = s
-      query.remove!(s)
-      return filters
-    end
-
-    filters["title"] = query.gsub(/ +/, " ").strip
-    filters
   end
 end
