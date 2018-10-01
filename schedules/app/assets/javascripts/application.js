@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     this.schedule = new Schedule();
 });
 
+/** Loads FontAwesome icons on load; fixes weird flickering */
 document.addEventListener('turbolinks:load', () => {
     FontAwesome.dom.i2svg();
 });

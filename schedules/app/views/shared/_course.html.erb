@@ -11,7 +11,7 @@
 
     <p class="description"><%= course.description %></p>
 
-    <% unless course.prereqs.empty? %>
+    <% unless course.prereqs.nil? || course.prereqs.empty? %>
 	<% first, rest = course.prereqs.split(':') %>
 	<% prereqs, note = rest.split('.') %>
 	<p><strong><%= first %>:</strong> <%= prereqs %> <sub><%= note %></sub></p>

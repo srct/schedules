@@ -43,6 +43,11 @@ body {
     background-color: lightgreen;
 }
 
+.list-group-item.selected:hover {
+    transition: 0.15s;
+    background-color: red;
+}
+
 .schedule-section-card:hover {
     transition: 0.15s;
     background-color: red;
