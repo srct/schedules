@@ -31,3 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('turbolinks:load', () => {
     FontAwesome.dom.i2svg();
 });
+
+const setSemester = async select => {
+    const resp = await fetch(`/sessions/update?semester_id=${select.value}`);
+    location.reload(true);
+};

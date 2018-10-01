@@ -7,6 +7,9 @@ class InstructorsController < ApplicationController
 
   def show
     sections = CourseSection.where instructor: @instructor
+    sections = sections.select do |s|
+      s.course.semester == @semester
+    end
 
     # TODO: move this to a model somewhere
     @courses = [].to_set
