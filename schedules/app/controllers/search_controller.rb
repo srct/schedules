@@ -4,10 +4,4 @@ class SearchController < ApplicationController
       course.course_sections.count.positive?
     end
   end
-
-  def update
-    cookies[:ids] = params[:ids]
-
-    head :ok
-  end
 end

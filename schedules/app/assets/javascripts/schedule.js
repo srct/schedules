@@ -12,7 +12,7 @@ class Schedule {
         this._ids = ids;
 
         document.getElementById('course-counter').innerText = ids.length;
-        fetch('/search/update?ids=' + ids.join(','), { cache: 'no-store' });
+        fetch('/sessions/update?crns=' + ids.join(','), { cache: 'no-store' });
     }
 
     toggle() {
