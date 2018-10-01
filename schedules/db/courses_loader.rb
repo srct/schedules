@@ -22,12 +22,15 @@ def get_courses(subj)
 
     description = course.css('.courseblockdesc').text
 
+    prereqs = course.css('p.prereq').text
+
     {
       subject: subj,
       title: name,
       course_number: num,
       credits: credits_num,
-      description: description
+      description: description,
+      prereqs: prereqs
     }
   end
 end

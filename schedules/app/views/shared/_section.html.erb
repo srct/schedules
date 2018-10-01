@@ -16,7 +16,7 @@
     <li id="section-<%= section.crn %>"
 	class="list-group-item section-item <%= "selected" if @cart.include? section %>"
 	data-crn="<%= section.crn %>"
-	onclick="addToSchedule(event, this)"
+	onclick="addOrRemoveFromSchedule(event, this)"
     >
 	<span style="float:left"><b class="subj"><%= "#{section.name}" %></b>:  <%= section.title %></span>
 	<span style="float:right"><i class="fas fa-map-marker-alt"></i> <%= section.location %></span>
