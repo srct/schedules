@@ -1,11 +1,14 @@
 module SearchHelper
   class GenericItem
+    attr_reader :data
+    attr_reader :type
+    
     def initialize(type, data)
       @type = type
       @data = data
     end
     
-    def self.fetchall(query_string)
+    def self.fetchall(query_string, sort_mode=:auto)
       models = []
       models += fetch_instructors query_string
       models += fetch_courses query_string
@@ -38,12 +41,18 @@ module SearchHelper
         s = a[0]
         next unless !subj.nil? && get_count(Course.from_course_number(base_query, s)).positive?
         base_query = Course.from_course_number(base_query, s)
-                           .order("courses.course_number ASC")
         return base_query.all
       end
       
-      base_query = Course.from_title(base_query, query_string.gsub(/ +/, " ").strip)
-                         .order("section_count DESC")
+      stripped_query_string = query_string.gsub(/ +/, " ").strip
+      
+      # There's more to parse
+      if stripped_query_string.length.positive?
+        base_query = Course.from_title(base_query, stripped_query_string)
+                           .order("section_count DESC")
+      else
+        base_query = base_query.order("courses.course_number ASC")
+      end
         
       base_query.all
     end
@@ -53,7 +62,7 @@ module SearchHelper
     def self.build_list(models)
       list = []
       models.each do |model|
-        list.push(GenericItem.new(model.class.name.underscore, model))
+        list.push(GenericItem.new(model.class.name.underscore.to_sym, model))
       end
       
       list
