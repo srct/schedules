@@ -1,13 +1,22 @@
 <div class="container-fluid">
     <div class="row align-left align-sm-center align-md-right" id="navbar">
 	<div class="col-8 col-sm align-center">
-	    <a href="/" id="logo">
-		<i class="fas fa-calendar-alt"></i>
-		Schedules
-	    </a>
+	    <div>
+		<a href="/" id="logo">
+		    <i class="fas fa-calendar-alt"></i>
+		    Schedules
+		</a>
+		<select onchange="setSemester(this)">
+		    <% for semester in Semester.all %>
+			<option value="<%= semester.id %>" <% if @semester == semester %> selected <% end %> >
+			    <%= "#{semester.season} #{semester.year}" %>
+			</option>
+		    <% end %>
+		</select>	
+	    </div>
 	</div>
 
-	<div class="col-4 col-sm align-center order-0 order-sm-1" onclick="toggleSchedule()">
+	<div class="col-4 col-sm align-center order-0 order-sm-1" onclick="window.schedule.toggle()">
 	    <h1 style="margin-top:24px">
 		<span class="fa-layers fa-fw" id="schedule-icon">
 		    <i class="fas fa-shopping-cart"></i>

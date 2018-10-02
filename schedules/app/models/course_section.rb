@@ -1,6 +1,4 @@
 # Contains logic belonging to the +CourseSection+ model.
-#
-# TODO: Add more docs
 class CourseSection < ApplicationRecord
   # Each +CourseSection+ belongs to a +Course+ and an +Instructor+.
   belongs_to :course

@@ -23,23 +23,28 @@ def parse_courses(subjects)
 end
 
 def load_courses(courses, semester)
-  courses.each do |course|
-    Course.create!(subject: course[:subject],
-                   title: course[:title],
-                   course_number: course[:course_number],
-                   credits: course[:credits],
-                   description: course[:description],
-                   semester: semester)
+  insert_hashes = courses.map do |course|
+    {
+      subject: course[:subject],
+      title: course[:title],
+      course_number: course[:course_number],
+      credits: course[:credits],
+      description: course[:description],
+      prereqs: course[:prereqs],
+      semester: semester
+    }
   end
+
+  Course.create!(insert_hashes)
 end
 
-def parse_sections(subjects)
+def parse_sections(semester, subjects)
   parser = PatriotWeb::Parser.new
   sections_in = {}
 
   threads = subjects.map do |subject|
     Thread.new do
-      sections_in[subject] = parser.parse_courses_in_subject(subject)
+      sections_in[subject] = parser.parse_courses_in_subject(semester, subject)
     end
   end
 
@@ -91,39 +96,44 @@ def wipe_db
   Semester.delete_all
 end
 
-def load_closures(semester)
+def load_closures
   # create closures for the days there will be no classes
   # see: https://registrar.gmu.edu/calendars/fall-2018/
-  Closure.create! date: Date.new(2018, 9, 3), semester: semester
-  Closure.create! date: Date.new(2018, 10, 8), semester: semester
-  (21..25).each { |n| Closure.create! date: Date.new(2018, 11, n), semester: semester }
-  (10..19).each { |n| Closure.create! date: Date.new(2018, 12, n), semester: semester }
+  fall2018 = Semester.find_by(season: 'Fall', year: '2018')
+  Closure.create! date: Date.new(2018, 9, 3), semester: fall2018
+  Closure.create! date: Date.new(2018, 10, 8), semester: fall2018
+  (21..25).each { |n| Closure.create! date: Date.new(2018, 11, n), semester: fall2018 }
+  (10..19).each { |n| Closure.create! date: Date.new(2018, 12, n), semester: fall2018 }
 end
 
 def main
   wipe_db
 
   parser = PatriotWeb::Parser.new
+  semesters = parser.parse_semesters[0..1] # expand to include however many semesters you want
+  courses = nil
 
-  puts "Parsing subjects..."
-  semester = parser.parse_semesters.first
-  subjects = parser.parse_subjects(semester)
+  semesters.each do |semester|
+    puts "#{semester[:season]} #{semester[:year]}"
+    db_semester = Semester.create!(season: semester[:season], year: semester[:year])
 
-  puts "Parsing courses from catalog.gmu.edu..."
-  courses = parse_courses(subjects)
+    puts "\tParsing subjects..."
+    subjects = parser.parse_subjects(semester[:value])
 
-  db_semester = Semester.create! season: 'Fall', year: 2018
+    puts "\tParsing courses from catalog.gmu.edu..."
+    courses = parse_courses(subjects) if courses.nil?
 
-  puts "Loading courses..."
-  load_courses(courses, db_semester)
+    puts "\tLoading courses..."
+    load_courses(courses, db_semester)
 
-  puts "Parsing sections from Patriot Web..."
-  sections_in = parse_sections(subjects)
+    puts "\tParsing sections from Patriot Web..."
+    sections_in = parse_sections(semester[:value], subjects)
 
-  puts "Loading sections..."
-  load_sections(sections_in, db_semester)
+    puts "\tLoading sections..."
+    load_sections(sections_in, db_semester)
+  end
 
-  load_closures(db_semester)
+  load_closures
 end
 
 main

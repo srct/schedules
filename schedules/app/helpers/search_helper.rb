@@ -1,4 +1,16 @@
 module SearchHelper
+  class GenericQueryData
+    attr_reader :semester
+    attr_reader :sort_mode
+    attr_reader :search_string
+    
+    def initialize(search_string, sort_mode, semester)
+      @semester = semester
+      @sort_mode = sort_mode
+      @search_string = search_string
+    end
+  end
+  
   class GenericItem
     attr_reader :data
     attr_reader :type
@@ -8,23 +20,31 @@ module SearchHelper
       @data = data
     end
     
-    def self.fetchall(query_string, sort_mode=:auto)
+    def self.fetchall(search_string, sort_mode=:auto, semester=:fall2018)
+      query_data = GenericQueryData.new(search_string, sort_mode, semester)
       models = []
-      models += fetch_instructors query_string
-      models += fetch_courses query_string
+      models += fetch_instructors query_data
+      models += fetch_courses query_data
       build_list(models)
     end
     
-    def self.fetch_instructors(query_string)
-      Instructor.from_name(Instructor.select("*"), query_string).all
+    def self.fetch_instructors(query_data)
+      Instructor.from_name(Instructor.select("instructors.*, COUNT(course_sections.id) AS section_count"), query_data.search_string)
+                .left_outer_joins(:course_sections)
+                .group("instructors.id")
+                .where("course_sections.semester = ?", query_data.semester)
+                .having("section_count > 0")
+                .all
     end
     
-    def self.fetch_courses(query_string)
+    def self.fetch_courses(query_data)
+      query_string = query_data.search_string
       query_string.upcase!
       CourseReplacementHelper.replace!(query_string)
       base_query = Course.select("courses.*, count(course_sections.id) AS section_count")
                          .left_outer_joins(:course_sections)
                          .having("section_count > 0")
+                         .where("course_sections.semester = ?", query_data.semester)
                          .group("courses.id")
   
       subj = nil

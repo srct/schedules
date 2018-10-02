@@ -22,3 +22,17 @@ const elementFromString = string => {
     const html = new DOMParser().parseFromString(string, 'text/html');
     return html.body.firstChild;
 };
+
+document.addEventListener('DOMContentLoaded', () => {
+    this.schedule = new Schedule();
+});
+
+/** Loads FontAwesome icons on load; fixes weird flickering */
+document.addEventListener('turbolinks:load', () => {
+    FontAwesome.dom.i2svg();
+});
+
+const setSemester = async select => {
+    const resp = await fetch(`/sessions/update?semester_id=${select.value}`);
+    location.reload(true);
+};
