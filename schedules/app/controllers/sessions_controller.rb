@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
   def update
-    set_cookie :crns
-    set_cookie :semester_id
+    update_cookie :crns
+    update_cookie :semester_id
 
     head :ok
   end
