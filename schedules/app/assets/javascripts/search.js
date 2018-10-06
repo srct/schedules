@@ -35,11 +35,12 @@ const removeFromSchedule = section => {
  * Toggles the display of the schedule
  */
 const toggleSections = course => {
-    const sections = course.querySelector('#sections');
-    if (sections.style.display === 'block') {
-        course.querySelector('#sections').style.display = 'none';
+    const sections = course.querySelector('.sections');
+    console.log(sections);
+    if (sections.style.display === 'flex') {
+        sections.style.display = 'none';
     } else {
-        course.querySelector('#sections').style.display = 'block';
+        sections.style.display = 'flex';
     }
 };
 

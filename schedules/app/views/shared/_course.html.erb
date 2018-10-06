@@ -1,34 +1,36 @@
 <% expanded = false unless defined? expanded %>
 
 <div class="card" id="course-<%= course.id %>" onclick="toggleSections(this)">
+  <div class="card-header">
+    <h3><%= "#{course.subject} #{course.course_number}" %></h3>
+    <h5><em><%= course.title %></em>. <%= course.credits %> credits.</h5>
+  </div>
   <div class="card-body">
     <div>
-      <h3 style="float: left"><%= "#{course.subject} #{course.course_number}" %></h3>
-      <h5 style="float: right"><em><%= course.title %></em>. <%= course.credits %> credits.</h5>
+      <ul class="attr-list">
+        <li><i class="fa fa-book"></i></li>
+      </ul>
     </div>
-
-    <div style="clear: both"> </div>
-
-    <p class="description"><%= course.description %></p>
+    <p class="description"><%= course.description %>...</p>
 
     <% unless course.prereqs.nil? || course.prereqs.empty? %>
-	<% first, rest = course.prereqs.split(':') %>
-	<% prereqs, note = rest.split('.') %>
-	<p><strong><%= first %>:</strong> <%= prereqs %> <sub><%= note %></sub></p>
+    	<% first, rest = course.prereqs.split(':') %>
+    	<% prereqs, note = rest.split('.') %>
+    	<p><strong><%= first %>:</strong> <%= prereqs %> <sub><%= note %></sub></p>
     <% end %>
-
+  
     <div class="d-block" style="text-align: center">
-	<p style="margin-bottom:-4px; font-size: 10px;">Expand</p>
-	<i class="fas fa-chevron-down"></i>
+  	  <p style="margin-bottom:-4px; font-size: 10px;">Expand</p>
+  	  <i class="fas fa-chevron-down"></i>
     </div>
-
+  
     <!-- List of Course Sections -->
-    <ul class="list-group list-group-flush" id="sections" style="display: <%= expanded ? "block" : "none" %>">
-	<% if defined?(@instructor) %>
-	    <%= render partial: 'shared/section', collection: course.course_sections.where(instructor: @instructor), locals: { in_cart: false } %>
-	<% else %>
-	    <%= render partial: 'shared/section', collection: course.course_sections, locals: { in_cart: false } %>
-	<% end %>
-    </ul>
+    <div class="list-group list-group-flush sections" style="display: <%= expanded ? "flex" : "none" %>">
+	    <% if defined?(@instructor) %>
+        <%= render partial: 'shared/section', collection: course.course_sections.where(instructor: @instructor), locals: { in_cart: false } %>
+	    <% else %>
+	      <%= render partial: 'shared/section', collection: course.course_sections, locals: { in_cart: false } %>
+	    <% end %>
+    </div>
   </div>
 </div>

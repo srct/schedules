@@ -27,6 +27,33 @@ body {
     
     box-shadow: 0 0 5px rgba(0,0,0,0.2);
     transition: 0.3s;
+    
+    ul.attr-list {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      
+      li {
+        &:nth-child(odd) {
+          float: left;
+          clear: left;
+        }
+        
+        &:nth-child(even) {
+          float: right;
+          clear: right;
+        }
+      }
+    }
+    
+    .card-header {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .card-body {
+      
+    }
 }
 
 /* On mouse-over, add a deeper shadow */

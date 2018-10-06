@@ -1,30 +1,29 @@
 <% if in_cart %>
-    <li id="section-<%= section.crn %>"
-	class="list-group-item schedule-section-card"
-	data-crn="<%= section.crn %>"
-	onclick="removeFromSchedule(this)"
-    >
-	<span style="float:left"><b class="subj"><%= "#{section.name}" %></b>:  <%= section.title %></span>
-	<span style="float:right"><i class="fas fa-map-marker-alt"></i> <%= section.location %></span>
-	<div style="clear: both"></div>
-	<span style="float:left"><i class="fas fa-chalkboard-teacher"></i> <%= link_to section.instructor.name, instructor_path(section.instructor) %> </span>
-	<span style="float:right"><i class="fas fa-clock"></i> <%= "#{section.days}, #{section.start_time}-#{section.end_time}" %></span>
-	<div style="clear: both"></div>
-    </li>
+    <div id="section-<%= section.crn %>"
+	      class="list-group-item schedule-section-card"
+	      data-crn="<%= section.crn %>"
+	      onclick="removeFromSchedule(this)">
+    	<ul class="attr-list">
+      	<li><b class="subj"><%= "#{section.name}" %></b>:  <%= section.title %></li>
+      	<li><i class="fas fa-map-marker-alt"></i> <%= section.location %></li>
+      	<li><i class="fas fa-chalkboard-teacher"></i> <%= link_to section.instructor.name, instructor_path(section.instructor) %> </li>
+      	<li><i class="fas fa-clock"></i> <%= "#{section.days}, #{section.start_time}-#{section.end_time}" %></li>
+      </ul>
+    </a>
+  </div>
 
 <% else %>
-    <li id="section-<%= section.crn %>"
-	class="list-group-item section-item <%= "selected" if @cart.include? section %>"
-	data-crn="<%= section.crn %>"
-	onclick="addOrRemoveFromSchedule(event, this)"
-    >
-	<span style="float:left"><b class="subj"><%= "#{section.name}" %></b>:  <%= section.title %></span>
-	<span style="float:right"><i class="fas fa-map-marker-alt"></i> <%= section.location %></span>
-	<div style="clear: both"></div>
-	<span style="float:left"><i class="fas fa-chalkboard-teacher"></i> <%= link_to section.instructor.name, instructor_path(section.instructor) %></span>
-	<span style="float:right"><i class="fas fa-clock"></i> <%= "#{section.days}, #{section.start_time}-#{section.end_time}" %></span>
-	<div style="clear: both"></div>
-    </li>
+    <div id="section-<%= section.crn %>"
+	      class="list-group-item section-item <%= "selected" if @cart.include? section %>"
+	      data-crn="<%= section.crn %>"
+	      onclick="addOrRemoveFromSchedule(event, this)">
+	  <ul class="attr-list">
+    	<li><b class="subj"><%= "#{section.name}" %></b>:  <%= section.title %></li>
+    	<li><i class="fas fa-map-marker-alt"></i> <%= section.location %></li>
+    	<li><i class="fas fa-chalkboard-teacher"></i> <%= link_to section.instructor.name, instructor_path(section.instructor) %> </li>
+    	<li><i class="fas fa-clock"></i> <%= "#{section.days}, #{section.start_time}-#{section.end_time}" %></li>
+    </ul>
+  </div>
 <% end  %>
 
 

@@ -29,7 +29,9 @@ module SearchHelper
     end
     
     def self.fetch_instructors(query_data)
-      Instructor.from_name(Instructor.select("instructors.*"), query_data.search_string)
+      Instructor.from_name(Instructor.select("instructors.*, COUNT(course_sections.id) AS section_count"), query_data.search_string)
+                .left_outer_joins(:course_sections)
+                .group("instructors.id")
     end
     
     def self.fetch_courses(query_data)
