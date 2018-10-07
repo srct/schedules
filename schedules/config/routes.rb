@@ -2,7 +2,7 @@
 Rails.application.routes.draw do
   get 'search', to: 'search#index'
   get 'sessions/update', as: 'update_session'
-  
+
   resources :instructors, only: [:index, :show]
 
   scope :api do # Register /api routes
