@@ -6,9 +6,9 @@
 	<div class="card-body">
 	    <h3 class="card-title">Your Schedule</h3>
 	</div>
-	<ul class="list-group list-group-flush" id="schedule">
+	<div class="list-group list-group-flush" id="schedule">
 	    <%= render partial: 'shared/section', collection: @cart, locals: { in_cart: true } %>
-	</ul>
+	</div>
 	<div class="card-body">
 	    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exportModal" onclick="setUrlInModal()">
 		Export schedule
