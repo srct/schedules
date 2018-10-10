@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get 'sessions/update', as: 'update_session'
 
   resources :instructors, only: [:index, :show]
+  get 'schedule', to: 'schedules#show', as: 'schedule'
 
   scope :api do # Register /api routes
     resources :courses, only: [:index, :show]

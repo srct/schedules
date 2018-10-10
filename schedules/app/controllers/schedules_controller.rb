@@ -15,4 +15,19 @@ class SchedulesController < ApplicationController
     @schedule = Schedule.new crns
     render plain: @schedule.to_ical # render a plaintext iCal file
   end
+
+  def show
+    @events = @cart.map do |_cid, sections|
+      s = sections.first
+      formatted_date = Date.today.to_s.tr('-', '')
+      formatted_time = Time.parse(s.start_time).strftime("%H%M%S")
+      formatted_endtime = Time.parse(s.end_time).strftime("%H%M%S")
+
+      {
+        title: s.name,
+        start: "#{formatted_date}T#{formatted_time}",
+        end: "#{formatted_date} #{formatted_endtime}"
+      }
+    end
+  end
 end

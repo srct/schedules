@@ -4,6 +4,9 @@
   <div class="card-header">
     <h4><%= "#{course.subject} #{course.course_number}" %></h4>
     <h5><em><%= course.title %></em>. <%= course.credits %> credits.</h5>
+    <h4 id="add-course-btn" onclick="addCourse(event, '<%= course.id %>');">
+			<i class="fas fa-plus" style="color: green"></i>
+		</h4>
   </div>
   <div class="card-body">
     <div class="attr-list">

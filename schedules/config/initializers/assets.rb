@@ -16,4 +16,7 @@ Rails.application.config.assets.precompile += %w(
   schedule.js
   masonstrap.min.css
   masonstrap.min.js
+  moment.min.js
+  fullcalendar.min.js
+  fullcalendar.min.css
 )

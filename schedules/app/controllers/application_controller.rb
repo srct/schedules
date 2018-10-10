@@ -12,15 +12,17 @@ class ApplicationController < ActionController::Base
   end
 
   def set_cart
-    @cart = cookies[:crns].split(',').map do |crn|
-      s = CourseSection.find_by_crn(crn)
-      s if s.course.semester == @semester
+    sections = cookies[:section_ids].split(',').map do |id|
+      CourseSection.find_by_id(id)
     end
 
-    @cart.compact!
+    @cart = sections.group_by do |s|
+      s.course.id
+    end
   end
 
   def set_cookies
     cookies[:crns] = "" if cookies[:crns].nil?
+    cookies[:section_ids] = "" if cookies[:section_ids].nil?
   end
 end
