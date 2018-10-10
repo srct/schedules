@@ -3,17 +3,30 @@
 
 const sectionWithCrn = crn => document.getElementById('search-list').querySelector(`[data-crn="${crn}"]`);
 
+const addCourse = (event, id) => {
+    const courseCard = document.getElementById(`course-${id}`);
+    const title = courseCard.querySelector('#title').innerText;
+    const sectionsItems = Array.from(courseCard.querySelectorAll('li'));
+    const sections = sectionsItems.map(li => ({ ...li.dataset }));
+
+    this.schedule.addCourse({ title, id, sections });
+    sectionsItems.forEach(s => s.classList.add('selected'));
+
+    event.stopPropagation();
+};
 /**
  * Either adds or removes a section from the schedule depending on
  * if it is currently in the schedule.
  */
-const addOrRemoveFromSchedule = (event, section) => {
-    if (this.schedule.ids.includes(section.dataset.crn)) {
-        this.schedule.removeFromSchedule(section.dataset.crn);
-        section.classList.remove('selected');
+const addOrRemoveFromSchedule = (event, sectionNode) => {
+    const section = { ...sectionNode.dataset };
+
+    if (this.schedule.includesSection(section.id)) {
+        this.schedule.removeSection(section);
+        sectionNode.classList.remove('selected');
     } else {
-        this.schedule.addToSchedule(section.cloneNode(true));
-        section.classList.add('selected');
+        this.schedule.addSection(section);
+        sectionNode.classList.add('selected');
     }
 
     event.stopPropagation();
