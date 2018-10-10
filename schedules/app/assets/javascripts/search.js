@@ -5,7 +5,7 @@ const sectionWithCrn = crn => document.getElementById('search-list').querySelect
 
 const addCourse = (event, id) => {
     const courseCard = document.getElementById(`course-${id}`);
-    const title = courseCard.querySelector('#title').innerText;
+    const title = courseCard.querySelector('.title').innerText;
     const sectionsItems = Array.from(courseCard.querySelectorAll('li'));
     const sections = sectionsItems.map(li => ({ ...li.dataset }));
 

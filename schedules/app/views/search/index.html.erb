@@ -3,7 +3,7 @@
     <% if result.type == :course %>
       <%= render partial: 'shared/course', object: result.data %>
     <% elsif result.type == :instructor %>
-      <%= render partial: 'shared/instructor', object: result.data%>
+      <%= render partial: 'shared/instructor', object: result.data %>
     <% end %>
   <% end %>
 <% else %>

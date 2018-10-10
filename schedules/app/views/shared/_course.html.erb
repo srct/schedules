@@ -2,7 +2,7 @@
 
 <div class="card" id="course-<%= course.id %>" onclick="toggleSections(this)">
   <div class="card-header">
-    <h4><%= "#{course.subject} #{course.course_number}" %></h4>
+    <h4 class="title"><%= "#{course.subject} #{course.course_number}" %></h4>
     <h5><em><%= course.title %></em>. <%= course.credits %> credits.</h5>
     <h4 id="add-course-btn" onclick="addCourse(event, '<%= course.id %>');">
 			<i class="fas fa-plus" style="color: green"></i>
@@ -29,9 +29,9 @@
     <!-- List of Course Sections -->
     <div class="list-group list-group-flush sections" style="display: <%= expanded ? "flex" : "none" %>">
 	    <% if defined?(@instructor) %>
-        <%= render partial: 'shared/section', collection: course.course_sections.where(instructor: @instructor), locals: { in_cart: false } %>
+        <%= render partial: 'shared/section', collection: course.course_sections.where(instructor: @instructor), locals: { course: course } %>
 	    <% else %>
-	      <%= render partial: 'shared/section', collection: course.course_sections, locals: { in_cart: false } %>
+	      <%= render partial: 'shared/section', collection: course.course_sections, locals: { course: course } %>
 	    <% end %>
     </div>
   </div>
