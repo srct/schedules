@@ -1,0 +1,21 @@
+<div id="calendar"></div>
+
+<template id="events" data-events="<%= @events.to_json %>"></template>
+
+<script>
+ /* const cal = document.querySelector('#calendar');
+  * var calendar = new Calendar(cal, {
+  *     defaultView: 'agendaWeek'
+  * }); */ 
+ document.addEventListener('DOMContentLoaded', () => {
+     const eventsJSON = document.querySelector('#events').dataset.events;
+     const events = JSON.parse(eventsJSON);
+     console.log(events);
+     $('#calendar').fullCalendar({
+	 defaultView: 'agendaWeek',
+	 header: { right: 'next'},
+	 events: events
+     });
+ });
+ 
+</script>
