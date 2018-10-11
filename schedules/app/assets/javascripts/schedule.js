@@ -100,7 +100,7 @@ class Schedule {
             fetch(`/sessions/update?section_ids=${this.ids.join(',')}`, { cache: 'no-store' });
         } else {
             const courseCard = document.getElementById(`course-${section.cid}`);
-            const title = courseCard.querySelector('#title').innerText;
+            const title = courseCard.querySelector('.title').innerText;
 
             this.addCourse({ title, id: section.cid, sections: [section] });
         }
