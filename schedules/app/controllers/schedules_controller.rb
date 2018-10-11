@@ -25,11 +25,11 @@ class SchedulesController < ApplicationController
     "S": Date.new(2019, 1, 19),
     "U": Date.new(2019, 1, 20)
   }.freeze
-      
+
   def show
     @events = @cart.map do |_cid, sections|
       s = sections.first
-      
+
       s.days.split('').map do |day|
         formatted_date = DAYS[day.to_sym].to_s.tr('-', '')
         time = Time.parse(s.start_time).strftime("%H%M%S")
@@ -41,7 +41,6 @@ class SchedulesController < ApplicationController
           end: "#{formatted_date}T#{endtime}"
         }
       end
-      
     end.flatten
   end
 end
