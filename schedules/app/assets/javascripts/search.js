@@ -5,7 +5,7 @@ const sectionWithCrn = crn => document.getElementById('search-list').querySelect
 
 const addCourse = (event, id) => {
     const courseCard = document.getElementById(`course-${id}`);
-    const title = courseCard.querySelector('#title').innerText;
+    const title = courseCard.querySelector('.title').innerText;
     const sectionsItems = Array.from(courseCard.querySelectorAll('li'));
     const sections = sectionsItems.map(li => ({ ...li.dataset }));
 
@@ -48,11 +48,12 @@ const removeFromSchedule = section => {
  * Toggles the display of the schedule
  */
 const toggleSections = course => {
-    const sections = course.querySelector('#sections');
-    if (sections.style.display === 'block') {
-        course.querySelector('#sections').style.display = 'none';
+    const sections = course.querySelector('.sections');
+    console.log(sections);
+    if (sections.style.display === 'flex') {
+        sections.style.display = 'none';
     } else {
-        course.querySelector('#sections').style.display = 'block';
+        sections.style.display = 'flex';
     }
 };
 

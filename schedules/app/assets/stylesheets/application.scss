@@ -27,6 +27,28 @@ body {
     
     box-shadow: 0 0 5px rgba(0,0,0,0.2);
     transition: 0.3s;
+    
+    .card-header {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .card-body {
+      .attr-list {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        padding-bottom: 10px;
+        
+        .attr {
+          margin-right: 13px;
+        }
+      } 
+    }
+}
+
+.unpadded {
+  padding: 0px;
 }
 
 /* On mouse-over, add a deeper shadow */

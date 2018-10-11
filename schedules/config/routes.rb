@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     resources :courses, only: [:index, :show]
     resources :course_sections, only: [:index]
     resources :instructors, only: [:index, :show]
+    resources :course_listings, only: [:index]
     resources :schedules, only: [:index]
   end
 

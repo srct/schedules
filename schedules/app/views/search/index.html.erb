@@ -1,7 +1,13 @@
-<% if @courses.any? %>
-    <%= render partial: 'shared/course', collection: @courses %>
+<% if @results.any? %>
+  <% @results.each do |result| %>
+    <% if result.type == :course %>
+      <%= render partial: 'shared/course', object: result.data %>
+    <% elsif result.type == :instructor %>
+      <%= render partial: 'shared/instructor', object: result.data %>
+    <% end %>
+  <% end %>
 <% else %>
-    <h1>Sorry, we couldn't find anything matching your search.</h1>
-    <p>Please try again!</p>
+  <h1>Sorry, we couldn't find anything matching your search.</h1>
+  <p>Please try again!</p>
 <% end %>
 
