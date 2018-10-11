@@ -1,4 +1,4 @@
-class Schedule {
+class Cart {
     constructor() {
         this.isOpen = false;
         this._courses = {}; // {title, id, sections: {id, crn}}
@@ -12,7 +12,7 @@ class Schedule {
         }
         document.getElementById('course-counter').innerText = Object.keys(this._courses).length;
 
-        this._ids = Array.from(document.getElementById('schedule').children).map(e => e.dataset.crn);
+        this._ids = Array.from(document.getElementById('cart-courses').children).map(e => e.dataset.crn);
     }
 
     get crns() {
@@ -45,12 +45,12 @@ class Schedule {
     addCourse(course) {
         this._courses[course.id] = course;
 
-        const parent = document.querySelector('#schedule');
-        const current = parent.querySelector(`#schedule-${course.id}`);
+        const courseList = document.getElementById('cart-courses');
+        const courseNode = courseList.querySelector(`#schedule-${course.id}`);
 
         const newNode = this._constructCourseNode(course);
-        if (current !== null) parent.replaceChild(newNode, current);
-        else parent.appendChild(newNode);
+        if (courseNode !== null) courseList.replaceChild(newNode, courseNode);
+        else courseList.appendChild(newNode);
 
         document.getElementById('course-counter').innerText = Object.keys(this._courses).length;
         fetch(`/sessions/update?section_ids=${this.ids.join(',')}`, { cache: 'no-store' });
@@ -65,9 +65,9 @@ class Schedule {
 
         delete this._courses[id];
 
-        const parent = document.querySelector('#schedule');
-        const current = parent.querySelector(`#schedule-${id}`);
-        parent.removeChild(current);
+        const courseList = document.getElementById('cart-courses');
+        const current = courseList.querySelector(`#schedule-${id}`);
+        courseList.removeChild(current);
 
         document.getElementById('course-counter').innerText = Object.keys(this._courses).length;
         fetch(`/sessions/update?section_ids=${this.ids.join(',')}`, { cache: 'no-store' });
@@ -93,7 +93,7 @@ class Schedule {
         if (course) {
             course.sections.push(section);
 
-            const courseNode = document.querySelector('#schedule').querySelector(`#schedule-${course.id}`);
+            const courseNode = document.getElementById(`#schedule-${course.id}`);
             const crnList = courseNode.querySelector('.crns');
             crnList.innerText = course.sections.map(s => `#${s.crn}`);
 
@@ -109,7 +109,7 @@ class Schedule {
     removeSection(section) {
         const course = this.courseContainingSection(section.id);
         course.sections = course.sections.filter(s => s.id !== section.id);
-        const schedule = document.querySelector('#schedule');
+        const schedule = document.querySelector('#cart-courses');
         const courseNode = schedule.querySelector(`#schedule-${course.id}`);
         const crnList = courseNode.querySelector('.crns');
         if (course.sections.length === 0) {
@@ -148,5 +148,5 @@ class Schedule {
 }
 
 const removeCourse = id => {
-    this.schedule.removeCourse(id);
+    this.cart.removeCourse(id);
 };

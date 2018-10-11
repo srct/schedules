@@ -1,13 +1,23 @@
-<% if @results.any? %>
-  <% @results.each do |result| %>
-    <% if result.type == :course %>
-      <%= render partial: 'shared/course', object: result.data %>
-    <% elsif result.type == :instructor %>
-      <%= render partial: 'shared/instructor', object: result.data %>
-    <% end %>
-  <% end %>
-<% else %>
-  <h1>Sorry, we couldn't find anything matching your search.</h1>
-  <p>Please try again!</p>
+<% unless @instructors.nil? %>
+    <h2>Instructors</h2>
+    <div class="row">
+	<% @instructors.map(&:data).each do |instructor| %>
+	    <div class="col"><%= render partial: 'shared/instructor', object: instructor %></div>
+	<% end %>
+    </div>
+    <hr />
 <% end %>
+
+<% unless @courses.nil? %>
+    <h2>Courses</h2>
+    <% @courses.map(&:data).each do |course| %>
+	<div class="col"><%= render partial: 'shared/course', object: course %></div>
+    <% end %>
+<% end %>
+
+<% if @courses.nil? && @instructors.nil? %>
+    <h1>Sorry, we couldn't find anything matching your search.</h1>
+    <p>Please try again!</p>
+<% end %>
+
 

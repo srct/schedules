@@ -13,9 +13,9 @@ class CourseSection < ApplicationRecord
   def labs
     return nil unless section_type == "Lecture"
 
-    lecture_number = name.split[name.split.length-1]
+    lecture_number = name.split[name.split.length - 1]
     course.course_sections.select do |s|
-      s.title.split[s.title.split.length-1] == lecture_number
+      s.title.split[s.title.split.length - 1] == lecture_number
     end
   end
 

@@ -1,0 +1,14 @@
+.cart-course {
+    display: flex; justify-content: space-between;
+    .title {
+	min-width: 15%;
+    }
+    .crns {
+	color: gray;
+	font-size: 10pt;
+    }
+}
+
+#cart {
+    display: none;
+}
