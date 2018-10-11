@@ -7,16 +7,6 @@
   * var calendar = new Calendar(cal, {
   *     defaultView: 'agendaWeek'
   * }); */ 
- document.addEventListener('DOMContentLoaded', () => {
-     const eventsJSON = document.querySelector('#events').dataset.events;
-     const events = JSON.parse(eventsJSON);
-     console.log(events);
-     $('#calendar').fullCalendar({
-	 defaultDate: new Date(2019, 0, 14),
-	 defaultView: 'agendaWeek',
-	 header: { right: 'next'},
-	 events: events
-     });
- });
+ 
  
 </script>

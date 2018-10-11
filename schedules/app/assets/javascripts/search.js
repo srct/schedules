@@ -9,23 +9,23 @@ const addCourse = (event, id) => {
     const sectionsItems = Array.from(courseCard.querySelectorAll('li'));
     const sections = sectionsItems.map(li => ({ ...li.dataset }));
 
-    this.schedule.addCourse({ title, id, sections });
+    this.cart.addCourse({ title, id, sections });
     sectionsItems.forEach(s => s.classList.add('selected'));
 
     event.stopPropagation();
 };
 /**
- * Either adds or removes a section from the schedule depending on
- * if it is currently in the schedule.
+ * Either adds or removes a section from the cart depending on
+ * if it is currently in the cart.
  */
-const addOrRemoveFromSchedule = (event, sectionNode) => {
+const addOrRemoveFromCart = (event, sectionNode) => {
     const section = { ...sectionNode.dataset };
 
-    if (this.schedule.includesSection(section.id)) {
-        this.schedule.removeSection(section);
+    if (this.cart.includesSection(section.id)) {
+        this.cart.removeSection(section);
         sectionNode.classList.remove('selected');
     } else {
-        this.schedule.addSection(section);
+        this.cart.addSection(section);
         sectionNode.classList.add('selected');
     }
 
@@ -33,15 +33,15 @@ const addOrRemoveFromSchedule = (event, sectionNode) => {
 };
 
 /**
- * Removes a given section from the schedule
- * @param {Node} DOM Node of the Section in the schedule
+ * Removes a given section from the cart
+ * @param {Node} DOM Node of the Section in the cart
  */
-const removeFromSchedule = section => {
+const removeFromCart = section => {
     const sectionInSearch = sectionWithCrn(section.dataset.crn);
     if (sectionInSearch) {
         sectionInSearch.classList.remove('selected');
     }
-    this.schedule.removeFromSchedule(section.dataset.crn);
+    this.cart.removeFromSchedule(section.dataset.crn);
 };
 
 /**
@@ -62,5 +62,5 @@ const toggleSections = course => {
  * and sets the link in the modal to it.
  */
 const setUrlInModal = () => {
-    document.getElementById('calendar-link').innerText = `https://${window.location.hostname}/api/schedule?crns=${this.schedule.ids.join(',')}`;
+    document.getElementById('calendar-link').innerText = `https://${window.location.hostname}/api/schedule?crns=${this.cart.ids.join(',')}`;
 };

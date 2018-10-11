@@ -1,11 +1,19 @@
 <div class="card">
-  <div class="card-header">
-    <h4><%= "#{instructor.name}" %></h4>
-  </div>
-  <div class="card-body">
-    <div class="attr-list">
-      <div class="attr"><i class="fa fa-user"></i> Instructor</div>
-      <div class="attr"><i class="fa fa-bars"></i> <%= "#{instructor.section_count}" %> sections</div>
+    <div class="card-body">
+	<div class="attr-list justify-content-between">
+	    <div class="attr">
+		<div class="icon">
+		    <i class="fa fa-user"></i>
+		</div>
+		<%= link_to instructor.name, instructor_path(instructor) %>
+	    </div>
+	    &nbsp;&nbsp;&nbsp;
+	    <div class="attr">
+		<div class="icon">
+		    <i class="fa fa-bars"></i>
+		</div>
+		<%= "#{instructor.section_count}" %> sections
+	    </div>
+	</div>
     </div>
-  </div>
 </div>

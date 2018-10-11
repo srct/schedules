@@ -4,26 +4,21 @@
 <div class="col order-1 order-lg-1" id="cart">
     <div class="card">
 	<div class="card-body">
-	    <h3 class="card-title"><%= link_to 'Your Schedule', schedule_path %></h3>
+	    <h3 class="card-title"><%= link_to 'Your Cart', schedule_path %></h3>
 	</div>
-	<ul class="list-group list-group-flush" id="schedule">
+	<ul class="list-group list-group-flush" id="cart-courses">
 	    <% @cart.each do |cid, sections| %>
 		<% course = Course.find_by_id(cid) %>
-		<li id="schedule-<%= cid %>" class="list-group-item schedule-section-card" onclick="removeCourse(<%= cid %>)">
-		    <div style="display: flex; justify-content: space-between;">
-			<b style="min-width: 15%"><%= "#{course.subject} #{course.course_number}" %></b>
-			<span class="crns" style="color: gray; font-size: 10pt;">
+		<li id="schedule-<%= cid %>" class="list-group-item" onclick="removeCourse(<%= cid %>)">
+		    <div class="cart-course">
+			<b class="title"><%= "#{course.subject} #{course.course_number}" %></b>
+			<span class="crns">
 			    <%= sections.map { |s| "##{s.crn}" }.join(', ') %>
 			</span>
 		    </div>
 		</li>
 	    <% end %>
 	</ul>
-	<div class="card-body">
-	    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exportModal" onclick="setUrlInModal()">
-		Export schedule
-	    </button>
-	</div>
     </div>
 </div>
 

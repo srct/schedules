@@ -24,7 +24,7 @@ const elementFromString = string => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-    this.schedule = new Schedule();
+    this.cart = new Cart();
 });
 
 const setSemester = async select => {

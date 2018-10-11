@@ -27,23 +27,26 @@ body {
     
     box-shadow: 0 0 5px rgba(0,0,0,0.2);
     transition: 0.3s;
-    
+
     .card-header {
-      display: flex;
-      flex-direction: column;
+	display: flex;
+	flex-direction: column;
     }
     
     .card-body {
-      .attr-list {
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        padding-bottom: 10px;
-        
-        .attr {
-          margin-right: 13px;
-        }
-      } 
+	.attr-list {
+            display: flex;
+            flex-direction: row;
+
+            .attr {
+		.icon {
+		    padding-right: 4px;
+		}
+		align-items: center;
+		display: inline-flex;
+		white-space: nowrap;
+            }
+	} 
     }
 }
 
@@ -98,35 +101,8 @@ body {
     align-items: center;
 }
 
-#navbar {
-    margin-top: 8px;
-    margin-bottom: 48px;
-}
-
-#logo {
-    font-size: 24pt;
-    color: black;
-}
-
 .form-control:focus {
     border-color: transparent;
     box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.075) inset, 0px 0px 0px rgba(0, 0, 255, 0.5);
 }
 
-#cart {
-    display: none;
-}
-
-.card .small {
-    margin-bottom: 16px;
-    padding: 12px;
-}
-
-#add-course-btn:hover {
-    background-color: rgba(0,0,0,0.2);
-}
-
-#calendar {
-    background-color: white;
-    padding: 16px;
-}

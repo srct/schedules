@@ -14,6 +14,7 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 Rails.application.config.assets.precompile += %w(
   FileSaver.js
   schedule.js
+  cart.js
   masonstrap.min.css
   masonstrap.min.js
   moment.min.js
