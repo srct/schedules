@@ -29,10 +29,10 @@ module SearchHelper
     end
 
     def self.fetch_instructors(query_data)
-      Instructor
-        .from_name(Instructor.select("instructors.*, COUNT(course_sections.id) AS section_count"), query_data.search_string)
-        .left_outer_joins(:course_sections)
-        .group("instructors.id")
+      Instructor.from_name(Instructor.select("instructors.*, COUNT(courses.id) AS section_count").from("course_sections"), query_data.search_string)
+                .joins("LEFT OUTER JOIN instructors ON instructors.id = course_sections.instructor_id")
+                .joins("LEFT OUTER JOIN courses ON courses.id = course_sections.course_id AND courses.semester_id = #{query_data.semester.id}")
+                .group("instructors.id").all
     end
 
     def self.fetch_courses(query_data)
