@@ -1,38 +1,38 @@
 <% expanded = false unless defined? expanded %>
 
 <div class="card" id="course-<%= course.id %>" onclick="toggleSections(this)">
-  <div class="card-header">
-    <h4 class="title"><%= "#{course.subject} #{course.course_number}" %></h4>
-    <h5><em><%= course.title %></em>. <%= course.credits %> credits.</h5>
-    <h4 id="add-course-btn" onclick="addCourse(event, '<%= course.id %>');">
-			<i class="fas fa-plus" style="color: green"></i>
-		</h4>
-  </div>
-  <div class="card-body">
-    <div class="attr-list">
-      <div class="attr"><i class="fa fa-book"></i> 3 credits</div>
-      <div class="attr"><i class="fa fa-bars"></i> 3 sections</div>
+    <div class="card-header">
+	<h4 class="title"><%= "#{course.subject} #{course.course_number}" %></h4>
+	<h5><em><%= course.title %></em>. <%= course.credits %> credits.</h5>
+	<h4 id="add-course-btn" onclick="addCourse(event, '<%= course.id %>');">
+	    <i class="fas fa-plus" style="color: green"></i>
+	</h4>
     </div>
-    <p class="description"><%= course.description %></p>
+    <div class="card-body">
+	<div class="attr-list">
+	    <div class="attr"><i class="fa fa-book"></i> 3 credits</div>
+	    <div class="attr"><i class="fa fa-bars"></i> 3 sections</div>
+	</div>
+	<p class="description"><%= course.description %></p>
 
-    <% unless course.prereqs.nil? || course.prereqs.empty? %>
-    	<% first, rest = course.prereqs.split(':') %>
-    	<% prereqs, note = rest.split('.') %>
-    	<p><strong><%= first %>:</strong> <%= prereqs %> <sub><%= note %></sub></p>
-    <% end %>
-  
-    <div class="d-block" style="text-align: center">
-  	  <p style="margin-bottom:-4px; font-size: 10px;">Expand</p>
-  	  <i class="fas fa-chevron-down"></i>
-    </div>
-  
-    <!-- List of Course Sections -->
-    <div class="list-group list-group-flush sections" style="display: <%= expanded ? "flex" : "none" %>">
+	<% unless course.prereqs.nil? || course.prereqs.empty? %>
+    	    <% first, rest = course.prereqs.split(':') %>
+    	    <% prereqs, note = rest.split('.') %>
+    	    <p><strong><%= first %>:</strong> <%= prereqs %> <sub><%= note %></sub></p>
+	<% end %>
+	
+	<div class="d-block" style="text-align: center">
+  	    <p style="margin-bottom:-4px; font-size: 10px;">Expand</p>
+  	    <i class="fas fa-chevron-down"></i>
+	</div>
+	
+	<!-- List of Course Sections -->
+	<div class="list-group list-group-flush sections" style="display: <%= expanded ? "flex" : "none" %>">
 	    <% if defined?(@instructor) %>
-        <%= render partial: 'shared/section', collection: course.course_sections.where(instructor: @instructor), locals: { course: course } %>
+		<%= render partial: 'shared/section', collection: course.course_sections.where(instructor: @instructor), locals: { course: course } %>
 	    <% else %>
-	      <%= render partial: 'shared/section', collection: course.course_sections, locals: { course: course } %>
+		<%= render partial: 'shared/section', collection: course.course_sections, locals: { course: course } %>
 	    <% end %>
+	</div>
     </div>
-  </div>
 </div>

@@ -10,6 +10,15 @@ class CourseSection < ApplicationRecord
   validates :title, presence: true
   validates :course_id, presence: true
 
+  def labs
+    return nil unless section_type == "Lecture"
+
+    lecture_number = name.split[name.split.length-1]
+    course.course_sections.select do |s|
+      s.title.split[s.title.split.length-1] == lecture_number
+    end
+  end
+
   # Select all course sections that have an instructor that matches the given name
   def self.with_instructor(name: "")
     joins(:instructor).where("instructors.name LIKE ?", "%#{name}%").select('course_sections.*, instructors.name as instructor_name')

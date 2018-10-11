@@ -2,8 +2,6 @@
 #
 # TODO: Add more docs
 
-require("course_replacement_helper.rb")
-
 class Course < ApplicationRecord
   # Each course belongs to a +Semester+
   belongs_to :semester
@@ -13,12 +11,6 @@ class Course < ApplicationRecord
   validates :course_number, presence: true
   validates :subject, presence: true
   validates :semester_id, presence: true
-
-  # Returns all +CourseSection+ objects that belong to this course.
-  # @return [Array]
-  def course_sections
-    CourseSection.where course_id: id
-  end
 
   def self.from_subject(base_query, subject)
     base_query.where("courses.subject = ?", subject.upcase)
