@@ -1,0 +1,37 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.12.0
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  'npm:debug:20170905':
+    - masonstrap > gulp-connect > send > debug:
+        patched: '2018-10-13T06:03:27.190Z'
+    - masonstrap > gulp-connect > tiny-lr > body-parser > debug:
+        patched: '2018-10-13T06:03:27.190Z'
+    - masonstrap > gulp-connect > tiny-lr > debug:
+        patched: '2018-10-13T06:03:27.190Z'
+  'npm:mime:20170907':
+    - masonstrap > gulp-connect > send > mime:
+        patched: '2018-10-13T06:03:27.190Z'
+  'npm:ms:20170412':
+    - masonstrap > gulp-connect > send > ms:
+        patched: '2018-10-13T06:03:27.190Z'
+    - masonstrap > gulp-connect > send > debug > ms:
+        patched: '2018-10-13T06:03:27.190Z'
+    - masonstrap > gulp-connect > tiny-lr > debug > ms:
+        patched: '2018-10-13T06:03:27.190Z'
+    - masonstrap > gulp-connect > tiny-lr > body-parser > debug > ms:
+        patched: '2018-10-13T06:03:27.190Z'
+  'npm:tunnel-agent:20170305':
+    - masonstrap > gulp-imagemin > imagemin-gifsicle > gifsicle > bin-build > download > caw > tunnel-agent:
+        patched: '2018-10-13T06:03:27.190Z'
+    - masonstrap > gulp-imagemin > imagemin-jpegtran > jpegtran-bin > bin-build > download > caw > tunnel-agent:
+        patched: '2018-10-13T06:03:27.190Z'
+    - masonstrap > gulp-imagemin > imagemin-optipng > optipng-bin > bin-build > download > caw > tunnel-agent:
+        patched: '2018-10-13T06:03:27.190Z'
+    - masonstrap > gulp-imagemin > imagemin-gifsicle > gifsicle > bin-wrapper > download > caw > tunnel-agent:
+        patched: '2018-10-13T06:03:27.190Z'
+    - masonstrap > gulp-imagemin > imagemin-jpegtran > jpegtran-bin > bin-wrapper > download > caw > tunnel-agent:
+        patched: '2018-10-13T06:03:27.190Z'
+    - masonstrap > gulp-imagemin > imagemin-optipng > optipng-bin > bin-wrapper > download > caw > tunnel-agent:
+        patched: '2018-10-13T06:03:27.190Z'
