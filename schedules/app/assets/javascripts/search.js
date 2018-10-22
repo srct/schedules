@@ -3,33 +3,58 @@
 
 const sectionWithCrn = crn => document.getElementById('search-list').querySelector(`[data-crn="${crn}"]`);
 
-const addCourse = (event, id) => {
+const addCourse = async (event, id) => {
+    event.stopPropagation();
+
     const courseCard = document.getElementById(`course-${id}`);
     const title = courseCard.querySelector('.title').innerText;
     const sectionsItems = Array.from(courseCard.querySelectorAll('li'));
-    const sections = sectionsItems.map(li => ({ ...li.dataset }));
+    const filtered = sectionsItems.filter(li => {
+        return !li.parentNode.classList.contains('pair') || li.dataset.type === 'Lecture';
+    });
 
-    this.cart.addCourse({ title, id, sections });
-    sectionsItems.forEach(s => s.classList.add('selected'));
-
-    event.stopPropagation();
+    for (const section of filtered) {
+        await addOrRemoveFromCart(undefined, section);
+    }
 };
+
 /**
  * Either adds or removes a section from the cart depending on
  * if it is currently in the cart.
  */
-const addOrRemoveFromCart = (event, sectionNode) => {
+const addOrRemoveFromCart = async (event, sectionNode) => {
+    event && event.stopPropagation();
     const section = { ...sectionNode.dataset };
 
-    if (this.cart.includesSection(section.id)) {
-        this.cart.removeSection(section);
-        sectionNode.classList.remove('selected');
-    } else {
-        this.cart.addSection(section);
-        sectionNode.classList.add('selected');
-    }
+    const parent = sectionNode.parentNode;
+    if (parent.classList.contains('pair')) {
+        const otherNode = Array.from(parent.children).filter(c => c != sectionNode)[0];
+        const other = { ...otherNode.dataset };
 
-    event.stopPropagation();
+        let pair;
+        if (section.type == 'Lecture') {
+            pair = [section, other];
+            await this.cart.addPair(pair);
+        } else {
+            pair = [other, section];
+            await this.cart.addPair(pair);
+        }
+
+        if (this.cart.includesPair(pair)) {
+            console.log('found');
+            [sectionNode, otherNode].forEach(s => s.classList.add('selected'));
+        } else {
+            console.log('not found');
+            [sectionNode, otherNode].forEach(s => s.classList.remove('selected'));
+        }
+    } else {
+        await this.cart.addSections([section]);
+        if (this.cart.includesSection(section)) {
+            sectionNode.classList.add('selected');
+        } else {
+            sectionNode.classList.remove('selected');
+        }
+    }
 };
 
 /**
@@ -49,7 +74,7 @@ const removeFromCart = section => {
  */
 const toggleSections = course => {
     const sections = course.querySelector('.sections');
-    console.log(sections);
+
     if (sections.style.display === 'flex') {
         sections.style.display = 'none';
     } else {

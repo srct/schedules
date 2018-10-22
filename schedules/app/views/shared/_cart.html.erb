@@ -12,9 +12,9 @@
 		<li id="schedule-<%= cid %>" class="list-group-item" onclick="removeCourse(<%= cid %>)">
 		    <div class="cart-course">
 			<b class="title"><%= "#{course.subject} #{course.course_number}" %></b>
-			<span class="crns">
-			    <%= sections.map { |s| "##{s.crn}" }.join(', ') %>
-			</span>
+			<!-- <span class="crns">
+			     <%= sections.map { |s| "##{s.crn}" }.join(', ') %>
+			     </span> -->
 		    </div>
 		</li>
 	    <% end %>

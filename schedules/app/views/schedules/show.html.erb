@@ -1,12 +1,9 @@
+<button onclick="nextSchedule()">Next</button>
+<button onclick="prevSchedule()">Prev</button>
+<span id="currentSchedule">1</span> / <span id="numSchedules">1</span>
+
 <div id="calendar"></div>
 
 <template id="events" data-events="<%= @events.to_json %>"></template>
 
-<script>
- /* const cal = document.querySelector('#calendar');
-  * var calendar = new Calendar(cal, {
-  *     defaultView: 'agendaWeek'
-  * }); */ 
- 
- 
-</script>
+

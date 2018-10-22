@@ -11,7 +11,7 @@
 // about supported directives.
 //
 //= require rails-ujs
-//= require turbolinks
+// require turbolinks
 //= require FileSaver
 //= require_tree .
 // require jquery3
@@ -25,6 +25,7 @@ const elementFromString = string => {
 
 document.addEventListener('DOMContentLoaded', () => {
     this.cart = new Cart();
+    FontAwesome.dom.i2svg();
 });
 
 const setSemester = async select => {
@@ -33,6 +34,7 @@ const setSemester = async select => {
 };
 
 /** Loads FontAwesome icons on load; fixes weird flickering */
-document.addEventListener('turbolinks:load', () => {
-    FontAwesome.dom.i2svg();
-});
+FontAwesome.dom.watch({ observeMutationsRoot: document });
+// document.addEventListener('turbolinks:load', () => {
+//     FontAwesome.dom.i2svg();
+// });

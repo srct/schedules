@@ -10,13 +10,32 @@ class CourseSection < ApplicationRecord
   validates :title, presence: true
   validates :course_id, presence: true
 
-  def labs
-    return nil unless section_type == "Lecture"
+  def is_lecture?
+    section_type == "Lecture"
+  end
 
+  def labs
+    return nil unless is_lecture?
+
+    # Lectures have names formatted like "MATH 214 001"
+    # Labs/recitations have the title format "Recitation for Lecture 001"
+    # so, match all the sections in the same course which have the same number
+    # as the last element of their titles
     lecture_number = name.split[name.split.length - 1]
-    course.course_sections.select do |s|
+    labs_for_section = course.course_sections.select do |s|
       s.title.split[s.title.split.length - 1] == lecture_number
     end
+
+    labs_for_section.map do |lab|
+      [self, lab]
+    end
+  end
+
+  def overlaps?(other)
+    t1_start, t1_end = Time.parse(start_time), Time.parse(end_time)
+    t2_start, t2_end = Time.parse(other.start_time), Time.parse(other.end_time)
+
+    (t1_start <= t2_end && t2_start <= t1_end) && Set.new(days.split).intersect?(Set.new(other.days.split))
   end
 
   # Select all course sections that have an instructor that matches the given name

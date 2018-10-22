@@ -2,6 +2,7 @@
 Rails.application.routes.draw do
   get 'search', to: 'search#index'
   get 'sessions/update', as: 'update_session'
+  get 'sessions/cart'
 
   resources :instructors, only: [:index, :show]
   get 'schedule', to: 'schedules#show', as: 'schedule'

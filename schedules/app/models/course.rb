@@ -12,6 +12,14 @@ class Course < ApplicationRecord
   validates :subject, presence: true
   validates :semester_id, presence: true
 
+  def has_labs?
+    course_sections.reject(&:is_lecture?).count.positive?
+  end
+
+  def lab_course?
+    course_sections.select(&:is_lecture?).count.zero?
+  end
+
   def self.from_subject(base_query, subject)
     base_query.where("courses.subject = ?", subject.upcase)
   end

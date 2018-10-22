@@ -1,6 +1,3 @@
-require 'icalendar'
-require 'time'
-
 # Contains functionality for generating schedules.
 class SchedulesController < ApplicationController
   resource_description do
@@ -16,35 +13,27 @@ class SchedulesController < ApplicationController
     render plain: @schedule.to_ical # render a plaintext iCal file
   end
 
-  DAYS = {
-    "M": Date.new(2019, 1, 14),
-    "T": Date.new(2019, 1, 15),
-    "W": Date.new(2019, 1, 16),
-    "R": Date.new(2019, 1, 17),
-    "F": Date.new(2019, 1, 18),
-    "S": Date.new(2019, 1, 19),
-    "U": Date.new(2019, 1, 20)
-  }.freeze
-
+  include SchedulesHelper
   def show
-    all_sections = @cart.values
-    # schedules = []
-    all_sections.each_with_index do |sections, i|
-    end
-    @events = @cart.map do |_cid, sections|
-      s = sections.first
+    combined = {}
+    @cart.each do |cid, sections|
+      combined[cid] = []
+      sections.each do |section|
 
-      s.days.split('').map do |day|
-        formatted_date = DAYS[day.to_sym].to_s.tr('-', '')
-        time = Time.parse(s.start_time).strftime("%H%M%S")
-        endtime = Time.parse(s.end_time).strftime("%H%M%S")
-
-        {
-          title: s.name,
-          start: "#{formatted_date}T#{time}",
-          end: "#{formatted_date}T#{endtime}"
-        }
       end
-    end.flatten
+    end
+
+    courses = @cart.values.group_by do |s|
+      s.course.id
+    end
+
+    puts courses.keys
+    
+    id_sets = generate_schedules(@cart.values)
+    @events = generate_fullcalender_events(id_sets)
   end
+
+  # this works(?)
+  # recursively build a list of sets containing 1 section from each course chosen
+
 end
