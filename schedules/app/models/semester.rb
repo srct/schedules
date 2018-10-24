@@ -8,4 +8,8 @@ class Semester < ApplicationRecord
   # Ensure necessary fields are present.
   validates :year, presence: true
   validates :season, presence: true
+
+  def to_s
+    return "#{season} #{year}"
+  end
 end
