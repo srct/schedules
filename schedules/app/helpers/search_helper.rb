@@ -1,4 +1,8 @@
 module SearchHelper
+  def in_cart?(id)
+    @cart.include? id.to_s
+  end
+    
   class GenericQueryData
     attr_reader :semester
     attr_reader :sort_mode

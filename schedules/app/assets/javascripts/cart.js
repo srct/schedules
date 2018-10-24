@@ -1,7 +1,12 @@
 class Cart {
     constructor() {
         this.isOpen = false;
-        this._courses = {};
+        this._courses = [];
+
+        const cartData = document.getElementById('cart-data');
+        if (cartData) {
+            this._courses = JSON.parse(cartData.dataset.cart);
+        }
     }
 
     toggle() {
@@ -24,34 +29,13 @@ class Cart {
         for (const courseId in this._courses) {
             if (this._courses[courseId].length === 0) delete this._courses[courseId];
         }
-        console.log(courses);
         document.getElementById('course-counter').innerText = Object.keys(this._courses).length;
     }
 
-    async addSections(sections) {
-        const resp = await fetch(`/sessions/cart?course_id=${sections[0].cid}&section_ids=${sections.map(s => s.id).join(',')}`, { cache: 'no-store' });
+    async addSection(section) {
+        const resp = await fetch(`/sessions/cart?&section_id=${section.id}`, { cache: 'no-store' });
         const json = await resp.json();
         this.courses = json;
-    }
-
-    async addPair(sections) {
-        const resp = await fetch(`/sessions/cart?course_id=${sections[0].cid}&pair_ids=${sections[0].id},${sections[1].id}`, { cache: 'no-store' });
-        const json = await resp.json();
-        this.courses = json;
-    }
-
-    includesPair(pair) {
-        const ids = pair.map(p => p.id);
-        for (const courseId in this._courses) {
-            const pairs = this._courses[courseId];
-            if (!Array.isArray(pairs[0])) continue;
-
-            for (const otherPair of pairs) {
-                if (JSON.stringify(ids) == JSON.stringify(otherPair)) return true;
-            }
-        }
-
-        return false;
     }
 
     includesSection(obj) {

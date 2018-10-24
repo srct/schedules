@@ -4,14 +4,16 @@
     <div class="card-header">
 	<div class="row">
 	    <div class="col">
-		<h4 class="title"><%= "#{course.subject} #{course.course_number}" %></h4>
+		<%= link_to course do %>
+		    <h4 class="title"><%= "#{course.subject} #{course.course_number}" %></h4>
+		<% end %>
 	    </div>
 	    
-	    <div class="col">
-		<h4 id="add-course-btn" class="text-right" onclick="addCourse(event, '<%= course.id %>');">
-		    <i class="fas fa-plus" style="color: green"></i>
-		</h4>
-	    </div>    
+	    <!-- <div class="col">
+		 <h4 id="add-course-btn" class="text-right" onclick="addCourse(event, '<%= course.id %>');">
+		 <i class="fas fa-plus" style="color: green"></i>
+		 </h4>
+		 </div>     -->
 	</div>
 	<h5><em><%= course.title %></em></h5>
     </div>
@@ -47,19 +49,8 @@
 	
 	<!-- List of Course Sections -->
 	<div class="list-group list-group-flush sections" style="display: <%= expanded ? "flex" : "none" %>">
-	    <% if course.has_labs? && !course.lab_course? %>
-		<% course.course_sections.each do |section| %>
-		    <% lecture_list = section.labs %>
-		    <% unless lecture_list.nil? %>
-			<% lecture_list.each do |list| %>
-			    <div class="pair">
-				<%= render partial: 'shared/section', object: list.first, locals: { course: course } %>
-				<%= render partial: 'shared/section', object: list.last, locals: { course: course } %>
-			    </div>
-			    <hr />
-			<% end %>
-		    <% end %>
-		<% end %>
+	    <% if defined?(@instructor) %>
+		<%= render partial: 'shared/section', collection: course.course_sections.where(instructor: @instructor), locals: { course: course } %>
 	    <% else %>
 		<%= render partial: 'shared/section', collection: course.course_sections, locals: { course: course } %>
 	    <% end %>

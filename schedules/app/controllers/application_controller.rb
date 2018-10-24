@@ -12,17 +12,12 @@ class ApplicationController < ActionController::Base
   end
 
   def set_cart
-    sections = cookies[:section_ids].split(',').map do |id|
-      CourseSection.find_by_id(id)
-    end
-
-    @cart = sections.group_by do |s|
-      s.course.id
-    end
+    @cart = JSON.parse(cookies[:cart])
   end
 
   def set_cookies
     cookies[:crns] = "" if cookies[:crns].nil?
     cookies[:section_ids] = "" if cookies[:section_ids].nil?
+    cookies[:cart] = "[]" if cookies[:cart].nil?
   end
 end

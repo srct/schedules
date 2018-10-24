@@ -15,22 +15,8 @@ class SchedulesController < ApplicationController
 
   include SchedulesHelper
   def show
-    combined = {}
-    @cart.each do |cid, sections|
-      combined[cid] = []
-      sections.each do |section|
-
-      end
-    end
-
-    courses = @cart.values.group_by do |s|
-      s.course.id
-    end
-
-    puts courses.keys
-    
-    id_sets = generate_schedules(@cart.values)
-    @events = generate_fullcalender_events(id_sets)
+    @all = @cart.map { |id| CourseSection.find_by_id id }
+    @events = generate_fullcalender_events(@cart)
   end
 
   # this works(?)

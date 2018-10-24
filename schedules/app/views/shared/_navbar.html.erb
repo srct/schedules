@@ -17,18 +17,20 @@
 	    </div>
 	</div>
 
-	<div class="col-sm align-center order-0 order-sm-1" onclick="window.cart.toggle()">
-	    <h1 style="margin-top:24px">
-		<span class="fa-layers fa-fw" id="schedule-icon">
-		    <i class="fas fa-shopping-cart"></i>
-		    <span class="fa-layers fa-fw">
-			<i class="fas fa-circle" data-fa-transform="shrink-3 up-12 right-12" style="color:gray"></i>
-			<span id="course-counter" class="fa-layers-text fa-inverse" data-fa-transform="shrink-10 up-12 right-12" style="font-weight:600">
-			    <%= @cart.length %>
+	<div class="col-sm align-center order-0 order-sm-1">
+	    <a id="cart-button" href="<%= schedule_path %>">
+		<h1 style="margin-top:24px">
+		    <span class="fa-layers fa-fw" id="schedule-icon">
+			<i class="fas fa-shopping-cart"></i>
+			<span class="fa-layers fa-fw">
+			    <i class="fas fa-circle" data-fa-transform="shrink-3 up-12 right-12" style="color:gray"></i>
+			    <span id="course-counter" class="fa-layers-text fa-inverse" data-fa-transform="shrink-10 up-12 right-12" style="font-weight:600">
+				<%= @cart.length %>
+			    </span>
 			</span>
 		    </span>
-		</span>
-	    </h1>
+		</h1>
+	    </a>
 	</div>
 
 	<div class="col order-1 order-sm-0">
