@@ -1,5 +1,5 @@
 # Contains all actions having to do with Courses.
-class CoursesController < ApplicationController
+class API::CoursesController < ApplicationController
   resource_description do
     short 'Working with courses, e.g. CS 112'
   end
@@ -7,7 +7,7 @@ class CoursesController < ApplicationController
   api :GET, '/courses', "Get a list of courses."
   param :subject, String, desc: 'Course subject, e.g. "CS" or "ACCT"'
   param :course_number, Integer, desc: 'Course number, e.g. "112"'
-  def index
+  def index 
     @courses = Course.fetch(params).all
     render json: @courses
   end

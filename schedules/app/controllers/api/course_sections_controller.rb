@@ -1,6 +1,6 @@
 # Contains all actions having to do with CourseSections.
 # This is a nested controller -- see +config/routes.rb+ for details
-class CourseSectionsController < ApplicationController
+class API::CourseSectionsController < ApplicationController
   resource_description do
     short 'Working with course sections, e.g. CS 112 001'
   end

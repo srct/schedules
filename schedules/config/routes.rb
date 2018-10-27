@@ -8,10 +8,10 @@ Rails.application.routes.draw do
   resources :instructors, only: [:index, :show]
   get 'schedule', to: 'schedules#show', as: 'schedule'
   
-  scope :api do # Register /api routes
-    resources :courses, only: [:index, :show]
-    resources :course_sections, only: [:index]
-    resources :instructors, only: [:index, :show]
+  scope :api, module: 'api' do # Register /api routes
+    resources :courses, only: [:index, :show], as: 'api_courses'
+    resources :course_sections, only: [:index], as: 'api_course_sections'
+    resources :instructors, only: [:index, :show], as: 'api_instructors'
     resources :course_listings, only: [:index]
     resources :schedules, only: [:index]
   end

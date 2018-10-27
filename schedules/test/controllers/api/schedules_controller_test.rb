@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class SchedulesControllertest < ActionDispatch::IntegrationTest
+class API::SchedulesControllerTest < ActionDispatch::IntegrationTest
   test "should generate schedule" do
     crns = [course_sections(:cs112001).crn, course_sections(:cs112002).crn]
     get "/api/schedules?crns=#{crns.join(',')}"

@@ -1,4 +1,4 @@
-class CourseListingsController < ApplicationController
+class API::CourseListingsController < ApplicationController
   resource_description do
     short 'Working with courses and associated sections'
   end
@@ -8,7 +8,7 @@ class CourseListingsController < ApplicationController
   param :number, Integer, desc: 'Course number, e.g. "112"'
   def index
     # Make a separate list so that we can include sections
-    @courses = CourseListingsHelper::CourseListing.wrap(Course.fetch(params).all)
+    @courses = API::CourseListingsHelper::CourseListing.wrap(Course.fetch(params).all)
 
     render json: @courses
   end

@@ -1,8 +1,10 @@
 require 'test_helper'
 
-class CoursesControllerTest < ActionDispatch::IntegrationTest
+class API::CoursesControllerTest < ActionDispatch::IntegrationTest
+  semester_id = semesters(:fall2018).id
+  
   test '#index should return all courses' do
-    get courses_url
+    get api_courses_url
     assert_response :success
 
     courses_returned = JSON.parse @response.body
@@ -11,7 +13,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test '#index should return filtered by subject case insensitive' do
-    get courses_url subject: "Cs"
+    get api_courses_url subject: "Cs"
     assert_response :success
 
     courses_returned = JSON.parse @response.body
@@ -21,7 +23,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test '#index should return filtered by subject and course number' do
-    get courses_url subject: "CS", course_number: "112"
+    get api_courses_url subject: "CS", course_number: "112"
     assert_response :success
 
     courses_returned = JSON.parse @response.body
@@ -33,7 +35,7 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
   test '#show should return course_sections for course' do
     cs_112_id = courses(:cs112).id
 
-    get course_url id: cs_112_id
+    get api_course_url id: cs_112_id
     assert_response :success
 
     sections_returned = JSON.parse @response.body

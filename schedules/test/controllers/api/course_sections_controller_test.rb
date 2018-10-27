@@ -1,8 +1,8 @@
 require 'test_helper'
 
-class CourseSectionsControllerTest < ActionDispatch::IntegrationTest
+class API::CourseSectionsControllerTest < ActionDispatch::IntegrationTest
   test 'should get index' do
-    get course_sections_url course_id: courses(:cs112).id
+    get api_course_sections_url course_id: courses(:cs112).id
     assert_response :success
 
     sections_returned = JSON.parse @response.body
@@ -12,7 +12,7 @@ class CourseSectionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should filter by crn' do
-    get course_sections_url crn: course_sections(:cs112001).crn
+    get api_course_sections_url crn: course_sections(:cs112001).crn
     assert_response :success
 
     sections_returned = JSON.parse @response.body
@@ -20,7 +20,7 @@ class CourseSectionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should filter by professor' do
-    get course_sections_url instructor: "king"
+    get api_course_sections_url instructor: "king"
     assert_response :success
 
     sections_returned = JSON.parse @response.body

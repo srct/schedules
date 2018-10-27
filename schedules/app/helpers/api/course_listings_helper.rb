@@ -1,4 +1,4 @@
-module CourseListingsHelper
+module API::CourseListingsHelper
   class CourseListing
     def initialize(course)
       @course = course

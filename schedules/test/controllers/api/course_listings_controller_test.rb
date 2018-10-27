@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class CourseListingsControllerTest < ActionDispatch::IntegrationTest
+class API::CourseListingsControllerTest < ActionDispatch::IntegrationTest
   test 'should grab sections for course' do
     get course_listings_url course_id: courses(:cs112).id
     assert_response :success
