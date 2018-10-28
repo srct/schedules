@@ -1,8 +1,7 @@
 class CoursesController < ApplicationController
   before_action :set_course
-  
-  def show
-  end
+
+  def show; end
 
   private
 

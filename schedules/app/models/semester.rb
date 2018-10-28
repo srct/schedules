@@ -10,6 +10,6 @@ class Semester < ApplicationRecord
   validates :season, presence: true
 
   def to_s
-    return "#{season} #{year}"
+    "#{season} #{year}"
   end
 end

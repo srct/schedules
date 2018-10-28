@@ -7,7 +7,7 @@ class API::CoursesController < ApplicationController
   api :GET, '/courses', "Get a list of courses."
   param :subject, String, desc: 'Course subject, e.g. "CS" or "ACCT"'
   param :course_number, Integer, desc: 'Course number, e.g. "112"'
-  def index 
+  def index
     @courses = Course.fetch(params).all
     render json: @courses
   end

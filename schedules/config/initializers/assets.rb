@@ -14,13 +14,13 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 Rails.application.config.assets.precompile += %w(
   search.js
   search.scss
-  
+
   schedules.js
   schedules.scss
-  
+
   cart.js
   cart.scss
-  
+
   FileSaver.js
   masonstrap.min.css
   masonstrap.min.js

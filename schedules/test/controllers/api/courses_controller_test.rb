@@ -1,8 +1,6 @@
 require 'test_helper'
 
 class API::CoursesControllerTest < ActionDispatch::IntegrationTest
-  semester_id = semesters(:fall2018).id
-  
   test '#index should return all courses' do
     get api_courses_url
     assert_response :success

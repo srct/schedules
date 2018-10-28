@@ -21,5 +21,4 @@ class SchedulesController < ApplicationController
 
   # this works(?)
   # recursively build a list of sets containing 1 section from each course chosen
-
 end

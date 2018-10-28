@@ -15,7 +15,7 @@ class Course < ApplicationRecord
   def full_name
     "#{subject} #{course_number}"
   end
-  
+
   def self.from_subject(base_query, subject)
     base_query.where("courses.subject = ?", subject.upcase)
   end

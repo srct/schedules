@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
 
   def cart
     section_id = params[:section_id]
-    
+
     if @cart.include?(section_id)
       @cart.reject! { |id| section_id == id }
     else
@@ -20,8 +20,6 @@ class SessionsController < ApplicationController
     cookies[:cart] = @cart.to_json
     render json: @cart.to_json
   end
-    
-  
 
   private
 
