@@ -10,28 +10,42 @@ document.addEventListener('DOMContentLoaded', () => {
             header: false,
             events: renderEvents,
         });
-
-        // document.getElementById('numSchedules').innerText = window.events.length;
     }
+
+    initListeners();
 });
 
-// let i = 0;
-
 const renderEvents = (start, end, timezone, callback) => {
-    // document.getElementById('currentSchedule').innerText = i + 1;
     callback(window.events);
 };
 
-// const nextSchedule = () => {
-//     if (i + 1 < window.events.length) i++;
+const remove = async item => {
+    await window.cart.addSection({ ...item.dataset });
+    location.reload(true);
+};
 
-//     $('#calendar').fullCalendar('refetchEvents');
-// };
+/**
+ * Generates a URL for the current sections in the schedule
+ * and sets the link in the modal to it.
+ */
+const setUrlInModal = () => {
+    document.getElementById('calendar-link').innerText = `${window.location.protocol}//${window.location.hostname}/api/schedules?section_ids=${window.cart._courses.join(',')}`;
+};
 
-// const prevSchedule = () => {
-//     if (i > 0) i--;
+const downloadIcs = async () => {
+    const response = await fetch(`http://localhost:3000/api/schedules?section_ids=${window.cart._courses.join(',')}`);
+    const text = await response.text();
+    const blob = new Blob([text], { type: 'text/calendar;charset=utf-8' });
+    saveAs(blob, 'GMU Schedule.ics');
+};
 
-//     $('#calendar').fullCalendar('refetchEvents');
+const addToSystemCalendar = () => {};
 
-//     console.log(window.events[i]);
-// };
+const initListeners = () => {
+    const items = Array.from(document.querySelectorAll('.section-item'));
+    items.forEach(item => (item.onclick = () => remove(item)));
+
+    document.getElementById('open-modal-btn').onclick = setUrlInModal;
+    document.getElementById('download-ics').onclick = downloadIcs;
+    document.getElementById('add-to-system').onclick = addToSystemCalendar;
+};

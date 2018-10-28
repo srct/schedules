@@ -1,3 +1,22 @@
 // Place all the styles related to the search controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.section-item:hover {
+    transition: 0.15s;
+    background-color: lightgray;
+}
+
+.section-item.selected {
+    background-color: lightgreen;
+}
+
+.section-item.selected:hover {
+    transition: 0.15s;
+    background-color: red;
+}
+
+.section-item:hover {
+    transition: 0.15s;
+    background-color: red;
+}

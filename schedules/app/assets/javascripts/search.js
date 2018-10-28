@@ -3,20 +3,6 @@
 
 const sectionWithCrn = crn => document.getElementById('search-list').querySelector(`[data-crn="${crn}"]`);
 
-// const addCourse = async (event, id) => {
-//     event && event.stopPropagation();
-
-//     const courseCard = document.getElementById(`course-${id}`);
-//     const title = courseCard.querySelector('.title').innerText;
-//     const sectionsItems = Array.from(courseCard.querySelectorAll('li'));
-//     const filtered = sectionsItems.filter(li => {
-//         return !li.parentNode.classList.contains('pair') || li.dataset.type === 'Lecture';
-//     });
-
-//     for (const section of filtered) {
-//         await addOrRemoveFromCart(undefined, section);
-//     }
-// }
 /**
  * Either adds or removes a section from the cart depending on
  * if it is currently in the cart.
@@ -46,10 +32,14 @@ const toggleSections = course => {
     }
 };
 
-/**
- * Generates a webcal:// URL for the current sections in the schedule
- * and sets the link in the modal to it.
- */
-const setUrlInModal = () => {
-    document.getElementById('calendar-link').innerText = `${window.location.protocol}//${window.location.hostname}/api/schedule?crns=${this.cart._courses.join(',')}`;
+const initSearchListeners = () => {
+    const courseCards = Array.from(document.querySelectorAll('.course-card'));
+    courseCards.forEach(card => {
+        card.onclick = () => toggleSections(card);
+    });
+
+    const sectionItems = Array.from(document.querySelectorAll('.section-item'));
+    sectionItems.forEach(item => (item.onclick = event => addOrRemoveFromCart(event, item)));
 };
+
+document.addEventListener('DOMContentLoaded', initSearchListeners);

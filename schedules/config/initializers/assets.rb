@@ -12,9 +12,16 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
 Rails.application.config.assets.precompile += %w(
-  FileSaver.js
-  schedule.js
+  search.js
+  search.scss
+  
+  schedules.js
+  schedules.scss
+  
   cart.js
+  cart.scss
+  
+  FileSaver.js
   masonstrap.min.css
   masonstrap.min.js
   moment.min.js

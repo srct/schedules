@@ -10,13 +10,14 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require rails-ujs
-// require turbolinks
 //= require FileSaver
-//= require_tree .
+//= require cart
+
+// require_tree .
 // require jquery3
 // require popper
 // require bootstrap-sprockets
+// require rails-ujs
 
 const elementFromString = string => {
     const html = new DOMParser().parseFromString(string, 'text/html');
@@ -25,7 +26,7 @@ const elementFromString = string => {
 
 document.addEventListener('DOMContentLoaded', () => {
     this.cart = new Cart();
-    FontAwesome.dom.i2svg();
+    initGlobalListeners();
 });
 
 const setSemester = async select => {
@@ -33,8 +34,7 @@ const setSemester = async select => {
     location.reload(true);
 };
 
-/** Loads FontAwesome icons on load; fixes weird flickering */
-FontAwesome.dom.watch({ observeMutationsRoot: document });
-// document.addEventListener('turbolinks:load', () => {
-//     FontAwesome.dom.i2svg();
-// });
+const initGlobalListeners = () => {
+    const semesterSelect = document.getElementById('semester-select');
+    semesterSelect.onchange = () => setSemester(semesterSelect);
+};

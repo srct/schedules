@@ -7,7 +7,7 @@
 		    Schedules
 		</a>
 		&nbsp;&nbsp;
-		<select onchange="setSemester(this)">
+		<select id="semester-select">
 		    <% Semester.all.each do |semester| %>
 			<option value="<%= semester.id %>" <% if @semester == semester %> selected <% end %> >
 			    <%= "#{semester.season} #{semester.year}" %>

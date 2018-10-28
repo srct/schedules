@@ -1,0 +1,30 @@
+<div class="row">
+    <div class="col-5">
+	<h1><%= @course.full_name %></h1>
+	<h4><%= @course.title %></h4>
+
+	<div class="d-flex">
+	    <div class="attr-list justify-content-start">
+		<div class="attr">
+		    <div class="icon">
+			<i class="fa fa-book"></i>
+		    </div>
+		    3 credits
+		</div>
+		&nbsp;&nbsp;&nbsp;
+		<div class="attr">
+		    <div class="icon">
+			<i class="fa fa-bars"></i>
+		    </div>
+		    <!-- TODO: FIX THIS -->
+		    <%#= "#{course.section_count}" %> 3 sections
+		</div>
+	    </div>
+	</div>
+	<p><%= @course.description %></p>
+    </div>
+
+    <div class ="col-7">
+	<%= render partial: 'shared/section', collection: @course.course_sections %>
+    </div>
+</div>

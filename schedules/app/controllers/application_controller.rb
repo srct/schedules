@@ -7,7 +7,9 @@ class ApplicationController < ActionController::Base
     @semester = if cookies.key?(:semester_id)
                   Semester.find_by(id: cookies[:semester_id])
                 else
-                  Semester.find_by(season: 'Spring', year: '2019')
+                  sem = Semester.find_by(season: 'Spring', year: '2019')
+                  cookies[:semester_id] = sem.id
+                  sem
                 end
   end
 

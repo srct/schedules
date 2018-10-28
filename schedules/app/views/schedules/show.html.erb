@@ -1,8 +1,13 @@
-<!-- <button onclick="nextSchedule()">Next</button>
-     <button onclick="prevSchedule()">Prev</button>
-     <span id="currentSchedule">1</span> / <span id="numSchedules">1</span> -->
+<%= javascript_include_tag 'schedules' %>
+<%= stylesheet_link_tag 'schedules' %>
 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exportModal" onclick="setUrlInModal()">
+<%= javascript_include_tag 'moment.min' %>
+<%= javascript_include_tag 'FileSaver' %>
+
+<%= javascript_include_tag 'fullcalendar.min'%>
+<%= stylesheet_link_tag 'fullcalendar.min' %>
+
+<button id="open-modal-btn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exportModal">
     Generate Schedule
 </button>
 <div id="calendar"></div>
@@ -46,12 +51,9 @@
 		To download a .ics file containing your schedule, click the "Download calendar file" button below.
 	    </div>
 	    <div class="modal-footer">
-		<button type="button" class="btn btn-secondary" onclick="downloadIcs()">Download calendar file</button>
-		<button type="button" class="btn btn-primary" onclick="addToSystemCalendar()">Add to system calendar</button>
+		<button id="download-ics" type="button" class="btn btn-secondary">Download calendar file</button>
+		<button id="add-to-system" type="button" class="btn btn-primary">Add to system calendar</button>
 	    </div>
 	</div>
     </div>
 </div>
-
-
-
