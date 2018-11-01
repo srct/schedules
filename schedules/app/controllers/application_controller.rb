@@ -4,13 +4,8 @@ class ApplicationController < ActionController::Base
   before_action :set_semester, :set_cookies, :set_cart
 
   def set_semester
-    @semester = if cookies.key?(:semester_id)
-                  Semester.find_by(id: cookies[:semester_id])
-                else
-                  sem = Semester.first
-                  cookies[:semester_id] = sem.id
-                  sem
-                end
+    redirect_to(url_for(params.permit(params.keys).merge(semester_id: Semester.first.id))) unless params.key?(:semester_id)
+    @semester = Semester.find_by_id params[:semester_id]
   end
 
   def set_cart

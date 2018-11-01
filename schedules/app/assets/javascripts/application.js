@@ -30,8 +30,9 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 const setSemester = async select => {
-    const resp = await fetch(`/sessions/update?semester_id=${select.value}`);
-    location.reload(true);
+    const url = new URL(window.location.href);
+    url.searchParams.set('semester_id', select.value);
+    window.open(url.toString(), '_self');
 };
 
 const initGlobalListeners = () => {

@@ -3,7 +3,7 @@ require 'test_helper'
 class API::SchedulesControllerTest < ActionDispatch::IntegrationTest
   test "should generate schedule" do
     ids = [course_sections(:cs112001).id, course_sections(:cs112002).id]
-    get "/api/schedules?section_ids=#{ids.join(',')}"
+    get "/api/schedules?section_ids=#{ids.join(',')}&semester_id=#{semesters(:fall2018).id}"
 
     # DTSTAMP and UID lines uniquely identify events, so we can't test against them.
     # so remove all the lines starting with them.

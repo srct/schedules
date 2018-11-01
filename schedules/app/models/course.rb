@@ -1,7 +1,4 @@
 # Contains logic regarding the +Course+ model.
-#
-# TODO: Add more docs
-
 class Course < ApplicationRecord
   # Each course belongs to a +Semester+
   belongs_to :semester
