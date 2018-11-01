@@ -1,7 +1,9 @@
 class CoursesController < ApplicationController
   before_action :set_course
 
-  def show; end
+  def show
+    @course = Course.find_by subject: @course.subject, course_number: @course.course_number, semester: @semester
+  end
 
   private
 

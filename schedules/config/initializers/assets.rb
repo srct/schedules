@@ -21,6 +21,9 @@ Rails.application.config.assets.precompile += %w(
   cart.js
   cart.scss
 
+  courses.js
+  courses.scss
+
   FileSaver.js
   masonstrap.min.css
   masonstrap.min.js
