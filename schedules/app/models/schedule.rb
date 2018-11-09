@@ -5,7 +5,7 @@ require 'time'
 class Schedule
   def initialize(ids)
     @cal = Icalendar::Calendar.new
-    @cal.x_wr_calname = 'GMU Fall 2018'
+    @cal.x_wr_calname = 'GMU Schedule'
 
     @course_sections = ids.map { |id| CourseSection.find_by_id id }
     @course_sections.compact!

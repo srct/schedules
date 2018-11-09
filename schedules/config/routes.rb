@@ -13,7 +13,7 @@ Rails.application.routes.draw do
     resources :course_sections, only: [:index], as: 'api_course_sections'
     resources :instructors, only: [:index, :show], as: 'api_instructors'
     resources :course_listings, only: [:index]
-    resources :schedules, only: [:index]
+    resources :schedules, only: [:index], as: 'api_schedules'
   end
 
   apipie # sets up API docs
