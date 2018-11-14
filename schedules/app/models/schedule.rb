@@ -26,10 +26,10 @@ class Schedule
         @cal.add_event(event)
       end
 
-      if section.days.start_with? "M"
-        col_day_makeup = generate_event_after_columbus_day(section)
-        @cal.add_event(col_day_makeup)
-      end
+      # if section.days.start_with? "M"
+      #   col_day_makeup = generate_event_after_columbus_day(section)
+      #   @cal.add_event(col_day_makeup)
+      # end
     end
   end
 
@@ -94,7 +94,7 @@ class Schedule
 
     # Every section's start_date is the first Monday of the semester.
     # So we need to add an exclusion for that day unless the class is held on Mondays
-    unless section.days.start_with? "M"
+    unless section.days.start_with? "T"
       exdates << generate_exdate(
         section.start_date.to_formatted_s(:number),
         section.start_time
@@ -102,12 +102,12 @@ class Schedule
     end
 
     # If the section meets on Tuesdays, add an exdate for the day after columbus day
-    if section.days.start_with? "T"
-      exdates << generate_exdate(
-        Date.new(2018, 10, 9).to_formatted_s(:number),
-        section.start_time
-      )
-    end
+    # if section.days.start_with? "T"
+    #   exdates << generate_exdate(
+    #     Date.new(2018, 10, 9).to_formatted_s(:number),
+    #     section.start_time
+    #   )
+    # end
 
     exdates
   end
