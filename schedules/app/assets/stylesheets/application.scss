@@ -10,7 +10,9 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
+ * require_tree .
+ *= require cart
+ *= require navbar
  *= require_self
  */
 
@@ -32,50 +34,29 @@ body {
 	display: flex;
 	flex-direction: column;
     }
-    
-    .card-body {
-	.attr-list {
-            display: flex;
-            flex-direction: row;
-
-            .attr {
-		.icon {
-		    padding-right: 4px;
-		}
-		align-items: center;
-		display: inline-flex;
-		white-space: nowrap;
-            }
-	} 
-    }
 }
 
+.attr-list {
+    display: flex;
+    flex-direction: row;
+
+    .attr {
+	.icon {
+	    padding-right: 4px;
+	}
+	align-items: center;
+	display: inline-flex;
+	white-space: nowrap;
+    }
+} 
+
 .unpadded {
-  padding: 0px;
+    padding: 0px;
 }
 
 /* On mouse-over, add a deeper shadow */
 .card:hover {
     box-shadow: 0 0 20px rgba(0,0,0,0.4);
-}
-
-.list-group-item:hover {
-    transition: 0.15s;
-    background-color: lightgray;
-}
-
-.list-group-item.selected {
-    background-color: lightgreen;
-}
-
-.list-group-item.selected:hover {
-    transition: 0.15s;
-    background-color: red;
-}
-
-.schedule-section-card:hover {
-    transition: 0.15s;
-    background-color: red;
 }
 
 .align-vertical {

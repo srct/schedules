@@ -4,25 +4,25 @@ class ApplicationController < ActionController::Base
   before_action :set_semester, :set_cookies, :set_cart
 
   def set_semester
-    @semester = if cookies.key?(:semester_id)
-                  Semester.find_by(id: cookies[:semester_id])
-                else
-                  Semester.find_by(season: 'Spring', year: '2019')
-                end
+    if params.key?(:semester_id)
+      cookies[:semester_id] = params[:semester_id]
+      @semester = Semester.find_by_id params[:semester_id]
+    elsif cookies[:semester_id].nil?
+      redirect_to(url_for(params.permit(params.keys).merge(semester_id: Semester.first.id)))
+    else
+      redirect_to(url_for(params.permit(params.keys).merge(semester_id: cookies[:semester_id])))
+    end
   end
 
   def set_cart
-    sections = cookies[:section_ids].split(',').map do |id|
-      CourseSection.find_by_id(id)
-    end
-
-    @cart = sections.group_by do |s|
-      s.course.id
-    end
+    @cart = JSON.parse(cookies[:cart])
+    @cart = @cart.reject { |id| CourseSection.find_by_id(id).nil? }
+    cookies[:cart] = @cart.to_json
   end
 
   def set_cookies
     cookies[:crns] = "" if cookies[:crns].nil?
     cookies[:section_ids] = "" if cookies[:section_ids].nil?
+    cookies[:cart] = "[]" if cookies[:cart].nil?
   end
 end

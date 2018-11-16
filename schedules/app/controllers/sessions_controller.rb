@@ -7,6 +7,20 @@ class SessionsController < ApplicationController
     head :ok
   end
 
+  def cart
+    section_id = params[:section_id]
+
+    if @cart.include?(section_id)
+      @cart.reject! { |id| section_id == id }
+    else
+      @cart << section_id
+    end
+
+    puts @cart.to_json
+    cookies[:cart] = @cart.to_json
+    render json: @cart.to_json
+  end
+
   private
 
   def update_cookie(sym)

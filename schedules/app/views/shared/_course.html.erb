@@ -1,17 +1,13 @@
 <% expanded = false unless defined? expanded %>
 
-<div class="card" id="course-<%= course.id %>" onclick="toggleSections(this)">
+<div class="card course-card" id="course-<%= course.id %>">
     <div class="card-header">
 	<div class="row">
 	    <div class="col">
-		<h4 class="title"><%= "#{course.subject} #{course.course_number}" %></h4>
+		<%= link_to course do %>
+		    <h4 class="title"><%= "#{course.subject} #{course.course_number}" %></h4>
+		<% end %>
 	    </div>
-	    
-	    <div class="col">
-		<h4 id="add-course-btn" class="text-right" onclick="addCourse(event, '<%= course.id %>');">
-		    <i class="fas fa-plus" style="color: green"></i>
-		</h4>
-	    </div>    
 	</div>
 	<h5><em><%= course.title %></em></h5>
     </div>
@@ -21,15 +17,14 @@
 		<div class="icon">
 		    <i class="fa fa-book"></i>
 		</div>
-		3 credits
+		<%= course.credits %> credits
 	    </div>
 	    &nbsp;&nbsp;&nbsp;
 	    <div class="attr">
 		<div class="icon">
 		    <i class="fa fa-bars"></i>
 		</div>
-		<!-- TODO: FIX THIS -->
-		<%#= "#{course.section_count}" %> 3 sections
+		 <%= course.course_sections.count %> sections
 	    </div>
 	</div>
 	<p class="description"><%= course.description %></p>
@@ -41,8 +36,8 @@
 	<% end %>
 	
 	<div class="d-block" style="text-align: center">
-  	    <p style="margin-bottom:-4px; font-size: 10px;">Expand</p>
-  	    <i class="fas fa-chevron-down"></i>
+  	    <p id="chevron-label" style="margin-bottom:-4px; font-size: 10px;">Expand</p>
+  	    <i id="course-chevron" class="fas fa-chevron-down"></i>
 	</div>
 	
 	<!-- List of Course Sections -->

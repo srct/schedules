@@ -1,7 +1,4 @@
 # Contains logic regarding the +Course+ model.
-#
-# TODO: Add more docs
-
 class Course < ApplicationRecord
   # Each course belongs to a +Semester+
   belongs_to :semester
@@ -11,6 +8,10 @@ class Course < ApplicationRecord
   validates :course_number, presence: true
   validates :subject, presence: true
   validates :semester_id, presence: true
+
+  def full_name
+    "#{subject} #{course_number}"
+  end
 
   def self.from_subject(base_query, subject)
     base_query.where("courses.subject = ?", subject.upcase)

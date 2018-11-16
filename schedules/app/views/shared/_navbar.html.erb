@@ -7,7 +7,7 @@
 		    Schedules
 		</a>
 		&nbsp;&nbsp;
-		<select onchange="setSemester(this)">
+		<select id="semester-select">
 		    <% Semester.all.each do |semester| %>
 			<option value="<%= semester.id %>" <% if @semester == semester %> selected <% end %> >
 			    <%= "#{semester.season} #{semester.year}" %>
@@ -17,24 +17,35 @@
 	    </div>
 	</div>
 
-	<div class="col-sm align-center order-0 order-sm-1" onclick="window.cart.toggle()">
-	    <h1 style="margin-top:24px">
-		<span class="fa-layers fa-fw" id="schedule-icon">
-		    <i class="fas fa-shopping-cart"></i>
-		    <span class="fa-layers fa-fw">
-			<i class="fas fa-circle" data-fa-transform="shrink-3 up-12 right-12" style="color:gray"></i>
-			<span id="course-counter" class="fa-layers-text fa-inverse" data-fa-transform="shrink-10 up-12 right-12" style="font-weight:600">
-			    <%= @cart.length %>
+	<div class="col-sm align-center order-0 order-sm-1">
+	    <a id="cart-button" href="<%= schedule_path %>">
+		<h1 style="margin-top:24px">
+		    <span class="fa-layers fa-fw" id="schedule-icon">
+			<i class="fas fa-shopping-cart"></i>
+			<span class="fa-layers fa-fw">
+			    <i class="fas fa-circle" data-fa-transform="shrink-3 up-12 right-12" style="color:gray"></i>
+			    <span id="course-counter" class="fa-layers-text fa-inverse" data-fa-transform="shrink-10 up-12 right-12" style="font-weight:600">
+				<%= @cart.length %>
+			    </span>
 			</span>
 		    </span>
-		</span>
-	    </h1>
+		</h1>
+	    </a>
 	</div>
 
 	<div class="col order-1 order-sm-0">
 	    <form action="/search" class="form">
 		<div class="input-group" style="width:100%;">
-		    <input name="query" type="text" class="form-control" placeholder="Search by CRN, course, professor..." aria-describedby="basic-addon2">
+		    <input
+			id="searchbar"
+			value="<%= params[:query] %>"
+			name="query"
+			type="text"
+			class="form-control"
+			placeholder="Search by CRN, course, professor..."
+			aria-describedby="basic-addon2"
+			autocomplete="off"
+		    >
 		    <div class="input-group-append">
 			<button class="btn btn-secondary" type="button">
 			    <i class="fas fa-search"></i>
@@ -45,10 +56,3 @@
 	</div>
     </div>
 </div>
-
-<div class="container-fluid">
-    <!-- The main screen consists of a row with two columns: the search results, and the cart -->
-    <div class="row">
-
-	<!-- Search result, List of Courses -->
-	<div class="col-lg-7 col-md-10 mx-auto order-2 order-lg-0" id="search-list">

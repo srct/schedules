@@ -1,0 +1,12 @@
+#calendar {
+    background-color: white;
+    padding: 16px;
+}
+
+.section-item.selected {
+    background-color: white;
+}
+
+.section-item.selected:hover {
+    background-color: red;
+}

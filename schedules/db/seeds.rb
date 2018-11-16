@@ -35,7 +35,7 @@ def load_courses(courses, semester)
     }
   end
 
-  Course.create!(insert_hashes)
+  insert_hashes.each { |c| Course.find_or_create_by!(c) }
 end
 
 def parse_sections(semester, subjects)
@@ -85,7 +85,7 @@ def load_sections(sections_in, semester)
                         instructor: instructor)
     end
 
-    CourseSection.create!(all_sections)
+    all_sections.each { |s| CourseSection.find_or_create_by! s }
   end
 end
 
@@ -99,15 +99,17 @@ end
 def load_closures
   # create closures for the days there will be no classes
   # see: https://registrar.gmu.edu/calendars/fall-2018/
-  fall2018 = Semester.find_by(season: 'Fall', year: '2018')
-  Closure.create! date: Date.new(2018, 9, 3), semester: fall2018
-  Closure.create! date: Date.new(2018, 10, 8), semester: fall2018
-  (21..25).each { |n| Closure.create! date: Date.new(2018, 11, n), semester: fall2018 }
-  (10..19).each { |n| Closure.create! date: Date.new(2018, 12, n), semester: fall2018 }
+  # fall2018 = Semester.find_by(season: 'Fall', year: '2018')
+  # Closure.create! date: Date.new(2018, 9, 3), semester: fall2018
+  # Closure.create! date: Date.new(2018, 10, 8), semester: fall2018
+  # (21..25).each { |n| Closure.create! date: Date.new(2018, 11, n), semester: fall2018 }
+  # (10..19).each { |n| Closure.create! date: Date.new(2018, 12, n), semester: fall2018 }
+  spring2019 = Semester.find_by(season: 'Spring', year: '2019')
+  (11..17).each { |day| Closure.find_or_create_by! date: Date.new(2019, 3, day), semester: spring2019 }
 end
 
 def main
-  wipe_db
+  # wipe_db
 
   parser = PatriotWeb::Parser.new
   semesters = parser.parse_semesters[0..1] # expand to include however many semesters you want
@@ -115,7 +117,7 @@ def main
 
   semesters.each do |semester|
     puts "#{semester[:season]} #{semester[:year]}"
-    db_semester = Semester.create!(season: semester[:season], year: semester[:year])
+    db_semester = Semester.find_or_create_by!(season: semester[:season], year: semester[:year])
 
     puts "\tParsing subjects..."
     subjects = parser.parse_subjects(semester[:value])

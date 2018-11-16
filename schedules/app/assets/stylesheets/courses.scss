@@ -2,7 +2,11 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.section-item.selected {
+    background-color: lightgreen;
+}
 
-#add-course-btn:hover {
-    background-color: rgba(0,0,0,0.2);
+.section-item:hover {
+    transition: 0.15s;
+    background-color: lightgray;
 }

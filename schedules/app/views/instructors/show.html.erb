@@ -1,7 +1,27 @@
-<h1><%= @instructor.name %></h1>
+<div class="row">
+    <div class="col-lg-4 col-12">
+	<h1><%= @instructor.name %></h1>
+	<% prev = @instructor.course_sections.map(&:course).reject { |c| c.semester == @semester } %>
 
-<% if @courses.any? %>
-    <%= render partial: 'shared/course', collection: @courses, locals: { expanded: true } %>
-<% else %>
-    <p><%= @instructor.name %> has not taught any courses...</p>
-<% end %>
+	<% if prev.count.positive? %>
+	    <strong>Previously taught: </strong>
+	    <ul>
+		<% prev.each do |s| %>
+		    <li><%= link_to s.full_name, course_path(s)  %></li>
+		<% end %>
+	    </ul>
+	<% end %>
+    </div>
+
+    <div class ="col-lg-8 col-12">
+	<h3><%= @semester.to_s %></h3>
+	<% if @courses.any? %>
+	    <%= render partial: 'shared/course', collection: @courses, locals: { expanded: true } %>
+	<% else %>
+	    <p><%= @instructor.name %> is not teaching any courses this semester...</p>
+	<% end %>
+    </div>
+</div>
+
+<%= javascript_include_tag 'search' %>
+<%= stylesheet_link_tag 'search' %>
