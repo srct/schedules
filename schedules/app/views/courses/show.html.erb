@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-5">
+    <div class="col-12 col-lg">
 	<h1><%= @course.full_name %></h1>
 	<h4><%= @course.title %></h4>
 
@@ -24,7 +24,7 @@
 	<p><%= @course.description %></p>
     </div>
 
-    <div class="col-7">
+    <div class="col-12 col-lg">
 	<%= render partial: 'shared/section', collection: @course.course_sections %>
     </div>
 </div>
