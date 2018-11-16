@@ -8,10 +8,11 @@
 }
 
 .section-item.selected {
+        transition: 0.15s;
     background-color: lightgreen;
 }
 
 .section-item.selected:hover {
     transition: 0.15s;
-    background-color: red;
+    background-color: rgba(255, 0, 0, 0.6);
 }

@@ -1,8 +1,6 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 
-const sectionWithCrn = crn => document.getElementById('search-list').querySelector(`[data-crn="${crn}"]`);
-
 /**
  * Either adds or removes a section from the cart depending on
  * if it is currently in the cart.
@@ -24,11 +22,17 @@ const addOrRemoveFromCart = async (event, sectionNode) => {
  */
 const toggleSections = course => {
     const sections = course.querySelector('.sections');
+    const chev = $(course.querySelector('#course-chevron'));
+    const label = course.querySelector('#chevron-label');
 
     if (sections.style.display === 'flex') {
         sections.style.display = 'none';
+        chev.addClass('fa-chevron-down').removeClass('fa-chevron-up');
+        label.innerText = 'Expand';
     } else {
         sections.style.display = 'flex';
+        chev.addClass('fa-chevron-up').removeClass('fa-chevron-down');
+        label.innerText = 'Minimize';
     }
 };
 

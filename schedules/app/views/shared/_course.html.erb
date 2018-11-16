@@ -24,8 +24,7 @@
 		<div class="icon">
 		    <i class="fa fa-bars"></i>
 		</div>
-		<!-- TODO: FIX THIS -->
-		<%#= "#{course.section_count}" %> <%= course.course_sections.count %> sections
+		 <%= course.course_sections.count %> sections
 	    </div>
 	</div>
 	<p class="description"><%= course.description %></p>
@@ -37,8 +36,8 @@
 	<% end %>
 	
 	<div class="d-block" style="text-align: center">
-  	    <p style="margin-bottom:-4px; font-size: 10px;">Expand</p>
-  	    <i class="fas fa-chevron-down"></i>
+  	    <p id="chevron-label" style="margin-bottom:-4px; font-size: 10px;">Expand</p>
+  	    <i id="course-chevron" class="fas fa-chevron-down"></i>
 	</div>
 	
 	<!-- List of Course Sections -->
