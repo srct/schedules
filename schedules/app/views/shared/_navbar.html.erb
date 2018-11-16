@@ -36,7 +36,16 @@
 	<div class="col order-1 order-sm-0">
 	    <form action="/search" class="form">
 		<div class="input-group" style="width:100%;">
-		    <input name="query" type="text" class="form-control" placeholder="Search by CRN, course, professor..." aria-describedby="basic-addon2">
+		    <input
+			id="searchbar"
+			value="<%= params[:query] %>"
+			name="query"
+			type="text"
+			class="form-control"
+			placeholder="Search by CRN, course, professor..."
+			aria-describedby="basic-addon2"
+			autocomplete="off"
+		    >
 		    <div class="input-group-append">
 			<button class="btn btn-secondary" type="button">
 			    <i class="fas fa-search"></i>
@@ -47,10 +56,3 @@
 	</div>
     </div>
 </div>
-
-<div class="container-fluid">
-    <!-- The main screen consists of a row with two columns: the search results, and the cart -->
-    <div class="row">
-
-	<!-- Search result, List of Courses -->
-	<div class="col-lg-8 col-md-10 mx-auto order-2 order-lg-0" id="search-list">
