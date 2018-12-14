@@ -1,6 +1,5 @@
 class SearchController < ApplicationController
   def index
-    # sorry zach
     results = SearchHelper::GenericItem.fetchall(String.new(params[:query]), semester: @semester).group_by(&:type)
 
     # results = search(params[:query])
