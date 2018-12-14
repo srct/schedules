@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'search', to: 'search#index'
   get 'sessions/update', as: 'update_session'
   get 'sessions/cart'
+  get 'sessions/add_bulk'
 
   resources :courses, only: [:show]
   resources :instructors, only: [:index, :show]

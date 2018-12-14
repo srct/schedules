@@ -1,7 +1,7 @@
 <% unless @instructors.nil? %>
     <h2>Instructors</h2>
     <div class="row">
-	<% @instructors.map(&:data).each do |instructor| %>
+	<% @instructors.each do |instructor| %>
 	    <div class="col"><%= render partial: 'shared/instructor', object: instructor %></div>
 	<% end %>
     </div>
@@ -10,7 +10,7 @@
 
 <% unless @courses.nil? %>
     <h2>Courses</h2>
-    <% @courses.map(&:data).each do |course| %>
+    <% @courses.each do |course| %>
 	<div class="col"><%= render partial: 'shared/course', object: course %></div>
     <% end %>
 <% end %>

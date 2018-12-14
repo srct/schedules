@@ -7,10 +7,32 @@
 <%= javascript_include_tag 'fullcalendar.min'%>
 <%= stylesheet_link_tag 'fullcalendar.min' %>
 
+
+
 <button id="open-modal-btn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exportModal">
     Generate Schedule
 </button>
 <div id="calendar"></div>
+<h3>Quick add</h3>
+<p>Populate your calendar quickly by entering a comma separated list of CRNs.</p>
+<form action="/sessions/add_bulk" class="form">
+    <div class="input-group">
+	<input
+	    id="crns"
+		name="crns"
+		type="text"
+		class="form-control"
+		placeholder="12345,54321,..."
+		aria-describedby="basic-addon2"
+		autocomplete="off"
+	>
+	<div class="input-group-append">
+	    <button type="submit" class="btn btn-primary" type="button">
+		Populate Calendar
+	    </button>
+	</div>
+    </div>
+</form>
 
 <template id="events" data-events="<%= @events.to_json %>"></template>
 

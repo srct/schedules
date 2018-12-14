@@ -1,3 +1,28 @@
 <h1>Welcome to Schedules!</h1>
-<p>Schedules is a website designed by Mason SRCT designed to help students explore the GMU Catalog.</p>
-Search for either professors or courses using the search bar above.
+<p>Schedules is a website built by <a href="https://srct.gmu.edu">Mason SRCT</a> designed to help students explore the GMU Catalog.</p>
+Search for either courses or professors using the search bar above.
+<br/>
+<p></p>
+
+
+
+<h3>Quick add</h3>
+<p>Want to quickly generate a calendar populated with your semester's classes? Enter the CRNs in a comma separated list below.</p>
+<form action="/sessions/add_bulk" class="form">
+    <div class="input-group">
+	<input
+	    id="crns"
+		name="crns"
+		type="text"
+		class="form-control"
+		placeholder="12345,54321,..."
+		aria-describedby="basic-addon2"
+		autocomplete="off"
+	>
+	<div class="input-group-append">
+	    <button type="submit" class="btn btn-primary" type="button">
+		Populate Calendar
+	    </button>
+	</div>
+    </div>
+</form>
