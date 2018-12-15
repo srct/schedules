@@ -3,7 +3,7 @@ stages:
   - build
 
 test:
-  image: ruby:2.5
+  image: starefossen/ruby-node:latest
   stage: test
   script:
     - cd schedules
