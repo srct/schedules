@@ -32,7 +32,7 @@ class Cart {
         document.getElementById('course-counter').innerText = Object.keys(this._courses).length;
     }
 
-    async addSection(section) {
+    async toggleSection(section) {
         const resp = await fetch(`/sessions/cart?&section_id=${section.id}`, { cache: 'no-store' });
         const json = await resp.json();
         this.courses = json;

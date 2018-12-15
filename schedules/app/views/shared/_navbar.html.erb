@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div id="navbar" class="container-fluid">
     <div class="row align-left align-sm-center align-md-right" id="navbar">
 	<div class="col align-center">
 	    <div class="center-vert">
@@ -6,10 +6,12 @@
 		    <i class="fas fa-calendar-alt"></i>
 		    Schedules
 		</a>
-		&nbsp;&nbsp;
-		<select id="semester-select">
+		<select id="semester-select" class="custom-select">
 		    <% Semester.all.each do |semester| %>
-			<option value="<%= semester.id %>" <% if @semester == semester %> selected <% end %> >
+			<option
+			    value="<%= semester.id %>"
+			    <% if @semester == semester %> selected <% end %>
+			>
 			    <%= "#{semester.season} #{semester.year}" %>
 			</option>
 		    <% end %>
@@ -19,7 +21,7 @@
 
 	<div class="col-sm align-center order-0 order-sm-1">
 	    <a id="cart-button" href="<%= schedule_path %>">
-		<h1 style="margin-top:24px">
+		<h1>
 		    <span class="fa-layers fa-fw" id="schedule-icon">
 			<i class="fas fa-shopping-cart"></i>
 			<span class="fa-layers fa-fw">
@@ -47,7 +49,7 @@
 			autocomplete="off"
 		    >
 		    <div class="input-group-append">
-			<button class="btn btn-secondary" type="button">
+			<button type="submit" class="btn btn-secondary" type="button">
 			    <i class="fas fa-search"></i>
 			</button>
 		    </div>

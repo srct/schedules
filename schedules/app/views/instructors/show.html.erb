@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-lg-4 col-12">
 	<h1><%= @instructor.name %></h1>
-	<% prev = @instructor.course_sections.map(&:course).reject { |c| c.semester == @semester } %>
+	<% prev = @instructor.course_sections.map(&:course).uniq.reject { |c| c.semester == @semester } %>
 
 	<% if prev.count.positive? %>
 	    <strong>Previously taught: </strong>

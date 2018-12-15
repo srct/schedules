@@ -9,11 +9,15 @@ const addOrRemoveFromCart = async (event, sectionNode) => {
     event && event.stopPropagation();
     const section = { ...sectionNode.dataset };
 
-    await this.cart.addSection(section);
+    await this.cart.toggleSection(section);
+    const icon = $(sectionNode.querySelector('.add-remove-btn #icon'));
+    const text = sectionNode.querySelector('.add-remove-btn .text');
     if (this.cart.includesSection(section)) {
-        sectionNode.classList.add('selected');
+        icon.addClass('fa-minus').removeClass('fa-plus');
+        text.innerText = 'Remove';
     } else {
-        sectionNode.classList.remove('selected');
+        icon.addClass('fa-plus').removeClass('fa-minus');
+        text.innerText = 'Add';
     }
 };
 

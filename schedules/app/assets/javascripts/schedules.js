@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
             defaultView: 'agendaWeek',
             header: false,
             events: renderEvents,
+            columnHeaderFormat: 'dddd',
+            allDaySlot: false,
         });
     }
 
@@ -20,7 +22,7 @@ const renderEvents = (start, end, timezone, callback) => {
 };
 
 const remove = async item => {
-    await window.cart.addSection({ ...item.dataset });
+    await window.cart.toggleSection({ ...item.dataset });
     location.reload(true);
 };
 
@@ -33,13 +35,15 @@ const setUrlInModal = () => {
 };
 
 const downloadIcs = async () => {
-    const response = await fetch(`http://localhost:3000/api/schedules?section_ids=${window.cart._courses.join(',')}`);
+    const response = await fetch(`${window.location.protocol}//${window.location.hostname}/api/schedules?section_ids=${window.cart._courses.join(',')}`);
     const text = await response.text();
     const blob = new Blob([text], { type: 'text/calendar;charset=utf-8' });
     saveAs(blob, 'GMU Schedule.ics');
 };
 
-const addToSystemCalendar = () => {};
+const addToSystemCalendar = () => {
+    window.open(`webcal://${window.location.hostname}:3000/api/schedules?section_ids=${window.cart._courses.join(',')}`);
+};
 
 const initListeners = () => {
     const items = Array.from(document.querySelectorAll('.section-item'));

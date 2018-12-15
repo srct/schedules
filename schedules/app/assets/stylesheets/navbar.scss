@@ -12,4 +12,14 @@
 #logo {
     font-size: 24pt;
     color: black;
+    white-space: nowrap;
+    margin-right: 8px;
+}
+
+#semester-select {
+    min-width: 100px;
+}
+
+#cart-button {
+    margin-top: 24px;
 }

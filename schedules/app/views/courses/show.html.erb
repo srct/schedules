@@ -9,15 +9,14 @@
 		    <div class="icon">
 			<i class="fa fa-book"></i>
 		    </div>
-		    3 credits
+		    <%= @course.credits %> credits
 		</div>
 		&nbsp;&nbsp;&nbsp;
 		<div class="attr">
 		    <div class="icon">
 			<i class="fa fa-bars"></i>
 		    </div>
-		    <!-- TODO: FIX THIS -->
-		    <%#= "#{course.section_count}" %> 3 sections
+		    <%= @course.course_sections.count %> sections
 		</div>
 	    </div>
 	</div>
