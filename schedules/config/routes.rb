@@ -1,5 +1,6 @@
 # Registers all routes for the app.
 Rails.application.routes.draw do
+  get '/', to: 'home#index', as: 'home'
   get 'search', to: 'search#index'
   get 'sessions/update', as: 'update_session'
   get 'sessions/cart'

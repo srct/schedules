@@ -1,12 +1,9 @@
 class SearchController < ApplicationController
   def index
-    results = SearchHelper::GenericItem.fetchall(String.new(params[:query]), semester: @semester).group_by(&:type)
+    redirect_to home_url unless params[:query].length > 1
 
-    # results = search(params[:query])
+    results = SearchHelper::GenericItem.fetchall(String.new(params[:query]), semester: @semester).group_by(&:type)
     @instructors = results[:instructor]&.map(&:data)
     @courses = results[:course]&.map(&:data)
   end
-
-  # cases
-  # math 113 - [a-zA-Z]{3,} [1-9]{3}
 end
