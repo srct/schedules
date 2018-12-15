@@ -42,7 +42,7 @@ const downloadIcs = async () => {
 };
 
 const addToSystemCalendar = () => {
-    window.open(`webcal://${window.location.hostname}:3000/api/schedules?section_ids=${window.cart._courses.join(',')}`);
+    window.open(`webcal://${window.location.hostname}/api/schedules?section_ids=${window.cart._courses.join(',')}`);
 };
 
 const initListeners = () => {
