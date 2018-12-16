@@ -1,0 +1,12 @@
+#cart {
+    display: none;
+}
+
+#cart-button {
+    color: black;
+}
+
+#cart-button:hover {
+    transition: 0.15s;
+    color: green;
+}

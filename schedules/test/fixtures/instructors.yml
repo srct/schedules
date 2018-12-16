@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+luke:
+  name: Sean Luke
+
+otten:
+  name: John Otten
+
+kinga:
+  name: Kinga
+
+business_man:
+  name: Bob

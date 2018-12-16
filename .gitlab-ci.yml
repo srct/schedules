@@ -2,25 +2,17 @@ stages:
   - test
   - build
 
-test_api:
-  image: ruby:2.5
+test:
+  image: starefossen/ruby-node:latest
   stage: test
   script:
-    - cd schedules_api
+    - cd schedules
     - bundle install
     - rails db:migrate
     - rails test
     - rubocop
 
-test_web:
-  image: node:9
-  stage: test
-  script:
-    - cd schedules_web
-    - yarn
-    - yarn build
-
-build_web:
+build:
   stage: build
   retry: 2
   image:
@@ -29,19 +21,6 @@ build_web:
   script:
     - mkdir -p /root/.docker
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /root/.docker/config.json
-    - /kaniko/executor --context $CI_PROJECT_DIR/schedules_web --dockerfile $CI_PROJECT_DIR/schedules_web/Dockerfile --destination $CI_REGISTRY_IMAGE/web:$CI_COMMIT_TAG
-  only:
-    - tags
-
-build_api:
-  stage: build
-  retry: 2
-  image:
-    name: gcr.io/kaniko-project/executor:debug
-    entrypoint: [""]
-  script:
-    - mkdir -p /root/.docker
-    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /root/.docker/config.json
-    - /kaniko/executor --context $CI_PROJECT_DIR/schedules_api --dockerfile $CI_PROJECT_DIR/schedules_api/Dockerfile --destination $CI_REGISTRY_IMAGE/api:$CI_COMMIT_TAG
+    - /kaniko/executor --context $CI_PROJECT_DIR/schedules --dockerfile $CI_PROJECT_DIR/schedules/Dockerfile --destination $CI_REGISTRY_IMAGE/api:$CI_COMMIT_TAG
   only:
     - tags
