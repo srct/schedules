@@ -9,16 +9,14 @@ class SchedulesController < ApplicationController
     }
 
     @all = valid_crns.map { |crn|
-      a = CourseSection.where(crn: crn).sort_by { |s| s.course.semester.id }
-      a.first
+      CourseSection.latest_by_crn(crn)
     }
     @events = generate_fullcalender_events(@all)
   end
 
   def view
     @all = params[:crns].split(',').map { |crn|
-      a = CourseSection.where(crn: crn).sort_by { |s| s.course.semester.id }
-      a.first
+      CourseSection.latest_by_crn(crn)
     }
     @events = generate_fullcalender_events(@all)
   end

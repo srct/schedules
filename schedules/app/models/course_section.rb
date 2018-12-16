@@ -17,6 +17,10 @@ class CourseSection < ApplicationRecord
     (t1_start <= t2_end && t2_start <= t1_end) && Set.new(days.split).intersect?(Set.new(other.days.split))
   end
 
+  def self.latest_by_crn(crn)
+    where(crn: crn).sort_by { |s| s.course.semester.id }.first
+  end
+
   # Select all course sections that have an instructor that matches the given name
   def self.with_instructor(name: "")
     joins(:instructor)

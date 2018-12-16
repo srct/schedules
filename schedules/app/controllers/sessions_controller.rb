@@ -17,18 +17,18 @@ class SessionsController < ApplicationController
     end
 
     puts @cart
-    cookies[:cart] = @cart.to_json
+    cookies.permanent[:cart] = @cart.to_json
     render json: @cart.to_json
   end
 
   def add_bulk
     crns = params[:crns].split(',')
     crns.each { |crn|
-      s = CourseSection.find_by_crn(crn)
+      s = CourseSection.latest_by_crn(crn)
       next if s.nil?
       @cart << crn.to_s unless @cart.include?(crn.to_s)
     }
-    cookies[:cart] = @cart.to_json
+    cookies.permanent[:cart] = @cart.to_json
     redirect_to schedule_path
   end
 

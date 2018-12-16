@@ -21,4 +21,9 @@ class CourseSectionTest < ActiveSupport::TestCase
     section = CourseSection.with_instructor.first
     assert section.instructor_name != ""
   end
+
+  test '#latest_by_crn sorts correctly' do
+    s = CourseSection.latest_by_crn(70192)
+    assert_equal semesters(:fall2018).id, s.course.semester.id
+  end
 end

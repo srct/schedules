@@ -15,12 +15,12 @@ class ApplicationController < ActionController::Base
   end
 
   def set_cart
-    @cart = JSON.parse(cookies[:cart])
+    @cart = JSON.parse(cookies.permanent[:cart])
     @cart = @cart.reject { |crn| CourseSection.find_by_crn(crn).nil? }
-    cookies[:cart] = @cart.to_json
+    cookies.permanent[:cart] = @cart.to_json
   end
 
   def set_cookies
-    cookies[:cart] = "[]" if cookies[:cart].nil?
+    cookies.permanent[:cart] = "[]" if cookies.permanent[:cart].nil?
   end
 end

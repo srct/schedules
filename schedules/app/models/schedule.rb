@@ -7,7 +7,9 @@ class Schedule
     @cal = Icalendar::Calendar.new
     @cal.x_wr_calname = 'GMU Schedule'
 
-    @course_sections = crns.map { |crn| CourseSection.find_by_crn crn }
+    @course_sections = crns.map { |crn|
+      CourseSection.latest_by_crn(crn)
+    }
     @course_sections.compact!
 
     load_events
