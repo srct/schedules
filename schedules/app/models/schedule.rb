@@ -3,11 +3,11 @@ require 'time'
 
 # Creates a iCal object given a list of section ids
 class Schedule
-  def initialize(ids)
+  def initialize(crns)
     @cal = Icalendar::Calendar.new
     @cal.x_wr_calname = 'GMU Schedule'
 
-    @course_sections = ids.map { |id| CourseSection.find_by_id id }
+    @course_sections = crns.map { |crn| CourseSection.find_by_crn crn }
     @course_sections.compact!
 
     load_events

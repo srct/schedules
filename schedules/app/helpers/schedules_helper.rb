@@ -9,9 +9,8 @@ module SchedulesHelper
     "U": Date.new(2019, 1, 20)
   }.freeze
 
-  def generate_fullcalender_events(section_ids)
-    section_ids.map do |id|
-      s = CourseSection.find_by_id id
+  def generate_fullcalender_events(sections)
+    sections.map do |s|
       s.days.split('').map do |day|
         formatted_date = DAYS[day.to_sym].to_s.tr('-', '')
         time = Time.parse(s.start_time).strftime("%H%M%S")

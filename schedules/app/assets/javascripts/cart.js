@@ -33,7 +33,7 @@ class Cart {
     }
 
     async toggleSection(section) {
-        const resp = await fetch(`/sessions/cart?&section_id=${section.id}`, { cache: 'no-store' });
+        const resp = await fetch(`/sessions/cart?&crn=${section.crn}`, { cache: 'no-store' });
         const json = await resp.json();
         this.courses = json;
     }
@@ -41,7 +41,7 @@ class Cart {
     includesSection(obj) {
         for (const key in this._courses) {
             const list = this._courses[key];
-            if (list.includes(obj.id)) return true;
+            if (list.includes(obj.crn)) return true;
         }
 
         return false;

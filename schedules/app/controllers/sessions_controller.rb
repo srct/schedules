@@ -8,14 +8,15 @@ class SessionsController < ApplicationController
   end
 
   def cart
-    section_id = params[:section_id]
+    section_crn = params[:crn]
 
-    if @cart.include?(section_id)
-      @cart.reject! { |id| section_id == id }
+    if @cart.include?(section_crn.to_s)
+      @cart.reject! { |crn| section_crn.to_s == crn.to_s }
     else
-      @cart << section_id
+      @cart << section_crn
     end
 
+    puts @cart
     cookies[:cart] = @cart.to_json
     render json: @cart.to_json
   end
@@ -25,8 +26,7 @@ class SessionsController < ApplicationController
     crns.each { |crn|
       s = CourseSection.find_by_crn(crn)
       next if s.nil?
-      section_id = s.id.to_s
-      @cart << section_id unless @cart.include?(section_id)
+      @cart << crn.to_s unless @cart.include?(crn.to_s)
     }
     cookies[:cart] = @cart.to_json
     redirect_to schedule_path

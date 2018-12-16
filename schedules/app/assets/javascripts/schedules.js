@@ -31,18 +31,18 @@ const remove = async item => {
  * and sets the link in the modal to it.
  */
 const setUrlInModal = () => {
-    document.getElementById('calendar-link').innerText = `${window.location.protocol}//${window.location.hostname}/api/schedules?section_ids=${window.cart._courses.join(',')}`;
+    document.getElementById('calendar-link').innerText = `${window.location.protocol}//${window.location.hostname}/api/schedules?crns=${window.cart._courses.join(',')}`;
 };
 
 const downloadIcs = async () => {
-    const response = await fetch(`${window.location.protocol}//${window.location.hostname}/api/schedules?section_ids=${window.cart._courses.join(',')}`);
+    const response = await fetch(`${window.location.protocol}//${window.location.hostname}/api/schedules?crns=${window.cart._courses.join(',')}`);
     const text = await response.text();
     const blob = new Blob([text], { type: 'text/calendar;charset=utf-8' });
     saveAs(blob, 'GMU Schedule.ics');
 };
 
 const addToSystemCalendar = () => {
-    window.open(`webcal://${window.location.hostname}/api/schedules?section_ids=${window.cart._courses.join(',')}`);
+    window.open(`webcal://${window.location.hostname}/api/schedules?crns=${window.cart._courses.join(',')}`);
 };
 
 const initListeners = () => {
@@ -53,5 +53,5 @@ const initListeners = () => {
     document.getElementById('download-ics').onclick = downloadIcs;
     document.getElementById('add-to-system').onclick = addToSystemCalendar;
 
-    document.getElementById('share-url').innerText = `${window.location.protocol}//${window.location.hostname}/schedule/view?section_ids=${window.cart._courses.join(',')}`;
+    document.getElementById('share-url').innerText = `${window.location.protocol}//${window.location.hostname}/schedule/view?crns=${window.cart._courses.join(',')}`;
 };

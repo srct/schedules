@@ -1,6 +1,6 @@
 module SearchHelper
-  def in_cart?(id)
-    @cart.include? id.to_s
+  def in_cart?(crn)
+    @cart.include? crn.to_s
   end
 
   class GenericQueryData
