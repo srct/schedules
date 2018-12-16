@@ -16,6 +16,12 @@ class InstructorsController < ApplicationController
     sections.each do |s|
       @courses.add s.course
     end
+
+    @past = []
+    @instructor.course_sections.map(&:course).each do |c|
+      @past << c unless @past.select { |past| past.full_name == c.full_name }.count.positive?
+    end
+    @past.sort_by!(&:full_name)
   end
 
   private
