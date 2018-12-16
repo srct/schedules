@@ -18,7 +18,7 @@ class CourseSection < ApplicationRecord
   end
 
   def self.latest_by_crn(crn)
-    where(crn: crn).sort_by { |s| s.course.semester.id }.first
+    where(crn: crn).min_by { |s| s.course.semester.id }
   end
 
   # Select all course sections that have an instructor that matches the given name
