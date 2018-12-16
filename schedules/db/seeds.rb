@@ -112,7 +112,7 @@ def main
   # wipe_db
 
   parser = PatriotWeb::Parser.new
-  semesters = parser.parse_semesters[0..1] # expand to include however many semesters you want
+  semesters = parser.parse_semesters[0..12] # expand to include however many semesters you want
   courses = nil
 
   semesters.each do |semester|
