@@ -43,9 +43,9 @@
 	<!-- List of Course Sections -->
 	<div class="list-group list-group-flush sections" style="display: <%= expanded ? "flex" : "none" %>">
 	    <% if defined?(@instructor) %>
-		<%= render partial: 'shared/section', collection: course.course_sections.where(instructor: @instructor), locals: { course: course } %>
+		<%= render partial: 'shared/section', collection: course.course_sections.where(instructor: @instructor).order(:name), locals: { course: course } %>
 	    <% else %>
-		<%= render partial: 'shared/section', collection: course.course_sections, locals: { course: course } %>
+		<%= render partial: 'shared/section', collection: course.course_sections.order(:name), locals: { course: course } %>
 	    <% end %>
 	</div>
     </div>

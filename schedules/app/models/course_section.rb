@@ -19,15 +19,17 @@ class CourseSection < ApplicationRecord
 
   # Select all course sections that have an instructor that matches the given name
   def self.with_instructor(name: "")
-    joins(:instructor).where("instructors.name LIKE ?", "%#{name}%").select('course_sections.*, instructors.name as instructor_name')
+    joins(:instructor)
+      .where("instructors.name LIKE ?", "%#{name}%")
+      .select('course_sections.*, instructors.name as instructor_name')
   end
 
   def self.from_crn(base_query, crn)
-    base_query.where("course_sections.crn = ?", crn)
+    base_query.where(crn: crn)
   end
 
   def self.from_course_id(base_query, course_id)
-    base_query.where("course_sections.course_id = ?", course_id)
+    base_query.where(course_id: course_id)
   end
 
   # Select all revelevant course sections given the provided filters

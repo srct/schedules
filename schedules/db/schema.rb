@@ -12,9 +12,12 @@
 
 ActiveRecord::Schema.define(version: 20180927140017) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "closures", force: :cascade do |t|
     t.date "date"
-    t.integer "semester_id"
+    t.bigint "semester_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["semester_id"], name: "index_closures_on_semester_id"
@@ -35,10 +38,10 @@ ActiveRecord::Schema.define(version: 20180927140017) do
     t.string "campus"
     t.string "notes"
     t.integer "size_limit"
-    t.integer "course_id"
+    t.bigint "course_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "instructor_id"
+    t.bigint "instructor_id"
     t.index ["course_id"], name: "index_course_sections_on_course_id"
     t.index ["instructor_id"], name: "index_course_sections_on_instructor_id"
   end
@@ -46,7 +49,7 @@ ActiveRecord::Schema.define(version: 20180927140017) do
   create_table "courses", force: :cascade do |t|
     t.string "subject"
     t.string "course_number"
-    t.integer "semester_id"
+    t.bigint "semester_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "description"
@@ -69,4 +72,8 @@ ActiveRecord::Schema.define(version: 20180927140017) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "closures", "semesters"
+  add_foreign_key "course_sections", "courses"
+  add_foreign_key "course_sections", "instructors"
+  add_foreign_key "courses", "semesters"
 end

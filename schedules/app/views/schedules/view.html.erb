@@ -1,4 +1,4 @@
-<%= javascript_include_tag 'schedules' %>
+<%= javascript_include_tag 'schedules_view' %>
 <%= stylesheet_link_tag 'schedules' %>
 
 <%= javascript_include_tag 'moment.min' %>
@@ -13,37 +13,12 @@
     Export Schedule
 </button>
 <div id="calendar"></div>
-<h3>Quick add</h3>
-<p>Populate your calendar quickly by entering a comma separated list of CRNs.</p>
-<form action="/sessions/add_bulk" class="form">
-    <div class="input-group">
-	<input
-	    id="crns"
-		name="crns"
-		type="text"
-		class="form-control"
-		placeholder="12345,54321,..."
-		aria-describedby="basic-addon2"
-		autocomplete="off"
-	>
-	<div class="input-group-append">
-	    <button type="submit" class="btn btn-primary" type="button">
-		Populate Calendar
-	    </button>
-	</div>
-    </div>
-</form>
-
-<h3 id="share-header">Share</h3>
-Want to share your schedule with your friends? Send them this link:<br/>
-<blockquote ><code id="share-url"></code></blockquote>
 
 <template id="events" data-events="<%= @events.to_json %>"></template>
 
 <hr />
 <h2>Selected Courses</h2>
-<%= render partial: 'shared/section', collection: @all %>
-
+<%= render partial: 'shared/section', collection: @all, locals: { editable: false } %>
 
 <!-- Export Modal -->
 <div class="modal fade" id="exportModal" tabindex="-1" role="dialog" aria-labelledby="exportModalLabel" aria-hidden="true">

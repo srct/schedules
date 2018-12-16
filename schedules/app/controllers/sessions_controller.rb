@@ -23,7 +23,9 @@ class SessionsController < ApplicationController
   def add_bulk
     crns = params[:crns].split(',')
     crns.each { |crn|
-      section_id = CourseSection.find_by_crn(crn).id.to_s
+      s = CourseSection.find_by_crn(crn)
+      next if s.nil?
+      section_id = s.id.to_s
       @cart << section_id unless @cart.include?(section_id)
     }
     cookies[:cart] = @cart.to_json

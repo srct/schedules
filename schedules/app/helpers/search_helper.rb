@@ -45,7 +45,7 @@ module SearchHelper
       CourseReplacementHelper.replace!(query_string)
       base_query = Course.select("courses.*, count(course_sections.id) AS section_count")
                          .left_outer_joins(:course_sections)
-                         .having("section_count > 0")
+                         .having("count(course_sections.id) > 0")
                          .where("courses.semester_id = ?", query_data.semester)
                          .group("courses.id")
 
@@ -53,6 +53,7 @@ module SearchHelper
       query_string.scan(/(?<= |^)([a-zA-Z]{2,4})(?=$| )/).each do |a|
         s = a[0]
         next unless get_count(Course.from_subject(base_query, s)).positive?
+        # next unless Course.from_subject(base_query, s).count.positive?
         subj = s
         base_query = Course.from_subject(base_query, subj)
         query_string.remove!(s)
@@ -61,6 +62,7 @@ module SearchHelper
       query_string.scan(/(?<= |^)(\d{3})(?=$| )/).each do |a|
         s = a[0]
         next unless !subj.nil? && get_count(Course.from_course_number(base_query, s)).positive?
+        # next unless !subj.nil? && Course.from_course_number(base_query, s).count.positive?
         base_query = Course.from_course_number(base_query, s)
         return base_query.all
       end
@@ -90,7 +92,7 @@ module SearchHelper
 
     def self.get_count(base_query)
       # I think I finally hit a limit of active record
-      ActiveRecord::Base.connection.execute("SELECT COUNT(*) AS count FROM (#{base_query.to_sql})")[0]["count"]
+      ActiveRecord::Base.connection.execute("SELECT COUNT(*) AS count FROM (#{base_query.to_sql}) as q")[0]["count"]
     end
 
     def to_s

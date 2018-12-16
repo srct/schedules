@@ -21,10 +21,6 @@ const renderEvents = (start, end, timezone, callback) => {
     callback(window.events);
 };
 
-const remove = async item => {
-    await window.cart.toggleSection({ ...item.dataset });
-    location.reload(true);
-};
 
 /**
  * Generates a URL for the current sections in the schedule
@@ -46,12 +42,8 @@ const addToSystemCalendar = () => {
 };
 
 const initListeners = () => {
-    const items = Array.from(document.querySelectorAll('.section-item'));
-    items.forEach(item => (item.onclick = () => remove(item)));
-
     document.getElementById('open-modal-btn').onclick = setUrlInModal;
     document.getElementById('download-ics').onclick = downloadIcs;
     document.getElementById('add-to-system').onclick = addToSystemCalendar;
-
     document.getElementById('share-url').innerText = `${window.location.protocol}//${window.location.hostname}/schedule/view?section_ids=${window.cart._courses.join(',')}`;
 };

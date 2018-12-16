@@ -16,6 +16,7 @@ Rails.application.config.assets.precompile += %w(
   search.scss
 
   schedules.js
+  schedules_view.js
   schedules.scss
 
   cart.js
