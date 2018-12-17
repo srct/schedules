@@ -10,6 +10,6 @@ ENV RAILS_ENV production
 
 RUN bundle install
 RUN export SECRET_KEY_BASE=$(rails secret)
-RUN rake assets:precompile
+RUN rails assets:precompile
 RUN rails db:migrate
 RUN rails db:seed

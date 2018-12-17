@@ -5,19 +5,26 @@ class SchedulesController < ApplicationController
   def show
     valid_crns = @cart.reject { |crn|
       s = CourseSection.find_by_crn(crn)
-      s.nil? || s.start_time == "TBA" || s.end_time == "TBA"
+      s.nil?
     }
 
     @all = valid_crns.map { |crn|
       CourseSection.latest_by_crn(crn)
     }
-    @events = generate_fullcalender_events(@all)
+    @without_online = @all.reject { |s|
+      s.start_time == "TBA" || s.end_time == "TBA"
+    }
+    @events = generate_fullcalender_events(@without_online)
   end
 
   def view
     @all = params[:crns].split(',').map { |crn|
       CourseSection.latest_by_crn(crn)
     }
-    @events = generate_fullcalender_events(@all)
+    @all.reject! { |s| s.nil? }
+    @without_online = @all.reject { |s|
+      s.start_time == "TBA" || s.end_time == "TBA"
+    }
+    @events = generate_fullcalender_events(@without_online)
   end
 end
