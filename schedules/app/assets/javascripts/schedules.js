@@ -45,6 +45,14 @@ const addToSystemCalendar = () => {
     window.open(`webcal://${window.location.hostname}/api/schedules?crns=${window.cart._courses.join(',')}`);
 };
 
+const saveImage = () => {
+    html2canvas(document.querySelector("#calendar")).then(canvas => {
+        canvas.toBlob(blob => {
+            saveAs(blob, 'GMU Schedule.png');
+        });
+    });
+};
+
 const initListeners = () => {
     const items = Array.from(document.querySelectorAll('.section-item'));
     items.forEach(item => (item.onclick = () => remove(item)));
@@ -52,6 +60,7 @@ const initListeners = () => {
     document.getElementById('open-modal-btn').onclick = setUrlInModal;
     document.getElementById('download-ics').onclick = downloadIcs;
     document.getElementById('add-to-system').onclick = addToSystemCalendar;
+    document.getElementById('save-image').onclick = saveImage;
 
     document.getElementById('share-url').innerText = `${window.location.protocol}//${window.location.hostname}/schedule/view?crns=${window.cart._courses.join(',')}`;
 };

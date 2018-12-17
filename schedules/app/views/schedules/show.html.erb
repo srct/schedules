@@ -1,3 +1,5 @@
+<%= javascript_include_tag 'html2canvas.min' %>
+
 <%= javascript_include_tag 'schedules' %>
 <%= stylesheet_link_tag 'schedules' %>
 
@@ -12,7 +14,10 @@
 <button id="open-modal-btn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exportModal">
     Export Schedule
 </button>
+<button id="save-image" class="btn btn-secondary">Save as PNG</button>
+
 <div id="calendar"></div>
+
 <h3>Quick add</h3>
 <p>Populate your calendar quickly by entering a comma separated list of CRNs.</p>
 <form action="/sessions/add_bulk" class="form">

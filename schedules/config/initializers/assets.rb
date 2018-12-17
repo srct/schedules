@@ -31,4 +31,5 @@ Rails.application.config.assets.precompile += %w(
   moment.min.js
   fullcalendar.min.js
   fullcalendar.min.css
+  html2canvas.min.js
 )

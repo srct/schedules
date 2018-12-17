@@ -1,3 +1,5 @@
+<%= javascript_include_tag 'html2canvas.min' %>
+
 <%= javascript_include_tag 'schedules_view' %>
 <%= stylesheet_link_tag 'schedules' %>
 
@@ -12,6 +14,8 @@
 <button id="open-modal-btn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exportModal">
     Export Schedule
 </button>
+<button id="save-image" class="btn btn-secondary" onclick="saveImage()">Save as PNG</button>
+
 <div id="calendar"></div>
 
 <template id="events" data-events="<%= @events.to_json %>"></template>
