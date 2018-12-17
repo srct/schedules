@@ -41,7 +41,7 @@ class Schedule
     event = Icalendar::Event.new
 
     event.summary = section.name
-    event.description = section.title
+    event.description = "#{section.title}\nTaught by #{section.instructor.name}"
     event.location = section.location
     event.dtstart = Icalendar::Values::DateTime.new(formatted_datetime_str(section.start_date, section.start_time))
     event.dtend = Icalendar::Values::DateTime.new(formatted_datetime_str(section.start_date, section.end_time))
