@@ -1,5 +1,6 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
+import Cart from 'src/cart';
 
 /**
  * Either adds or removes a section from the cart depending on
@@ -9,10 +10,10 @@ const addOrRemoveFromCart = async (event, sectionNode) => {
     event && event.stopPropagation();
     const section = { ...sectionNode.dataset };
 
-    await this.cart.toggleSection(section);
+    await Cart.toggleSection(section);
     const icon = $(sectionNode.querySelector('.add-remove-btn #icon'));
     const text = sectionNode.querySelector('.add-remove-btn .text');
-    if (this.cart.includesSection(section)) {
+    if (Cart.includesSection(section)) {
         icon.addClass('fa-minus').removeClass('fa-plus');
         text.innerText = 'Remove';
     } else {

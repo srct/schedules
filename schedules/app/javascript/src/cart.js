@@ -1,8 +1,17 @@
+//import '@babel/polyfill';
+
 class Cart {
     constructor() {
         this.isOpen = false;
         this._courses = [];
 
+        const cartData = document.getElementById('cart-data');
+        if (cartData) {
+            this._courses = JSON.parse(cartData.dataset.cart);
+        }
+    }
+
+    _parseData() {
         const cartData = document.getElementById('cart-data');
         if (cartData) {
             this._courses = JSON.parse(cartData.dataset.cart);
@@ -33,7 +42,10 @@ class Cart {
     }
 
     async toggleSection(section) {
-        const resp = await fetch(`/sessions/cart?&crn=${section.crn}`, { cache: 'no-store' });
+        const resp = await fetch(`/sessions/cart?&crn=${section.crn}`, {
+            cache: 'no-store',
+            credentials: 'same-origin'
+        });
         const json = await resp.json();
         this.courses = json;
     }
@@ -47,3 +59,10 @@ class Cart {
         return false;
     }
 }
+
+const cart = new Cart();
+
+document.addEventListener('DOMContentLoaded', () => cart._parseData());
+
+export default cart;
+

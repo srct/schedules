@@ -21,7 +21,7 @@ class SchedulesController < ApplicationController
     @all = params[:crns].split(',').map { |crn|
       CourseSection.latest_by_crn(crn)
     }
-    @all.reject! { |s| s.nil? }
+    @all.reject!(&:nil?)
     @without_online = @all.reject { |s|
       s.start_time == "TBA" || s.end_time == "TBA"
     }
