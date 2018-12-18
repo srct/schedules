@@ -9,6 +9,7 @@ EXPOSE 3000
 ENV RAILS_ENV production
 
 RUN bundle install
+RUN yarn install
 RUN export SECRET_KEY_BASE=$(rails secret)
 RUN rails assets:precompile
 RUN rails db:migrate
