@@ -1,4 +1,5 @@
 require 'icalendar'
+require 'icalendar/tzinfo'
 require 'time'
 
 # Creates a iCal object given a list of section ids
@@ -6,6 +7,10 @@ class Schedule
   def initialize(crns)
     @cal = Icalendar::Calendar.new
     @cal.x_wr_calname = 'GMU Schedule'
+
+    tzid = "America/New_York"
+    tz = TZInfo::Timezone.get tzid
+    @cal.add_timezone tz.ical_timezone(Time.now)
 
     @course_sections = crns.map { |crn|
       CourseSection.latest_by_crn(crn)

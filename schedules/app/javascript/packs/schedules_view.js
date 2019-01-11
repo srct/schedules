@@ -60,7 +60,7 @@ const saveImage = () => {
 };
 
 const initListeners = () => {
-    document.getElementById('open-modal-btn').onclick = setUrlInModal;
+    // document.getElementById('open-modal-btn').onclick = setUrlInModal;
     document.getElementById('download-ics').onclick = downloadIcs;
     document.getElementById('add-to-system').onclick = addToSystemCalendar;
     document.getElementById('save-image').onclick = saveImage;

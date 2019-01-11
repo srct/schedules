@@ -63,7 +63,7 @@ const initListeners = () => {
     const items = Array.from(document.querySelectorAll('.section-item'));
     items.forEach(item => (item.onclick = () => remove(item)));
 
-    document.getElementById('open-modal-btn').onclick = setUrlInModal;
+    // document.getElementById('open-modal-btn').onclick = setUrlInModal;
     document.getElementById('download-ics').onclick = downloadIcs;
     document.getElementById('add-to-system').onclick = addToSystemCalendar;
     document.getElementById('save-image').onclick = saveImage;
