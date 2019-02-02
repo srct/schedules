@@ -9,10 +9,43 @@ class API::CourseSectionsController < ApplicationController
   param :course_id, Integer, desc: "Only get the course sections belonging to the course with this ID"
   param :crn, String, desc: "Get the course section with this CRN"
   param :instructor, String, desc: "Get course sections being taught by this instructor"
-  param :query, String, desc: 'A generic query ex. "CS 110"'
-
   def index
-    @sections = CourseSection.fetch(params).all
-    render json: @sections
+    @sections = CourseSection
+                .select('course_sections.*, courses.semester_id, instructors.name AS instructor_name')
+                .joins(:course).where('courses.semester_id = ?', @semester.id)
+                .joins(:instructor)
+
+    if params.key?(:course_id)
+      @sections = @sections.where(course_id: params[:course_id])
+    end
+
+    if params.key?(:crn)
+      @sections = @sections.where(crn: params[:crn])
+    end
+
+    if params.key?(:instructor)
+      @sections = @sections.where('UPPER(instructors.name) LIKE UPPER(?)', "%#{params[:instructor]}%")
+    end
+
+    # @sections = CourseSection.fetch(params).all
+    res = @sections.map do |s|
+      {
+        id: s.id,
+        semester_id: s.semester_id,
+        course_id: s.course_id,
+        name: s.name,
+        crn: s.crn,
+        title: s.title,
+        instructor_name: s.instructor_name,
+        section_type: s.section_type,
+        start_date: s.start_date,
+        end_date: s.end_date,
+        days: s.days,
+        start_time: s.start_time,
+        end_time: s.end_time,
+        location: s.location,
+      }
+    end
+    render json: res
   end
 end

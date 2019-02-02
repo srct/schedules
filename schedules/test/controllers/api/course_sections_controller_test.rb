@@ -6,7 +6,10 @@ class API::CourseSectionsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
 
     sections_returned = JSON.parse @response.body
-    num_sections = CourseSection.where(course_id: courses(:cs112).id).count
+    num_sections = CourseSection
+                   .joins(course: :semester)
+                   .where('semesters.id = ?', semesters(:fall2018).id)
+                   .where(course_id: courses(:cs112).id).count
 
     assert_equal num_sections, sections_returned.count
   end
