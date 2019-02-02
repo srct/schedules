@@ -6,7 +6,7 @@ class API::CoursesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
 
     courses_returned = JSON.parse @response.body
-    courses_count = Course.all.count
+    courses_count = Course.where(semester_id: semesters(:fall2018).id).count
     assert_equal courses_count, courses_returned.count
   end
 
@@ -15,7 +15,7 @@ class API::CoursesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
 
     courses_returned = JSON.parse @response.body
-    courses_count = Course.where(subject: "CS").count
+    courses_count = Course.where(subject: "CS", semester_id: semesters(:fall2018).id).count
 
     assert_equal courses_count, courses_returned.count
   end
@@ -25,7 +25,7 @@ class API::CoursesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
 
     courses_returned = JSON.parse @response.body
-    courses_count = Course.where(subject: "CS", course_number: "112").count
+    courses_count = Course.where(subject: "CS", course_number: "112", semester_id: semesters(:fall2018).id).count
 
     assert_equal courses_count, courses_returned.count
   end
