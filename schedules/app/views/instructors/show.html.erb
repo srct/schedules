@@ -5,7 +5,7 @@
 	    <strong>Previously taught: </strong>
 	    <ul>
 		<% @past.each do |c| %>
-		    <li><%= link_to c.full_name, course_path(c)  %></li>
+		    <li><%= link_to(c.full_name, course_path(c)) %></li>
 		<% end %>
 	    </ul>
 	<% end %>
@@ -14,7 +14,7 @@
     <div class ="col-lg-8 col-12">
 	<h3><%= @semester.to_s %></h3>
 	<% if @courses.any? %>
-	    <%= render partial: 'shared/course', collection: @courses, locals: { expanded: true } %>
+	    <%= render(partial: 'shared/course', collection: @courses, locals: { expanded: true }) %>
 	<% else %>
 	    <p><%= @instructor.name %> is not teaching any courses this semester...</p>
 	<% end %>
