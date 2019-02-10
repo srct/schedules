@@ -3,8 +3,8 @@ class CourseSection < ApplicationRecord
   # Each +CourseSection+ belongs to a +Course+ and an +Instructor+.
   belongs_to :course
   belongs_to :instructor
-  
-    # Each course belongs to a +Semester+
+
+  # Each course belongs to a +Semester+
   belongs_to :semester
 
   # Ensure all necessary fields are present.

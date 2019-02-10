@@ -119,7 +119,6 @@ def main
                 parser.parse_semesters[0..6]
               end
 
-
   puts "\tParsing subjects..."
   subjects = parser.parse_subjects(semesters.first[:value])
 
@@ -128,7 +127,7 @@ def main
 
   puts "\tLoading courses..."
   load_courses(courses)
-  
+
   semesters.each do |semester|
     puts "#{semester[:season]} #{semester[:year]}"
     db_semester = Semester.find_or_create_by!(season: semester[:season], year: semester[:year])

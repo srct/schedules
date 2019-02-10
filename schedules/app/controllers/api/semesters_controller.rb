@@ -7,7 +7,7 @@ class API::SemestersController < ApplicationController
         year: s.year
       }
     end
-    
+
     render json: result
   end
 end
