@@ -16,7 +16,7 @@
 		    <div class="icon">
 			<i class="fa fa-bars"></i>
 		    </div>
-		    <%= @course.course_sections.count %> sections
+		    <%= @sections.count %> sections
 		</div>
 	    </div>
 	</div>
@@ -24,7 +24,7 @@
     </div>
 
     <div class="col-12 col-lg">
-	<%= render partial: 'shared/section', collection: @course.course_sections %>
+	<%= render partial: 'shared/section', collection: @sections %>
     </div>
 </div>
 

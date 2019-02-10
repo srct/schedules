@@ -52,4 +52,13 @@ class Course < ApplicationRecord
 
     query
   end
+
+  # build_set builds
+  def self.build_set(sections)
+    courses = [].to_set
+    sections.each do |s|
+      courses.add s.course
+    end
+    courses
+  end
 end

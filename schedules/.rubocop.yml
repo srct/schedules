@@ -16,3 +16,6 @@ Metrics/BlockLength:
 
 Style/ClassAndModuleChildren:
   Enabled: false
+
+Style/GuardClause:
+  Enabled: false
