@@ -116,7 +116,7 @@ def main
                 [parser.parse_semesters.first]
               else
                 # expand to include however many semesters you want
-                parser.parse_semesters[0..2]
+                parser.parse_semesters[0..6]
               end
 
 
