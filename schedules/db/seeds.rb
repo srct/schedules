@@ -22,7 +22,7 @@ def parse_courses(subjects)
   courses
 end
 
-def load_courses(courses, semester)
+def load_courses(courses)
   insert_hashes = courses.map do |course|
     {
       subject: course[:subject],
@@ -31,7 +31,6 @@ def load_courses(courses, semester)
       credits: course[:credits],
       description: course[:description],
       prereqs: course[:prereqs],
-      semester: semester
     }
   end
 
@@ -64,8 +63,7 @@ def load_sections(sections_in, semester)
       end
 
       course = Course.find_or_create_by!(subject: section[:subj],
-                                         course_number: section[:course_number],
-                                         semester: semester)
+                                         course_number: section[:course_number])
 
       instructor = Instructor.find_or_create_by!(name: section[:instructor])
 
@@ -82,7 +80,8 @@ def load_sections(sections_in, semester)
                         end_time: section[:end_time],
                         location: section[:location],
                         course: course,
-                        instructor: instructor)
+                        instructor: instructor,
+                        semester: semester)
     end
 
     all_sections.each { |s| CourseSection.find_or_create_by! s }
@@ -120,20 +119,18 @@ def main
                 parser.parse_semesters[0..6]
               end
 
-  courses = nil
+  puts "\tParsing subjects..."
+  subjects = parser.parse_subjects(semesters.first[:value])
+
+  puts "\tParsing courses from catalog.gmu.edu..."
+  courses = parse_courses(subjects) if courses.nil?
+
+  puts "\tLoading courses..."
+  load_courses(courses)
 
   semesters.each do |semester|
     puts "#{semester[:season]} #{semester[:year]}"
     db_semester = Semester.find_or_create_by!(season: semester[:season], year: semester[:year])
-
-    puts "\tParsing subjects..."
-    subjects = parser.parse_subjects(semester[:value])
-
-    puts "\tParsing courses from catalog.gmu.edu..."
-    courses = parse_courses(subjects) if courses.nil?
-
-    puts "\tLoading courses..."
-    load_courses(courses, db_semester)
 
     puts "\tParsing sections from Patriot Web..."
     sections_in = parse_sections(semester[:value], subjects)

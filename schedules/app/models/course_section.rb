@@ -4,11 +4,15 @@ class CourseSection < ApplicationRecord
   belongs_to :course
   belongs_to :instructor
 
+  # Each course belongs to a +Semester+
+  belongs_to :semester
+
   # Ensure all necessary fields are present.
   validates :name, presence: true
   validates :crn, presence: true
   validates :title, presence: true
   validates :course_id, presence: true
+  validates :semester_id, presence: true
 
   def overlaps?(other)
     t1_start, t1_end = Time.parse(start_time), Time.parse(end_time)
@@ -18,7 +22,7 @@ class CourseSection < ApplicationRecord
   end
 
   def self.latest_by_crn(crn)
-    where(crn: crn).min_by { |s| s.course.semester.id }
+    where(crn: crn).min_by { |s| s.semester.id }
   end
 
   # Select all course sections that have an instructor that matches the given name

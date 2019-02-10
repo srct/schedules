@@ -7,7 +7,7 @@ class InstructorsController < ApplicationController
     @instructor = Instructor.find_by_id(params[:id])
 
     # find the courses being taught this semester
-    sections = CourseSection.where(instructor: @instructor).joins(course: :semester).where("semesters.id = ?", @semester.id)
+    sections = CourseSection.where(instructor: @instructor, semester: @semester)
     @courses = Course.build_set(sections)
 
     # build the list of courses the instructor has taught in the past

@@ -7,6 +7,6 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
 
     # assert every course section is displayed
-    assert_select '.section-item', c.course_sections.count
+    assert_select '.section-item', c.course_sections.where(semester: semesters(:fall2018)).count
   end
 end

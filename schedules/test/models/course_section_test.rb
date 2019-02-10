@@ -13,8 +13,9 @@ class CourseSectionTest < ActiveSupport::TestCase
     CourseSection.create! name: 'Test section',
                           crn: '12345',
                           title: 'Test title',
-                          course_id: courses(:cs211).id,
-                          instructor_id: instructors(:luke).id
+                          course: courses(:cs211),
+                          instructor: instructors(:luke),
+                          semester: semesters(:fall2018)
   end
 
   test '#with_instructor filters correctly' do
@@ -24,6 +25,6 @@ class CourseSectionTest < ActiveSupport::TestCase
 
   test '#latest_by_crn sorts correctly' do
     s = CourseSection.latest_by_crn(70192)
-    assert_equal semesters(:fall2018).id, s.course.semester.id
+    assert_equal semesters(:fall2018).id, s.semester.id
   end
 end
