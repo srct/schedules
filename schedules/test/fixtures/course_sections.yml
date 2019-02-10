@@ -12,6 +12,7 @@ cs112001:
   location: Innovation Hall 204
   course: cs112
   instructor: kinga
+  semester: fall2018
 
 cs112002:
   name: CS 112 002
@@ -25,6 +26,7 @@ cs112002:
   end_time: 2:00 pm
   course: cs112
   instructor: luke
+  semester: fall2018
 
 cs211001:
   name: CS 211 001
@@ -36,8 +38,9 @@ cs211001:
   start_time: 2:30 pm
   end_time: 3:00 pm
   location: ENGR 200
-  course: cs211spring
+  course: cs211
   instructor: otten
+  semester: spring2018
 
 cs112001spring:
   name: CS 112 001
@@ -49,8 +52,9 @@ cs112001spring:
   start_time: 12:00 pm
   end_time: 1:00 pm
   location: Innovation Hall 204
-  course: cs112spring
+  course: cs112
   instructor: kinga
+  semester: spring2018
 
 acct110001:
   name: ACCT 110 001
@@ -62,5 +66,6 @@ acct110001:
   start_time: 12:00 pm
   end_time: 1:00 pm
   location: Innovation Hall 204
-  course: acct110spring
+  course: acct110
   instructor: business_man
+  semester: spring2018

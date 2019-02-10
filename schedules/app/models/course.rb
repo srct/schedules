@@ -1,13 +1,10 @@
 # Contains logic regarding the +Course+ model.
 class Course < ApplicationRecord
-  # Each course belongs to a +Semester+
-  belongs_to :semester
   has_many :course_sections
 
   # Ensure all necessary are fields present.
   validates :course_number, presence: true
   validates :subject, presence: true
-  validates :semester_id, presence: true
 
   def full_name
     "#{subject} #{course_number}"

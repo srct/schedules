@@ -2,14 +2,15 @@ require 'test_helper'
 
 class API::CourseSectionsControllerTest < ActionDispatch::IntegrationTest
   test 'should get index' do
-    get api_course_sections_url course_id: courses(:cs112).id, semester_id: semesters(:fall2018).id
+    get api_course_sections_url(course_id: courses(:cs112).id,
+                                semester_id: semesters(:fall2018).id)
+    
     assert_response :success
 
     sections_returned = JSON.parse @response.body
     num_sections = CourseSection
-                   .joins(course: :semester)
-                   .where('semesters.id = ?', semesters(:fall2018).id)
-                   .where(course_id: courses(:cs112).id).count
+      .where(course_id: courses(:cs112).id)
+      .where(semester: semesters(:fall2018)).count
 
     assert_equal num_sections, sections_returned.count
   end

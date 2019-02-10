@@ -27,15 +27,15 @@ module SearchHelper
     def self.fetchall(search_string, sort_mode: :auto, semester: :fall2018)
       query_data = GenericQueryData.new(search_string, sort_mode, semester)
       models = []
-      models += fetch_instructors query_data
-      models += fetch_courses query_data
+      models += fetch_instructors(query_data)
+      models += fetch_courses(query_data)
       build_list(models)
     end
 
     def self.fetch_instructors(query_data)
       Instructor.from_name(Instructor.select("instructors.*, COUNT(courses.id) AS section_count").from("course_sections"), query_data.search_string)
                 .joins("LEFT OUTER JOIN instructors ON instructors.id = course_sections.instructor_id")
-                .joins("LEFT OUTER JOIN courses ON courses.id = course_sections.course_id AND courses.semester_id = #{query_data.semester.id}")
+                .joins("LEFT OUTER JOIN courses ON courses.id = course_sections.course_id AND course_sections.semester_id = #{query_data.semester.id}")
                 .group("instructors.id").all
     end
 
@@ -46,7 +46,7 @@ module SearchHelper
       base_query = Course.select("courses.*, count(course_sections.id) AS section_count")
                          .left_outer_joins(:course_sections)
                          .having("count(course_sections.id) > 0")
-                         .where("courses.semester_id = ?", query_data.semester)
+                         .where("course_sections.semester_id = ?", query_data.semester)
                          .group("courses.id")
 
       subj = nil

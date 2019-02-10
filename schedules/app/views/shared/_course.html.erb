@@ -1,5 +1,11 @@
 <% expanded = false unless defined? expanded %>
 
+<% if defined?(@instructor) %>
+    <% sections = course.course_sections.where(instructor: @instructor, semester: @semester).order(:name) %>
+<% else %>
+    <% sections = course.course_sections.where(semester: @semester).order(:name) %>
+<% end %>
+
 <div class="card course-card" id="course-<%= course.id %>">
     <div class="card-header">
 	<div class="row">
@@ -24,7 +30,7 @@
 		<div class="icon">
 		    <i class="fa fa-bars"></i>
 		</div>
-		 <%= course.course_sections.count %> sections
+		 <%= sections.count %> sections
 	    </div>
 	</div>
 	<p class="description"><%= course.description %></p>
@@ -42,11 +48,7 @@
 	
 	<!-- List of Course Sections -->
 	<div class="list-group list-group-flush sections" style="display: <%= expanded ? "flex" : "none" %>">
-	    <% if defined?(@instructor) %>
-		<%= render partial: 'shared/section', collection: course.course_sections.where(instructor: @instructor).order(:name), locals: { course: course } %>
-	    <% else %>
-		<%= render partial: 'shared/section', collection: course.course_sections.order(:name), locals: { course: course } %>
-	    <% end %>
+	    <%= render partial: 'shared/section', collection: sections, locals: { course: course } %>
 	</div>
     </div>
 </div>

@@ -11,9 +11,10 @@ class API::CourseSectionsController < ApplicationController
   param :instructor, String, desc: "Get course sections being taught by this instructor"
   def index
     @sections = CourseSection
-                .select('course_sections.*, courses.semester_id, instructors.name AS instructor_name')
-                .joins(:course).where('courses.semester_id = ?', @semester.id)
-                .joins(:instructor)
+      .where(semester: @semester)
+      .joins(:course)
+      .joins(:instructor)
+      .select('course_sections.*, instructors.name AS instructor_name')
 
     if params.key?(:course_id)
       @sections = @sections.where(course_id: params[:course_id])

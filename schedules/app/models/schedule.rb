@@ -95,7 +95,7 @@ class Schedule
   # @return [Array]
   def exdates_for_section(section)
     # Generate exdates for all closures in a semester
-    exdates = Closure.where(semester: section.course.semester).map { |closure|
+    exdates = Closure.where(semester: section.semester).map { |closure|
       generate_exdate(closure.date.to_formatted_s(:number), section.start_time)
     }
 
