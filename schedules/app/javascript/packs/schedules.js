@@ -69,6 +69,7 @@ const initListeners = () => {
     document.getElementById('save-image').onclick = saveImage;
 
     document.getElementById('share-url').innerText = `${window.location.protocol}//${window.location.hostname}/schedule/view?crns=${Cart._courses.join(',')}`;
+    document.getElementById('share-url').href= `${window.location.protocol}//${window.location.hostname}/schedule/view?crns=${Cart._courses.join(',')}`;
 };
 
 if (!HTMLCanvasElement.prototype.toBlob) {
