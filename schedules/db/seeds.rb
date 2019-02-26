@@ -7,6 +7,7 @@ require 'thwait'
 require 'httparty'
 require 'nokogiri'
 require 'json'
+require 'set'
 
 def parse_courses(subjects)
   courses = []
@@ -120,7 +121,11 @@ def main
               end
 
   puts "\tParsing subjects..."
-  subjects = parser.parse_subjects(semesters.first[:value])
+  subjects = [].to_set
+  subjects.merge(parser.parse_subjects(semesters.first[:value]))
+  subjects.merge(parser.parse_subjects(semesters.second[:value])) if semesters.count > 1
+  subjects.merge(parser.parse_subjects(semesters.third[:value])) if semesters.count > 2
+  subjects = subjects.to_a
 
   puts "\tParsing courses from catalog.gmu.edu..."
   courses = parse_courses(subjects) if courses.nil?
