@@ -35,10 +35,17 @@
     	    <p><strong><%= first %>:</strong> <%= prereqs %> <sub><%= note %></sub></p>
 	<% end %>
 	
-	<div class="d-block" style="text-align: center">
-  	    <p id="chevron-label" style="margin-bottom:-4px; font-size: 10px;">Expand</p>
-  	    <i id="course-chevron" class="fas fa-chevron-down"></i>
-	</div>
+	<% if expanded %>
+		<div class="d-block" style="text-align: center">
+	  	    <p id="chevron-label" style="margin-bottom:-4px; font-size: 10px;">Minimize</p>
+	  	    <i id="course-chevron" class="fas fa-chevron-up"></i>
+		</div>
+	<% else %>
+		<div class="d-block" style="text-align: center">
+	  	    <p id="chevron-label" style="margin-bottom:-4px; font-size: 10px;">Expand</p>
+	  	    <i id="course-chevron" class="fas fa-chevron-down"></i>
+		</div>
+	<% end %>
 	
 	<!-- List of Course Sections -->
 	<div class="list-group list-group-flush sections" style="display: <%= expanded ? "flex" : "none" %>">
