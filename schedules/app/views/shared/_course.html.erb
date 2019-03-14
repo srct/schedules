@@ -40,6 +40,10 @@
     	    <% prereqs, note = rest.split('.') %>
     	    <p><strong><%= first %>:</strong> <%= prereqs %> <sub><%= note %></sub></p>
 	<% end %>
+
+	<% unless course.rating.nil? %>
+	    <p>This course has a <%= course.rating %> / 5 rating.</p>
+	<% end %>  
 	
 	<% if expanded %>
 		<div class="d-block" style="text-align: center">
@@ -52,6 +56,8 @@
 	  	    <i id="course-chevron" class="fas fa-chevron-down"></i>
 		</div>
 	<% end %>
+
+
 	
 	<!-- List of Course Sections -->
 	<div class="list-group list-group-flush sections" style="display: <%= expanded ? "flex" : "none" %>">

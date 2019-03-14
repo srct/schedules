@@ -10,6 +10,21 @@ class Course < ApplicationRecord
     "#{subject} #{course_number}"
   end
 
+  def rating
+    i = 0
+    total = 0
+    course_sections.each do |s|
+      next if s.course_rating.nil?
+      total += s.course_rating.to_f
+      i += 1
+    end
+    if i == 0
+      "N/A"
+    else
+      total / i
+    end
+  end
+
   def self.from_subject(base_query, subject)
     base_query.where("courses.subject = ?", subject.upcase)
   end
