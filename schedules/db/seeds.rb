@@ -117,7 +117,7 @@ def main
                 [parser.parse_semesters.first]
               else
                 # expand to include however many semesters you want
-                parser.parse_semesters[0..6]
+                parser.parse_semesters[0..7]
               end
 
   puts "\tParsing subjects..."
