@@ -1,5 +1,3 @@
-require 'course_section_ratings'
-
 # Contains logic belonging to the +CourseSection+ model.
 class CourseSection < ApplicationRecord
   # Each +CourseSection+ belongs to a +Course+ and an +Instructor+.
