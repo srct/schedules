@@ -1,3 +1,5 @@
+require 'course_section_ratings'
+
 # Contains logic belonging to the +CourseSection+ model.
 class CourseSection < ApplicationRecord
   # Each +CourseSection+ belongs to a +Course+ and an +Instructor+.
@@ -20,7 +22,7 @@ class CourseSection < ApplicationRecord
     if rating_questions.empty?
       nil
     else
-      rating_questions[0]["instr_mean"] 
+      "#{rating_questions[0]['instr_mean']} / #{rating_questions[0]['resp']} responses"
     end
   end
 
@@ -28,7 +30,7 @@ class CourseSection < ApplicationRecord
     if rating_questions.empty?
       nil
     else
-      rating_questions[1]["instr_mean"] 
+      "#{rating_questions[1]['instr_mean']} / #{rating_questions[1]['resp']} responses"
     end
   end
 

@@ -23,10 +23,19 @@
     <% if section.instructor.name == "TBA" %>
 	TBA
     <% else %>
-	<%= link_to section.instructor.name, section.instructor %> was rated <%= section.teaching_rating %> / 5 for this section.
+	<%= link_to section.instructor.name, section.instructor %>
     <% end %>
     <br/>
     
     <i class="fas fa-map-marker-alt"></i> <%= section.location %> <br/>
     <i class="fas fa-clock"></i> <%= "#{section.days}, #{section.start_time}-#{section.end_time}" %> <br/>
+
+    <% unless section.rating_questions.empty? %>
+	<br/>
+	<b>Rating Info</b> (<%= link_to("See all ratings", course_section_url(section))%>)
+	<ul>
+	    <li>Instructor rating: <%= section.teaching_rating %></li>
+	    <li>Course rating: <%= section.course_rating %></li>
+	</ul>
+    <% end %>
 </li>

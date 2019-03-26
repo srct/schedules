@@ -41,10 +41,6 @@
     	    <p><strong><%= first %>:</strong> <%= prereqs %> <sub><%= note %></sub></p>
 	<% end %>
 
-	<% unless course.rating.nil? %>
-	    <p>This course has a <%= course.rating %> / 5 rating.</p>
-	<% end %>  
-	
 	<% if expanded %>
 		<div class="d-block" style="text-align: center">
 	  	    <p id="chevron-label" style="margin-bottom:-4px; font-size: 10px;">Minimize</p>

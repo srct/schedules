@@ -1,6 +1,8 @@
 require 'httparty'
 require 'nokogiri'
 
+sem = ARGV.first
+
 headers = {
   'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:65.0) Gecko/20100101 Firefox/65.0',
   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
@@ -14,13 +16,13 @@ headers = {
 }
 
 resp = HTTParty.post('https://crserating.gmu.edu/ReportPaper/InstructorList.cfm',
-                     body: "SearchType=instructor&semester=f17&ctitle=&iname=&divsname=&deptname=&disc=&ckey=&orig=off&SearchTypeHid=instructor",
+                     body: "SearchType=instructor&semester=#{sem}&ctitle=&iname=&divsname=&deptname=&disc=&ckey=&orig=off&SearchTypeHid=instructor",
                      headers: headers).body
 
 document = Nokogiri::HTML(resp)
 values = document.css('select option').map { |e| e['value'] }
 i = values.index('--Select an Instructor--')
-values = values[i+1..-1]
+values = values[i + 1..-1]
 all = {}
 c = values.count
 counter = 1
@@ -28,25 +30,26 @@ values.each do |v|
   puts "#{counter}/#{c} getting data for #{v}..."
   counter += 1
   resp = HTTParty.post('https://crserating.gmu.edu/ReportPaper/InstructorList.cfm',
-                       body: "SearchType=instructor&semester=f17&ctitle=&iname=#{v}&divsname=&deptname=&disc=&ckey=&orig=off&SearchTypeHid=instructor",
+                       body: "SearchType=instructor&semester=#{sem}&ctitle=&iname=#{v}&divsname=&deptname=&disc=&ckey=&orig=off&SearchTypeHid=instructor",
                        headers: headers)
 
   document = Nokogiri::HTML(resp)
   rows = document.css('tr')
   i = rows.index { |r| r.css('td').first&.text == 'Course' }
-  rows[i+1..-3].each do |s_tr|
+  next if i.nil?
+  rows[i + 1..-3].each do |s_tr|
     tds = s_tr.css('td')
-    
+
     id = tds.first.css('font a').first['href'].match(/[0-9]+/)[0]
     section, instr = tds.first&.text, tds[2]&.text
-    
+
     resp = HTTParty.post("https://crserating.gmu.edu/ReportPaper/MeansSummary16.cfm?rat_num=#{id}&caller=InstructorList",
-                         body: "semester=f17&formseq=62&orig=off&iname=#{instr}",
+                         body: "semester=#{sem}&formseq=62&orig=off&iname=#{instr}",
                          headers: headers)
     document = Nokogiri::HTML(resp)
     rows = document.css('tr')
-    qs = [9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39].map do |i|
-      datas = rows[i].css('td')
+    qs = [9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39].map do |n|
+      datas = rows[n].css('td')
       { q: datas[0].text.match(/[A-Z].*/)[0], resp: datas[1].text.strip, instr_mean: datas[2].text.strip, dept_mean: datas[3].text.strip }
     end
     all[section] = qs
@@ -54,7 +57,4 @@ values.each do |v|
   puts '------------------------------'
 end
 
-File.write('f17.json', all.to_json)
-
-
-
+File.write("#{sem}.json", all.to_json)
