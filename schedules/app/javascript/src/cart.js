@@ -38,13 +38,13 @@ class Cart {
         for (const courseId in this._courses) {
             if (this._courses[courseId].length === 0) delete this._courses[courseId];
         }
-        document.getElementById('course-counter').innerText = Object.keys(this._courses).length;
+        document.getElementById('cart-counter').innerText = Object.keys(this._courses).length;
     }
 
     async toggleSection(section) {
         const resp = await fetch(`/sessions/cart?&crn=${section.crn}`, {
             cache: 'no-store',
-            credentials: 'same-origin'
+            credentials: 'same-origin',
         });
         const json = await resp.json();
         this.courses = json;
@@ -65,4 +65,3 @@ const cart = new Cart();
 document.addEventListener('DOMContentLoaded', () => cart._parseData());
 
 export default cart;
-

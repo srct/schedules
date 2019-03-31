@@ -1,11 +1,14 @@
 require 'json'
 
-[['f18', 'Fall', '2018'], ['sp18', 'Spring', '2018'],
- ['f17', 'Fall', '2017'], ['sp17', 'Spring', '2017']].each do |arr|
-  puts arr
+[['sp18', 'Spring', '2018'], ['sm18', 'Summer', '2018'], ['f18', 'Fall', '2018'],
+ ['sp17', 'Spring', '2017'], ['sm17', 'Summer', '2017'], ['f17', 'Fall', '2017'],
+ ['sp16', 'Spring', '2016'], ['sm16', 'Summer', '2016'], ['f16', 'Fall', '2016']].each do |arr|
   ratings = JSON.parse(File.read("db/data/#{arr[0]}.json"))
-  semester = Semester.find_by!(season: arr[1], year: arr[2])
+  semester = Semester.find_by(season: arr[1], year: arr[2])
+  next if semester.nil?
 
+  puts "#{ratings[1]} #{ratings[2]}"
+  
   ratings.each do |section, qs|
     section = section.split(',').first
     subj = section.match(/[A-Z]+/)[0]

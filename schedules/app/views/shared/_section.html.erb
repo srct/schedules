@@ -24,6 +24,25 @@
 	TBA
     <% else %>
 	<%= link_to section.instructor.name, section.instructor %>
+	<% unless section.instructor.rating.nil? %>
+	    <div class="star-rating">
+		<div class="back-stars">
+		    <i class="far fa-star" aria-hidden="true"></i>
+		    <i class="far fa-star" aria-hidden="true"></i>
+		    <i class="far fa-star" aria-hidden="true"></i>
+		    <i class="far fa-star" aria-hidden="true"></i>
+		    <i class="far fa-star" aria-hidden="true"></i>
+		    
+		    <div class="front-stars" style="width: <%= (section.instructor.rating[0] / 5 * 100).to_i %>%">
+			<i class="fa fa-star" aria-hidden="true"></i>
+			<i class="fa fa-star" aria-hidden="true"></i>
+			<i class="fa fa-star" aria-hidden="true"></i>
+			<i class="fa fa-star" aria-hidden="true"></i>
+			<i class="fa fa-star" aria-hidden="true"></i>
+		    </div>
+		</div>
+	    </div>
+	<% end %>
     <% end %>
     <br/>
     
