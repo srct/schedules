@@ -114,7 +114,7 @@ def main
   parser = PatriotWeb::Parser.new
 
   semesters = if ARGV.first == "update"
-                [parser.parse_semesters.first]
+                [parser.parse_semesters[3]]
               else
                 # expand to include however many semesters you want
                 parser.parse_semesters[0..7]
