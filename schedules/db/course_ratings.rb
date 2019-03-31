@@ -3,6 +3,7 @@ require 'nokogiri'
 
 sem = ARGV.first
 
+# bamboozle website
 headers = {
   'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:65.0) Gecko/20100101 Firefox/65.0',
   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
@@ -48,7 +49,7 @@ values.each do |v|
                          headers: headers)
     document = Nokogiri::HTML(resp)
     rows = document.css('tr')
-    qs = [9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35, 37, 39].map do |n|
+    qs = (9..39).filter(&:odd?).map do |n|
       datas = rows[n].css('td')
       { q: datas[0].text.match(/[A-Z].*/)[0], resp: datas[1].text.strip, instr_mean: datas[2].text.strip, dept_mean: datas[3].text.strip }
     end
@@ -57,4 +58,4 @@ values.each do |v|
   puts '------------------------------'
 end
 
-File.write("#{sem}.json", all.to_json)
+File.write("db/data/#{sem}.json", all.to_json)
