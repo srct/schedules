@@ -66,9 +66,23 @@
 		<li class="nav-item">
 		    <a href="/schedule" class="nav-link">Your Schedule (<span id="cart-counter"><%= @cart.length %></span>)</a>
 		</li>
+		<li class="nav-item">
+		    <a href="/about" class="nav-link">About Schedules</a>
+		</li>
 	    </ul>
 	    
 	    <form action="/search" class="form-inline">
+		<select id="semester-select" class="custom-select">
+		    <% Semester.all.each do |semester| %>
+			<option
+			    value="<%= semester.id %>"
+			    <% if @semester == semester %> selected <% end %>
+			>
+			    <%= "#{semester.season} #{semester.year}" %>
+			</option>
+		    <% end %>
+		</select>
+
 		<input
 		    id="searchbar"
 			value="<%= params[:query] %>"
@@ -79,6 +93,7 @@
 			aria-describedby="basic-addon2"
 			autocomplete="off"
 		>
+		
 		<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
 	    </form>
 	    

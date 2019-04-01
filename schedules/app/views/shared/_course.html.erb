@@ -15,24 +15,21 @@
 		<% end %>
 	    </div>
 	</div>
-	<h5><em><%= course.title %></em></h5>
-    </div>
-    <div class="card-body">
-	<div class="attr-list justify-content-start">
-	    <div class="attr">
-		<div class="icon">
-		    <i class="fa fa-book"></i>
+	<div class="d-md-flex justify-content-between">
+	    <h5><em><%= course.title %></em></h5>
+	    <div class="attr-list justify-content-start">
+		<div class="attr">
+		    <div class="icon">
+			<i class="fa fa-book"></i>
+		    </div>
+		    <%= course.credits %> credits
 		</div>
-		<%= course.credits %> credits
-	    </div>
-	    &nbsp;&nbsp;&nbsp;
-	    <div class="attr">
-		<div class="icon">
-		    <i class="fa fa-bars"></i>
-		</div>
-		 <%= sections.count %> sections
+		&nbsp;&nbsp;&nbsp;
 	    </div>
 	</div>
+    </div>
+    <div class="card-body">
+	
 	<p class="description"><%= course.description %></p>	
 	
 	<% unless course.prereqs.nil? || course.prereqs.empty? %>
@@ -59,7 +56,7 @@
 	
 	<!-- List of Course Sections -->
 	<div class="list-group list-group-flush sections" style="display: <%= expanded ? "flex" : "none" %>">
-	    <%= render partial: 'shared/section', collection: sections, locals: { course: course } %>
+	    
 	</div>
     </div>
 </div>

@@ -16,6 +16,8 @@ class CourseSection < ApplicationRecord
 
   serialize :rating_questions, Array
 
+  scope :in_semester, ->(semester) { where(semester: semester) }
+
   def teaching_rating
     if rating_questions.empty?
       nil

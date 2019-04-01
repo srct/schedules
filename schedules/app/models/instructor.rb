@@ -1,6 +1,12 @@
 class Instructor < ApplicationRecord
   has_many :course_sections
 
+  scope :named, ->(name) {
+    name.split(' ').reduce(all) do |query, comp|
+      query.where("upper(instructors.name) LIKE ?", "%#{comp.upcase}%")
+    end
+  }
+
   def self.from_name(base_query, name)
     base_query.where("upper(instructors.name) LIKE ?", "%#{name.upcase}%")
   end
