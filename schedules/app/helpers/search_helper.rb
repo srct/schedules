@@ -1,8 +1,4 @@
 module SearchHelper
-  def in_cart?(crn)
-    @cart.include? crn.to_s
-  end
-
   class GenericQueryData
     attr_reader :semester
     attr_reader :sort_mode

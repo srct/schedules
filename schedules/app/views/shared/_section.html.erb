@@ -9,14 +9,10 @@
     data-cid="<%= course.id if defined?(course) %>"
     data-type="<%= section.section_type %>"
 >
-    <p><b class="subj"><%= "#{section.name}" %></b>:  <%= section.title %></p>
+    <p><b class="subj"><%= "#{section.name}" %></b>:  <%= section.title %> <em><%= "(##{section.crn})"%></em></p>
 
     <% if editable %>
-	<% if in_cart? section.crn  %>
-	    <span class="float-right text-center add-remove-btn"><i id="icon" class="fas fa-minus"></i><br/><span class="text">Remove</span></span>	
-	<% else %>
-	    <span class="float-right text-center add-remove-btn"><i id="icon" class="fas fa-plus"></i><br/><span class="text">Add</span></span>
-	<% end %>
+	    <span class="float-right text-center add-remove-btn"><i id="icon" class="fas fa-ellipsis-h"></i><br/><span class="text">Add</span></span>
     <% end %>
     
     <i class="fas fa-chalkboard-teacher"></i>

@@ -5,6 +5,8 @@
 	<%= csrf_meta_tags %>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+	<%= Gon::Base.render_data %>
+	
 	<%= javascript_include_tag 'masonstrap.min' %>
 	
 	<%= stylesheet_link_tag 'masonstrap.min' %>
@@ -16,7 +18,7 @@
 	<meta property="og:url" content="https://schedules.gmu.edu/">
 	<meta property="og:type" content="website">
 	<meta property="og:title" content="SRCT Schedules">
-	<meta property="og:description" content="Easily generate a calendar with your class schedule.">
+	<meta property="og:description" content="Browse the GMU catalog, see course reviews, build and share your schedule.">
 	<meta property="og:site_name" content="SRCT Schedules">
 	<meta property="og:locale" content="en_US">
 	<meta property="article:author" content="SRCT">
@@ -27,7 +29,7 @@
 	<meta name="twitter:creator" content="@MasonSRCT">
 	<meta name="twitter:url" content="https://schedules.gmu.edu/">
 	<meta name="twitter:title" content="SRCT Schedules">
-	<meta name="twitter:description" content="Easily generate a calendar with your class schedule.">
+	<meta name="twitter:description" content="Browse the GMU catalog, see course reviews, build and share your schedule.">
 
 	<!-- favicons -->
 	<%= favicon_link_tag %>

@@ -21,6 +21,9 @@ gem 'uglifier'
 
 gem 'webpacker', '~> 3.5'
 
+# Access Ruby data from JavaScript
+gem 'gon'
+
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
@@ -74,7 +77,3 @@ gem 'apipie-rails'
 
 # Markdown for API docs
 gem 'maruku'
-
-# gem 'jquery-rails'
-
-# gem 'font-awesome-sass', '~> 5.3.1'

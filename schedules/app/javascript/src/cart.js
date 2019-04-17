@@ -1,67 +1,36 @@
-//import '@babel/polyfill';
-
 class Cart {
     constructor() {
-        this.isOpen = false;
-        this._courses = [];
+        document.addEventListener('DOMContentLoaded', () => (document.getElementById('cart-counter').innerText = this.crns.length));
+    }
 
-        const cartData = document.getElementById('cart-data');
-        if (cartData) {
-            this._courses = JSON.parse(cartData.dataset.cart);
+    get crns() {
+        const crnString = localStorage.getItem('crns');
+        if (!crnString) return [];
+        return JSON.parse(crnString);
+    }
+
+    set crns(crnList) {
+        localStorage.setItem('crns', JSON.stringify(crnList));
+        document.getElementById('cart-counter').innerText = crnList.length;
+    }
+
+    addCrn(crn) {
+        if (!this.includesCrn(crn)) {
+            this.crns = [...this.crns, crn];
         }
     }
 
-    _parseData() {
-        const cartData = document.getElementById('cart-data');
-        if (cartData) {
-            this._courses = JSON.parse(cartData.dataset.cart);
-        }
-    }
-
-    toggle() {
-        const list = document.getElementById('cart');
-        const icon = document.getElementById('schedule-icon');
-
-        if (this.isOpen) {
-            list.style.display = 'none';
-            icon.style.color = 'black';
+    toggleCrn(crn) {
+        if (!this.includesCrn(crn)) {
+            this.crns = [...this.crns, crn];
         } else {
-            list.style.display = 'block';
-            icon.style.color = 'green';
+            this.crns = this.crns.filter(c => c != crn);
         }
-
-        this.isOpen = !this.isOpen;
     }
 
-    set courses(courses) {
-        this._courses = courses;
-        for (const courseId in this._courses) {
-            if (this._courses[courseId].length === 0) delete this._courses[courseId];
-        }
-        document.getElementById('cart-counter').innerText = Object.keys(this._courses).length;
-    }
-
-    async toggleSection(section) {
-        const resp = await fetch(`/sessions/cart?&crn=${section.crn}`, {
-            cache: 'no-store',
-            credentials: 'same-origin',
-        });
-        const json = await resp.json();
-        this.courses = json;
-    }
-
-    includesSection(obj) {
-        for (const key in this._courses) {
-            const list = this._courses[key];
-            if (list.includes(obj.crn)) return true;
-        }
-
-        return false;
+    includesCrn(crn) {
+        return this.crns.filter(c => c == crn).length > 0;
     }
 }
 
-const cart = new Cart();
-
-document.addEventListener('DOMContentLoaded', () => cart._parseData());
-
-export default cart;
+export default new Cart();
