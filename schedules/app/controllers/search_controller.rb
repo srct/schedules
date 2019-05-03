@@ -42,7 +42,6 @@ class SearchController < ApplicationController
         c.serializable_hash.merge(url: course_url(c))
       end
       gon.courses = @courses
-      gon.courses.map!
     end
 
     /[0-9]{5}/.match(params[:query]) do |m|

@@ -119,6 +119,15 @@ body {
     top: 0;
 }
 
+.full-width {
+  width: 90vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -45vw;
+  margin-right: -45vw;
+}
+
 // .jumbotron {
 //     color: #FFFFFF
 // }
