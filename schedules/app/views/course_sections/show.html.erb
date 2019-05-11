@@ -1,0 +1,10 @@
+<h1><%= @section.name %> - <%= @section.semester.to_s %> - <%= @section.instructor.name %></h1>
+
+<ol>
+<% @section.rating_questions.each do |q| %>
+    <b>
+	<li><%= q["q"] %></li>
+    </b>
+    Instructor mean: <%= q["instr_mean"] %>, Responses: <%= q["resp"] %>
+<% end %>
+</ol>

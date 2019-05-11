@@ -1,25 +1,4 @@
-<% unless @instructors.nil? %>
-    <h2>Instructors</h2>
-    <div class="row">
-	<% @instructors.each do |instructor| %>
-	    <div class="col"><%= render partial: 'shared/instructor', object: instructor %></div>
-	<% end %>
-    </div>
-    <hr />
-<% end %>
-
-<% unless @courses.nil? %>
-    <h2>Courses</h2>
-    <% @courses.each do |course| %>
-	<div class="col"><%= render partial: 'shared/course', object: course %></div>
-    <% end %>
-<% end %>
-
-<% if @courses.nil? && @instructors.nil? %>
-    <h1>Sorry, we couldn't find anything matching your search.</h1>
-    <p>Please try again!</p>
-<% end %>
-
+<div id="root"></div>
 
 <%= javascript_pack_tag 'search' %>
 <%= stylesheet_link_tag 'search' %>

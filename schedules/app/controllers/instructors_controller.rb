@@ -7,14 +7,11 @@ class InstructorsController < ApplicationController
     @instructor = Instructor.find_by_id(params[:id])
 
     # find the courses being taught this semester
-    sections = CourseSection.where(instructor: @instructor, semester: @semester)
-    @courses = Course.build_set(sections)
-
-    # build the list of courses the instructor has taught in the past
-    @past = []
-    @instructor.course_sections.map(&:course).each do |c|
-      @past << c unless @past.select { |past| past.full_name == c.full_name }.count.positive?
+    sections = CourseSection.where(instructor: @instructor)
+    @semesters = sections.group_by do |s|
+      s.semester.to_s
     end
-    @past.sort_by!(&:full_name)
+
+    @rating = { teaching: @instructor.rating, respect: @instructor.rating(6) }
   end
 end
