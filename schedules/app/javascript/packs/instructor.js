@@ -33,7 +33,6 @@ const initSearchListeners = () => {
         sectionItems.forEach(item => {
             const icon = $(item.querySelector('.add-remove-btn #icon'));
             const text = item.querySelector('.add-remove-btn .text');
-            console.log(item.dataset.crn);
             if (Cart.includesCrn(item.dataset.crn)) {
                 icon.addClass('fa-minus').removeClass('fa-plus');
                 text.innerText = 'Remove';

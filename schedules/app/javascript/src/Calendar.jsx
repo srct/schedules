@@ -1,16 +1,19 @@
 import React from 'react';
 import BigCalendar from 'react-big-calendar';
+import Toolbar from 'src/Toolbar';
 import moment from 'moment';
 import '!style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css';
+import withSizes from 'react-sizes';
 
 const localizer = BigCalendar.momentLocalizer(moment);
 
 const Calendar = props => (
-    <div style={{ backgroundColor: 'white', padding: '24px' }}>
+    <div className="full-width" style={{ backgroundColor: 'white', padding: '24px' }}>
         <BigCalendar
             localizer={localizer}
             events={props.events}
             title=""
+            components={{ toolbar: Toolbar }}
             defaultView="week"
             views={['week', 'day']}
             startAccessor="start"
@@ -18,6 +21,7 @@ const Calendar = props => (
             defaultDate={moment('2019-01-14').toDate()}
             formats={{
                 dayFormat: (date, culture, localizer) => localizer.format(date, 'ddd', culture),
+                dayHeaderFormat: (date, culture, localizer) => localizer.format(date, 'ddd', culture),
                 dayRangeHeaderFormat: () => '',
             }}
             style={{ height: '75vh' }}
