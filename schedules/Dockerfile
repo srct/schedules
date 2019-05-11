@@ -14,4 +14,3 @@ RUN export SECRET_KEY_BASE=$(rails secret)
 RUN rails assets:precompile
 RUN rails db:migrate
 RUN rails db:seed
-RUN rails runner db/load_course_ratings.rb

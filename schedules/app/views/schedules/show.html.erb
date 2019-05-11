@@ -1,10 +1,46 @@
 <%= javascript_pack_tag 'schedules' %>
 <%= stylesheet_link_tag 'schedules' %>
 
+<%= javascript_include_tag 'moment.min' %>
+<%= stylesheet_link_tag 'fullcalendar.min' %>
 
+<button id="open-modal-btn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exportModal">
+    Export Schedule
+</button>
+<button id="save-image" class="btn btn-secondary">Save Image</button>
 
-<div id="root"></div>
+<div id="calendar"></div>
 
+<h3>Quick add</h3>
+<p>Populate your calendar quickly by entering a comma separated list of CRNs.</p>
+<form action="/sessions/add_bulk" class="form">
+    <div class="input-group">
+	<input
+	    id="crns"
+		name="crns"
+		type="text"
+		class="form-control"
+		placeholder="12345,54321,..."
+		aria-describedby="basic-addon2"
+		autocomplete="off"
+	>
+	<div class="input-group-append">
+	    <button type="submit" class="btn btn-primary" type="button">
+		Populate Calendar
+	    </button>
+	</div>
+    </div>
+</form>
+
+<h3 id="share-header">Share</h3>
+Want to share your schedule with your friends? Send them this link:<br/>
+<a id="share-url"></a>
+
+<template id="events" data-events="<%= @events.to_json %>"></template>
+
+<hr />
+<h2>Selected Courses</h2>
+<%= render partial: 'shared/section', collection: @all %>
 
 
 <!-- Export Modal -->

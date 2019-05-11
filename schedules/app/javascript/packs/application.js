@@ -10,9 +10,6 @@
 import '@babel/polyfill';
 import 'url-polyfill';
 
-import React from 'react';
-import Cart from 'src/Cart';
-
 const elementFromString = string => {
     const html = new DOMParser().parseFromString(string, 'text/html');
     return html.body.firstChild;
