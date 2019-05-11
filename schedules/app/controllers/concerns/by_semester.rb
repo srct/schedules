@@ -1,4 +1,4 @@
-# BySemester contains logic for setting the current request's Semester. 
+# BySemester contains logic for setting the current request's Semester.
 module BySemester
   extend ActiveSupport::Concern
 

@@ -8,6 +8,7 @@ require 'httparty'
 require 'nokogiri'
 require 'json'
 require 'set'
+require 'yaml/store'
 
 def parse_courses(subjects)
   courses = []
