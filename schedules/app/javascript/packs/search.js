@@ -23,8 +23,8 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import CourseList from 'src/CourseList';
+import SearchList from 'src/SearchList';
 
 document.addEventListener('DOMContentLoaded', () => {
-    ReactDOM.render(<CourseList courses={gon.courses} />, document.getElementById('root'));
+    ReactDOM.render(<SearchList courses={gon.courses} instructors={gon.instructors} />, document.getElementById('root'));
 });
