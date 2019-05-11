@@ -20,6 +20,11 @@ body {
     background-color: #E4E4E4;
 }
 
+#page {
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
 .card {
     margin-bottom: 12px;
 
@@ -90,3 +95,39 @@ body {
 .quick-add-header {
     margin-top: 32px;
 }
+
+%flex-display {
+    display: inline-flex;
+}
+.star-rating {
+    @extend %flex-display;
+    align-items: center;
+    font-size: 1em;
+    justify-content: flex-start;
+}
+.back-stars {
+    @extend %flex-display;
+    position: relative;
+    text-shadow: 4px 4px 10px #843a3a;
+}
+.front-stars {
+    @extend %flex-display;
+    color: #FFBC0B;
+    overflow: hidden;
+    position: absolute;
+    text-shadow: 2px 2px 5px #d29b09;
+    top: 0;
+}
+
+.full-width {
+  width: 90vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -45vw;
+  margin-right: -45vw;
+}
+
+// .jumbotron {
+//     color: #FFFFFF
+// }

@@ -28,7 +28,6 @@ class API::CourseSectionsController < ApplicationController
       @sections = @sections.where('UPPER(instructors.name) LIKE UPPER(?)', "%#{params[:instructor]}%")
     end
 
-    # @sections = CourseSection.fetch(params).all
     res = @sections.map do |s|
       {
         id: s.id,
@@ -38,6 +37,9 @@ class API::CourseSectionsController < ApplicationController
         crn: s.crn,
         title: s.title,
         instructor_name: s.instructor_name,
+        instructor_url: instructor_url(s.instructor),
+        teaching_rating: s.instructor.rating,
+        course_rating: s.course_rating,
         section_type: s.section_type,
         start_date: s.start_date,
         end_date: s.end_date,

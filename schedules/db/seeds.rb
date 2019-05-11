@@ -8,6 +8,7 @@ require 'httparty'
 require 'nokogiri'
 require 'json'
 require 'set'
+require 'yaml/store'
 
 def parse_courses(subjects)
   courses = []
@@ -105,6 +106,7 @@ def load_closures
   # (21..25).each { |n| Closure.create! date: Date.new(2018, 11, n), semester: fall2018 }
   # (10..19).each { |n| Closure.create! date: Date.new(2018, 12, n), semester: fall2018 }
   spring2019 = Semester.find_by(season: 'Spring', year: '2019')
+  return if spring2019.nil?
   (11..17).each { |day| Closure.find_or_create_by! date: Date.new(2019, 3, day), semester: spring2019 }
 end
 
@@ -117,14 +119,13 @@ def main
                 [parser.parse_semesters.first]
               else
                 # expand to include however many semesters you want
-                parser.parse_semesters[0..7]
+                parser.parse_semesters[1..7]
               end
 
   puts "\tParsing subjects..."
   subjects = [].to_set
-  subjects.merge(parser.parse_subjects(semesters.first[:value]))
-  subjects.merge(parser.parse_subjects(semesters.second[:value])) if semesters.count > 1
-  subjects.merge(parser.parse_subjects(semesters.third[:value])) if semesters.count > 2
+  # merge all of the subjects
+  semesters.each { |s| subjects.merge(parser.parse_subjects(s[:value])) }
   subjects = subjects.to_a
 
   puts "\tParsing courses from catalog.gmu.edu..."

@@ -1,14 +1,18 @@
 # Registers all routes for the app.
 Rails.application.routes.draw do
+  get 'about', to: 'about#index', as: 'about'
+
   get '/', to: 'home#index', as: 'home'
-  get 'search', to: 'search#index'
+  get 'search', to: 'search#index', as: 'search'
   get 'sessions/update', as: 'update_session'
   get 'sessions/cart'
   get 'sessions/add_bulk'
 
   resources :courses, only: [:show]
+  resources :course_sections, only: [:show]
   resources :instructors, only: [:index, :show]
   get 'schedule', to: 'schedules#show', as: 'schedule'
+  get 'schedule/events', to: 'schedules#events'
   get 'schedule/view', to: 'schedules#view', as: 'view_schedule'
 
   scope :api, module: 'api' do # Register /api routes

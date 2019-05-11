@@ -2,20 +2,7 @@
 class SchedulesController < ApplicationController
   include SchedulesHelper
 
-  def show
-    valid_crns = @cart.reject { |crn|
-      s = CourseSection.find_by_crn(crn)
-      s.nil?
-    }
-
-    @all = valid_crns.map { |crn|
-      CourseSection.latest_by_crn(crn)
-    }
-    @without_online = @all.reject { |s|
-      s.start_time == "TBA" || s.end_time == "TBA"
-    }
-    @events = generate_fullcalender_events(@without_online)
-  end
+  def show; end
 
   def view
     @all = params[:crns].split(',').map { |crn|
@@ -26,5 +13,21 @@ class SchedulesController < ApplicationController
       s.start_time == "TBA" || s.end_time == "TBA"
     }
     @events = generate_fullcalender_events(@without_online)
+  end
+
+  def events
+    @cart = params[:crns].split(',')
+                         .map { |crn| CourseSection.latest_by_crn(crn) }
+                         .reject(&:nil?)
+
+    @without_online = @cart.reject { |s|
+      s.start_time == "TBA" || s.end_time == "TBA"
+    }
+
+    @events = generate_fullcalender_events(@without_online)
+    sections = @cart.map do |s|
+      s.serializable_hash.merge(instructor_name: s.instructor.name, instructor_url: instructor_url(s.instructor))
+    end
+    render json: { events: @events, sections: sections }
   end
 end
