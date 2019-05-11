@@ -15,29 +15,32 @@
 		<% end %>
 	    </div>
 	</div>
-	<div class="d-md-flex justify-content-between">
-	    <h5><em><%= course.title %></em></h5>
-	    <div class="attr-list justify-content-start">
-		<div class="attr">
-		    <div class="icon">
-			<i class="fa fa-book"></i>
-		    </div>
-		    <%= course.credits %> credits
-		</div>
-		&nbsp;&nbsp;&nbsp;
-	    </div>
-	</div>
+	<h5><em><%= course.title %></em></h5>
     </div>
     <div class="card-body">
-	
-	<p class="description"><%= course.description %></p>	
-	
+	<div class="attr-list justify-content-start">
+	    <div class="attr">
+		<div class="icon">
+		    <i class="fa fa-book"></i>
+		</div>
+		<%= course.credits %> credits
+	    </div>
+	    &nbsp;&nbsp;&nbsp;
+	    <div class="attr">
+		<div class="icon">
+		    <i class="fa fa-bars"></i>
+		</div>
+		 <%= sections.count %> sections
+	    </div>
+	</div>
+	<p class="description"><%= course.description %></p>
+
 	<% unless course.prereqs.nil? || course.prereqs.empty? %>
     	    <% first, rest = course.prereqs.split(':') %>
     	    <% prereqs, note = rest.split('.') %>
     	    <p><strong><%= first %>:</strong> <%= prereqs %> <sub><%= note %></sub></p>
 	<% end %>
-
+	
 	<% if expanded %>
 		<div class="d-block" style="text-align: center">
 	  	    <p id="chevron-label" style="margin-bottom:-4px; font-size: 10px;">Minimize</p>
@@ -49,14 +52,10 @@
 	  	    <i id="course-chevron" class="fas fa-chevron-down"></i>
 		</div>
 	<% end %>
-
-	
-
-
 	
 	<!-- List of Course Sections -->
 	<div class="list-group list-group-flush sections" style="display: <%= expanded ? "flex" : "none" %>">
-	    
+	    <%= render partial: 'shared/section', collection: sections, locals: { course: course } %>
 	</div>
     </div>
 </div>

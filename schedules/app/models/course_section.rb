@@ -14,26 +14,6 @@ class CourseSection < ApplicationRecord
   validates :course_id, presence: true
   validates :semester_id, presence: true
 
-  serialize :rating_questions, Array
-
-  scope :in_semester, ->(semester) { where(semester: semester) }
-
-  def teaching_rating
-    if rating_questions.empty?
-      nil
-    else
-      "#{rating_questions[0]['instr_mean']} / #{rating_questions[0]['resp']} responses"
-    end
-  end
-
-  def course_rating
-    if rating_questions.empty?
-      nil
-    else
-      "#{rating_questions[1]['instr_mean']} / #{rating_questions[1]['resp']} responses"
-    end
-  end
-
   def overlaps?(other)
     t1_start, t1_end = Time.parse(start_time), Time.parse(end_time)
     t2_start, t2_end = Time.parse(other.start_time), Time.parse(other.end_time)

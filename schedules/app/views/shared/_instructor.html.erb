@@ -7,6 +7,13 @@
 		</div>
 		<%= link_to instructor.name, instructor_path(instructor) %>
 	    </div>
+	    &nbsp;&nbsp;&nbsp;
+	    <div class="attr">
+		<div class="icon">
+		    <i class="fa fa-bars"></i>
+		</div>
+		<%= "#{instructor.section_count}" %> sections
+	    </div>
 	</div>
     </div>
 </div>

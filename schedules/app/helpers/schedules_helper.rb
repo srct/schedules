@@ -19,9 +19,7 @@ module SchedulesHelper
         {
           title: s.name,
           start: "#{formatted_date}T#{time}",
-          end: "#{formatted_date}T#{endtime}",
-          crn: s.crn,
-          active: true
+          end: "#{formatted_date}T#{endtime}"
         }
       end
     end.flatten

@@ -1,5 +1,5 @@
 <div class="jumbotron text-center">
-    <h1><i class="fas fa-calendar-alt"></i>&nbsp;SRCT Schedules</h1>
+    <h1>SRCT Schedules</h1>
     <p class="lead">Build, share, and export your schedule. Search for classes and professors.</p>
     <hr>
     <p>
@@ -36,6 +36,24 @@
     </div>
 </div>
 
-<div id="quick-add" />
 
-<%= javascript_pack_tag 'home' %>
+<h3 class="quick-add-header">Quick add</h3>
+<p>Want to quickly generate a calendar populated with your semester's classes? Enter the CRNs in a comma separated list below.</p>
+<form action="/sessions/add_bulk" class="form">
+    <div class="input-group">
+	<input
+	    id="crns"
+	    name="crns"
+	    type="text"
+	    class="form-control"
+	    placeholder="12345,54321,..."
+	    aria-describedby="basic-addon2"
+	    autocomplete="off"
+	>
+	<div class="input-group-append">
+	    <button type="submit" class="btn btn-primary" type="button">
+		Populate Calendar
+	    </button>
+	</div>
+    </div>
+</form>
