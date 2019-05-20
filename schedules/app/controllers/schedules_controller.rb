@@ -25,9 +25,11 @@ class SchedulesController < ApplicationController
     }
 
     @events = generate_fullcalender_events(@without_online)
+    
     sections = @cart.map do |s|
       s.serializable_hash.merge(instructor_name: s.instructor.name, instructor_url: instructor_url(s.instructor))
     end
+    
     render json: { events: @events, sections: sections }
   end
 end

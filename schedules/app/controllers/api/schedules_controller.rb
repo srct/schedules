@@ -8,7 +8,7 @@ class API::SchedulesController < ApplicationController
   param :crns, String, desc: 'Comma separated list of crns to include as events in the calendar', required: true
   def index
     crns = params["crns"].split ','
-    @schedule = Schedule.new crns
+    @schedule = Schedule.new(crns, @semester.season)
     render plain: @schedule.to_ical # render a plaintext iCal file
   end
 end

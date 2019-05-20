@@ -13,14 +13,16 @@ class CustomToolbar extends Toolbar {
         return (
             <div className="rbc-toolbar d-flex justify-content-between">
                 {!isMobile && (
-                    <span className="rbc-btn-group">
-                        <button type="button" onClick={() => this.view('day')}>
-                            Day
-                        </button>
-                        <button type="button" onClick={() => this.view('week')}>
-                            Week
-                        </button>
-                    </span>
+                    <div>
+                        <span className="rbc-btn-group">
+                            <button type="button" onClick={() => this.view('day')}>
+                                Day
+                            </button>
+                            <button type="button" onClick={() => this.view('week')}>
+                                Week
+                            </button>
+                        </span>
+                    </div>
                 )}
 
                 <span className="rbc-toolbar-label">{this.props.label}</span>

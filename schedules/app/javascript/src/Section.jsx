@@ -11,7 +11,7 @@ export default class Section extends React.Component {
     onClick = e => {
         e.stopPropagation();
         console.log(e.target.tagName);
-        if (e.target.tagName === 'A') return;
+        if (e.target.tagName === 'A') return; // if we clicked on a link, don't add the section to the cart
 
         Cart.toggleCrn(this.props.crn);
         this.setState({ inCart: Cart.includesCrn(this.props.crn) });
@@ -20,7 +20,7 @@ export default class Section extends React.Component {
     };
 
     render() {
-        const { name, title, crn, instructor_name, instructor_url, teaching_rating, course_rating, location, days, start_time, end_time } = this.props;
+        const { name, title, crn, instructor_name, instructor_url, teaching_rating, location, days, start_time, end_time } = this.props;
         const { inCart } = this.state;
 
         const percent = teaching_rating ? <Stars percent={(teaching_rating[0] / 5) * 100} /> : null;
@@ -51,7 +51,14 @@ export default class Section extends React.Component {
                 </p>
                 {remove}
                 {add}
-                <i className="fas fa-chalkboard-teacher" /> <a href={instructor_url}>{instructor_name}</a> {percent}
+                <i className="fas fa-chalkboard-teacher" />{' '}
+                {instructor_name !== 'TBA' ? (
+                    <span>
+                        <a href={instructor_url}>{instructor_name}</a> {percent}
+                    </span>
+                ) : (
+                    <span>{instructor_name}</span>
+                )}
                 <br />
                 <i className="fas fa-map-marker-alt" /> {location} <br />
                 <i className="fas fa-clock" /> {days}, {start_time} - {end_time} <br />

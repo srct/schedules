@@ -3,7 +3,6 @@ import BigCalendar from 'react-big-calendar';
 import Toolbar from 'src/Toolbar';
 import moment from 'moment';
 import '!style-loader!css-loader!react-big-calendar/lib/css/react-big-calendar.css';
-import withSizes from 'react-sizes';
 
 const localizer = BigCalendar.momentLocalizer(moment);
 

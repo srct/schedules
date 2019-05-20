@@ -2,6 +2,7 @@ import React from 'react';
 import Calendar from 'src/Calendar';
 import Cart from 'src/Cart';
 import SectionList from 'src/SectionList';
+import ExportModal from 'src/ExportModal';
 import QuickAdd from 'src/QuickAdd';
 import moment from 'moment';
 
@@ -36,8 +37,28 @@ export default class CalendarPage extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="container">
                 <Calendar events={this.events()} />
+                <div className="container mt-4">
+                    <div className="row justify-content-around">
+                        <div className="col-4">
+                            <div className="d-flex justify-content-center">
+                                <button className="btn btn-lg btn-primary" data-toggle="modal" data-target="#exportModal">
+                                    <i className="fas fa-download mr-2" />
+                                    Export Schedule
+                                </button>
+                            </div>
+                        </div>
+                        <div className="col-4">
+                            <div className="d-flex justify-content-center">
+                                <button className="btn btn-lg btn-secondary">
+                                    <i className="fas fa-share-square mr-2" />
+                                    Share
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 {this.state.sections.length > 0 ? (
                     <div className="d-flex justify-content-between align-items-end">
                         <h2 className="mt-4">Your Schedule</h2>{' '}
@@ -48,6 +69,7 @@ export default class CalendarPage extends React.Component {
                 ) : null}
                 <SectionList onClick={this.toggleSection} sections={this.state.sections} expanded={true} />
                 <QuickAdd loadCalendar={this.loadEvents} />
+                <ExportModal />
             </div>
         );
     }

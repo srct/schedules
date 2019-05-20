@@ -2,6 +2,10 @@
     <% editable = true %>
 <% end %>
 
+<% unless defined?(show_instr) %>
+    <% show_instr = true %>
+<% end %>
+
 <li id="section-<%= section.id %>"
     class="list-group-item section-item"
     data-crn="<%= section.crn %>"
@@ -14,17 +18,20 @@
     <% if editable %>
 	    <span class="float-right text-center add-remove-btn"><i id="icon" class="fas fa-ellipsis-h"></i><br/><span class="text">Add</span></span>
     <% end %>
-    
+
+
     <i class="fas fa-chalkboard-teacher"></i>
     <% if section.instructor.name == "TBA" %>
 	TBA
     <% else %>
 	<%= link_to section.instructor.name, section.instructor %>
-	<% unless section.instructor.rating.nil? %>
+	<% unless section.instructor.rating.nil? || !show_instr %>
 	    <%= render partial: 'shared/stars', locals: { percent: (section.instructor.rating[0] / 5 * 100).to_i }%>
 	<% end %>
+	
     <% end %>
     <br/>
+
     
     <i class="fas fa-map-marker-alt"></i> <%= section.location %> <br/>
     <i class="fas fa-clock"></i> <%= "#{section.days}, #{section.start_time}-#{section.end_time}" %> <br/>
