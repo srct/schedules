@@ -2,9 +2,9 @@ module Update
   FILE_NAME = "db/data/last_update.txt".freeze
 
   def self.last_update_date
-    begin
+    if File.exist?(FILE_NAME)
       File.open(FILE_NAME).first
-    rescue
+    else
       "Data has not yet been loaded."
     end
   end
