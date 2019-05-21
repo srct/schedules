@@ -10,7 +10,7 @@ class Course < ApplicationRecord
     "#{subject} #{course_number}"
   end
 
-  def rating(question = 1, sections = self.course_sections)
+  def rating(question = 1, sections = course_sections)
     total = 0
     resp = 0
     sections.each do |s|

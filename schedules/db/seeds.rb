@@ -98,13 +98,13 @@ def wipe_db
 end
 
 def load_closures
-  semesters = YAML.load_file("db/closures.yaml")
+  semesters = YAML.load_file("db/data/closures.yaml")
   semesters.each do |semester, dates|
     season, year = semester.split
     s = Semester.find_by(season: season, year: year)
     next if s.nil?
     dates.each do |date|
-      Closure.create!(date: Date.strptime(date, "%Y-%m-%d"), semester: s)
+      Closure.find_or_create_by!(date: Date.strptime(date, "%Y-%m-%d"), semester: s)
     end
   end
 end
@@ -118,7 +118,7 @@ def main
                 [parser.parse_semesters.first]
               else
                 # expand to include however many semesters you want
-                parser.parse_semesters[1..7]
+                parser.parse_semesters[0..7]
               end
 
   puts "\tParsing subjects..."
@@ -145,6 +145,8 @@ def main
   end
 
   load_closures
+
+  Update.new_update
 end
 
 main

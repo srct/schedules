@@ -20,7 +20,7 @@ export default class Section extends React.Component {
     };
 
     render() {
-        const { name, title, crn, instructor_name, instructor_url, teaching_rating, location, days, start_time, end_time } = this.props;
+        const { name, title, crn, readOnly, instructor_name, instructor_url, teaching_rating, location, days, start_time, end_time } = this.props;
         const { inCart } = this.state;
 
         const percent = teaching_rating ? <Stars percent={(teaching_rating[0] / 5) * 100} /> : null;
@@ -49,8 +49,12 @@ export default class Section extends React.Component {
                         {crn})
                     </em>
                 </p>
-                {remove}
-                {add}
+                {!readOnly && (
+                    <div>
+                        {remove}
+                        {add}
+                    </div>
+                )}
                 <i className="fas fa-chalkboard-teacher" />{' '}
                 {instructor_name !== 'TBA' ? (
                     <span>

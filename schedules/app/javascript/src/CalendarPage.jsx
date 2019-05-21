@@ -3,6 +3,7 @@ import Calendar from 'src/Calendar';
 import Cart from 'src/Cart';
 import SectionList from 'src/SectionList';
 import ExportModal from 'src/ExportModal';
+import ShareModal from 'src/ShareModal';
 import QuickAdd from 'src/QuickAdd';
 import moment from 'moment';
 
@@ -51,7 +52,7 @@ export default class CalendarPage extends React.Component {
                         </div>
                         <div className="col-4">
                             <div className="d-flex justify-content-center">
-                                <button className="btn btn-lg btn-secondary">
+                                <button className="btn btn-lg btn-secondary" data-toggle="modal" data-target="#shareModal">
                                     <i className="fas fa-share-square mr-2" />
                                     Share
                                 </button>
@@ -70,6 +71,9 @@ export default class CalendarPage extends React.Component {
                 <SectionList onClick={this.toggleSection} sections={this.state.sections} expanded={true} />
                 <QuickAdd loadCalendar={this.loadEvents} />
                 <ExportModal />
+                <ShareModal
+                    link={`${window.location.protocol}//${window.location.hostname}${window.location.port === '3000' ? ':3000' : ''}/schedule/view?crns=${Cart.crns.join(',')}`}
+                />
             </div>
         );
     }
