@@ -4,9 +4,10 @@ require 'time'
 
 # Creates a iCal object given a list of section ids
 class Schedule
-  def initialize(crns)
+  def initialize(crns, season)
     @cal = Icalendar::Calendar.new
     @cal.x_wr_calname = 'GMU Schedule'
+    @season = season
 
     tzid = "America/New_York"
     tz = TZInfo::Timezone.get tzid
@@ -33,10 +34,11 @@ class Schedule
         @cal.add_event(event)
       end
 
-      # if section.days.start_with? "M"
-      #   col_day_makeup = generate_event_after_columbus_day(section)
-      #   @cal.add_event(col_day_makeup)
-      # end
+      # Add the columbus day make up for Fall
+      if @season == "Fall" && section.days.start_with?("M")
+        col_day_makeup = generate_event_after_columbus_day(section)
+        @cal.add_event(col_day_makeup)
+      end
     end
   end
 
@@ -101,7 +103,16 @@ class Schedule
 
     # Every section's start_date is the first Monday of the semester.
     # So we need to add an exclusion for that day unless the class is held on Mondays
-    unless section.days.start_with? "T"
+    start_day = case @season
+                when "Fall"
+                  "M"
+                when "Spring"
+                  "T"
+                when "Summer"
+                  "M"
+                end
+
+    unless section.days.start_with? start_day
       exdates << generate_exdate(
         section.start_date.to_formatted_s(:number),
         section.start_time
@@ -109,12 +120,12 @@ class Schedule
     end
 
     # If the section meets on Tuesdays, add an exdate for the day after columbus day
-    # if section.days.start_with? "T"
-    #   exdates << generate_exdate(
-    #     Date.new(2018, 10, 9).to_formatted_s(:number),
-    #     section.start_time
-    #   )
-    # end
+    if @season == "Fall" && section.days.start_with?("T")
+      exdates << generate_exdate(
+        Date.new(2019, 10, 15).to_formatted_s(:number),
+        section.start_time
+      )
+    end
 
     exdates
   end
@@ -138,7 +149,7 @@ class Schedule
     event.description = section.title + " (Columbus Day makeup)"
     event.location = section.location
 
-    after_columbus_day = Date.new 2018, 10, 9
+    after_columbus_day = Date.new(2019, 10, 15)
     event.dtstart = Icalendar::Values::DateTime.new(formatted_datetime_str(after_columbus_day, section.start_time))
     event.dtend = Icalendar::Values::DateTime.new(formatted_datetime_str(after_columbus_day, section.end_time))
 

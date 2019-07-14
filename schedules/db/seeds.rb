@@ -8,6 +8,7 @@ require 'httparty'
 require 'nokogiri'
 require 'json'
 require 'set'
+require 'yaml/store'
 
 def parse_courses(subjects)
   courses = []
@@ -97,15 +98,15 @@ def wipe_db
 end
 
 def load_closures
-  # create closures for the days there will be no classes
-  # see: https://registrar.gmu.edu/calendars/fall-2018/
-  # fall2018 = Semester.find_by(season: 'Fall', year: '2018')
-  # Closure.create! date: Date.new(2018, 9, 3), semester: fall2018
-  # Closure.create! date: Date.new(2018, 10, 8), semester: fall2018
-  # (21..25).each { |n| Closure.create! date: Date.new(2018, 11, n), semester: fall2018 }
-  # (10..19).each { |n| Closure.create! date: Date.new(2018, 12, n), semester: fall2018 }
-  spring2019 = Semester.find_by(season: 'Spring', year: '2019')
-  (11..17).each { |day| Closure.find_or_create_by! date: Date.new(2019, 3, day), semester: spring2019 }
+  semesters = YAML.load_file("db/data/closures.yaml")
+  semesters.each do |semester, dates|
+    season, year = semester.split
+    s = Semester.find_by(season: season, year: year)
+    next if s.nil?
+    dates.each do |date|
+      Closure.find_or_create_by!(date: Date.strptime(date, "%Y-%m-%d"), semester: s)
+    end
+  end
 end
 
 def main
@@ -122,9 +123,8 @@ def main
 
   puts "\tParsing subjects..."
   subjects = [].to_set
-  subjects.merge(parser.parse_subjects(semesters.first[:value]))
-  subjects.merge(parser.parse_subjects(semesters.second[:value])) if semesters.count > 1
-  subjects.merge(parser.parse_subjects(semesters.third[:value])) if semesters.count > 2
+  # merge all of the subjects
+  semesters.each { |s| subjects.merge(parser.parse_subjects(s[:value])) }
   subjects = subjects.to_a
 
   puts "\tParsing courses from catalog.gmu.edu..."
@@ -145,6 +145,8 @@ def main
   end
 
   load_closures
+
+  Update.new_update
 end
 
 main
