@@ -13,7 +13,6 @@ export default class Section extends React.Component {
 
     if (this.props.readOnly) return;
 
-    console.log(e.target.tagName);
     if (e.target.tagName === 'A') return; // if we clicked on a link, don't add the section to the cart
 
     Cart.toggleCrn(this.props.crn);

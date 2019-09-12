@@ -46,8 +46,6 @@ class CustomToolbar extends Toolbar {
     }
 
     navigate = action => {
-        console.log(action);
-
         this.props.onNavigate(action);
     };
 

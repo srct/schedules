@@ -33,7 +33,7 @@ export default class QuickAdd extends React.Component {
                             autoComplete="off"
                         />
                         <div className="input-group-append">
-                            <button type="submit" className="btn btn-primary" type="button">
+                          <button type="submit" className="btn btn-primary" type="button" onClick={this.add}>
                                 Populate Calendar
                             </button>
                         </div>
