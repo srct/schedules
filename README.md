@@ -51,6 +51,11 @@ See the offical [Ruby docs](https://www.ruby-lang.org/en/documentation/installat
 Download the lastest Ruby+DevKit installer from https://rubyinstaller.org/downloads/.
 Run the installer and follow the instructions.
 
+### Install Yarn
+
+Follow the offical Yarn [install instructions](https://yarnpkg.com/lang/en/docs/install).
+You might have to install node.js as well.
+
 
 ### Clone the schedules workspace
 We're first going to clone down a copy of the schedules codebase from [git.gmu.edu](http://git.gmu.edu/srct/schedules),
@@ -58,7 +63,7 @@ the SRCT code respository, with SSH.
 
 **a)** Configure your ssh keys by following the directions at:
 
-[git.gmu.edu/help/ssh/README](http://git.gmu.edu/help/ssh/README).
+[git.gmu.edu/srct/schedules/wikis/Adding-SSH-Keys-to-GitLab](https://git.gmu.edu/srct/schedules/wikis/Adding-SSH-Keys-to-GitLab).
 
 **b)** Now, on your computer, navigate to the directory in which you want to download the project (ie. perhaps one called `development/SRCT`), and run
 
@@ -77,7 +82,7 @@ To install the project dependencies, first install `bundler`, the tool used to m
 $ gem install bundler
 ```
 
-And then run `bundle install`.
+And then run `bundle install`. Next, run `yarn` to install the JavaScript dependencies.
 
 ### Database
 To populate your local database, run `rails db:migrate` and `rails db:seed`. This sets up your local database and loads it with data from Patriot Web. 
