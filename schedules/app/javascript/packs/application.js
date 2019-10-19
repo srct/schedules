@@ -7,30 +7,11 @@
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
 
-import '@babel/polyfill';
 import 'url-polyfill';
-
-import React from 'react';
-import Cart from 'src/Cart';
 
 const elementFromString = string => {
     const html = new DOMParser().parseFromString(string, 'text/html');
     return html.body.firstChild;
-};
-
-document.addEventListener('DOMContentLoaded', () => {
-    initGlobalListeners();
-});
-
-const setSemester = async select => {
-    const url = new URL(window.location.href);
-    url.searchParams.set('semester_id', select.value);
-    window.open(url.toString(), '_self');
-};
-
-const initGlobalListeners = () => {
-    const semesterSelect = document.getElementById('semester-select');
-    semesterSelect.onchange = () => setSemester(semesterSelect);
 };
 
 if (!HTMLCanvasElement.prototype.toBlob) {

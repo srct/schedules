@@ -1,5 +1,6 @@
 class SearchController < ApplicationController
   def index
+    params[:query].strip!
     redirect_to(home_url) unless params[:query].length > 1
 
     if params[:query].casecmp('god').zero?
@@ -41,8 +42,6 @@ class SearchController < ApplicationController
       @courses.map! do |c|
         c.serializable_hash.merge(url: course_url(c))
       end
-      gon.courses = @courses
-      gon.instructors = @instructors
     end
 
     /[0-9]{5}/.match(params[:query]) do |m|

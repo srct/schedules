@@ -3,6 +3,7 @@
   "private": true,
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
+    "@prettier/plugin-ruby": "^0.15.0",
     "@rails/webpacker": "3.5",
     "babel-preset-react": "^6.24.1",
     "file-saver": "^2.0.0",

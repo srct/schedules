@@ -1,31 +1,12 @@
-<% unless defined?(editable) %>
-    <% editable = true %>
-<% end %>
-
-<% unless defined?(show_instr) %>
-    <% show_instr = true %>
-<% end %>
-
-<li id="section-<%= section.id %>"
-    class="list-group-item section-item"
-    data-crn="<%= section.crn %>"
-    data-id="<%= section.id %>"
-    data-cid="<%= course.id if defined?(course) %>"
-    data-type="<%= section.section_type %>"
->
-    <p><b class="subj"><%= "#{section.name}" %></b>:  <%= section.title %> <em><%= "(##{section.crn})"%></em></p>
-
-    <% if editable %>
-	    <span class="float-right text-center add-remove-btn"><i id="icon" class="fas fa-ellipsis-h"></i><br/><span class="text">Add</span></span>
-    <% end %>
-
+<li id="section-<%= section.id %>" class="list-group-item card section-item">
+    <p><strong class="subj"><%= "#{section.name}" %></strong>:  <%= section.title %> <em><%= "(##{section.crn})"%></em></p>
 
     <i class="fas fa-chalkboard-teacher"></i>
     <% if section.instructor.name == "TBA" %>
 	TBA
     <% else %>
 	<%= link_to section.instructor.name, section.instructor %>
-	<% unless section.instructor.rating.nil? || !show_instr %>
+	<% unless section.instructor.rating.nil? %>
 	    <%= render partial: 'shared/stars', locals: { percent: (section.instructor.rating[0] / 5 * 100).to_i }%>
 	<% end %>
 	
