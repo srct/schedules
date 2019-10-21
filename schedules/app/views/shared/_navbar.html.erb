@@ -1,7 +1,7 @@
 <nav>
   <span><a href="/"><i class="fas fa-calendar-alt"></i> Schedules</a></span>
   <form id="search-container" action="/search" method="GET">
-    <input aria-label="Search" name="query" placeholder="PSYC, CS 112, 71926, Jonathan Bell, ..." value="<%= params[:query] %>"/>
+    <input id="search-input" aria-label="Search" name="query" placeholder="PSYC, CS 112, 71926, Jonathan Bell, ..." value="<%= params[:query] %>"/>
     <button aria-label="Submit" type="submit">
       <i class="fas fa-search"></i>
     </button>

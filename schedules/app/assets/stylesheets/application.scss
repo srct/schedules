@@ -17,6 +17,7 @@
 $gray: #4a4a4a;
 $gold: #febf10;
 $green: #01693f;
+$blue: #297dc5;
 
 * {
     font-family: 'Roboto', sans-serif;
@@ -63,7 +64,7 @@ h6 {
     & i {
         width: 2em;
         margin: auto;
-        color: #297dc5;
+        color: $blue;
     }
 
     & button {
@@ -195,4 +196,51 @@ a {
     > * {
         margin-bottom: 0.5em;
     }
+}
+
+.underline {
+    text-decoration: underline;
+}
+.cart {
+    position: fixed;
+    right: 5%;
+    bottom: 3%;
+    background-color: $green;
+    width: 3.5em;
+    height: 3.5em;
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    i {
+        font-size: 1.5em;
+        margin: auto;
+        color: white;
+    }
+}
+
+.stats {
+    margin-bottom: 0.5em;
+}
+
+.ratings {
+    margin-bottom: 0.5em;
+}
+
+footer {
+    margin: 4em auto 1em;
+    text-align: center;
+}
+
+#count {
+    position: absolute;
+    top: 0;
+    left: -0.5em;
+    color: white;
+    background-color: $blue;
+    width: 1.5em;
+    text-align: center;
+    border-radius: 33%;
 }

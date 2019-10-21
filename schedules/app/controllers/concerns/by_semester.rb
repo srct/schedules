@@ -15,7 +15,7 @@ module BySemester
     @semester = if params.key?(:semester_id)
                   Semester.find_by_id(params[:semester_id])
                 else
-                  Semester.first
+                  Semester.sorted_by_date.first
                 end
   end
 end

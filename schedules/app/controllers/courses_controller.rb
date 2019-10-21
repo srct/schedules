@@ -8,11 +8,22 @@ class CoursesController < ApplicationController
                   .joins(:semester)
                   .select("semesters.id")
 
+    puts semester_ids.map(&:id)
+
     @semesters = Semester.where(id: semester_ids.map(&:id))
     @semesters = Semester.sorted_by_date(@semesters)
 
     @taught_in = Set.new(@semesters.map(&:season))
-    @taught_in = sort_seasons(@taught_in.to_a).join(", ")
+    @taught_in = if @taught_in.empty?
+                  "Has not been offered since #{Semester.sorted_by_date.last.to_s}"
+                 else
+                   "Has been offered in #{(@taught_in.to_a).join(", ")}"
+                 end
+
+
+    if @semesters.first != Semester.sorted_by_date.first
+      @semesters = [Semester.sorted_by_date.first, *@semesters]
+    end
 
     @sections = @course.course_sections.where(semester: @semester).group_by { |s| s.section_type }
   end

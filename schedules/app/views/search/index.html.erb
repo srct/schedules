@@ -1,12 +1,4 @@
-<nav>
-  <span><a href="/"><i class="fas fa-calendar-alt"></i> Schedules</a></span>
-  <form id="search-container" action="/search" method="GET">
-    <input name="query" placeholder="PSYC, CS 112, 71926, Jonathan Bell, ..." value="<%= params[:query] %>"/>
-    <button type="submit">
-      <i class="fas fa-search"></i>
-    </button>
-  </form>
-</nav>
+<%= render(partial: 'shared/navbar') %>
 
 <div class="search-results">
   <% @courses.each do |course| %>
@@ -19,5 +11,3 @@
     </section>
   <% end %>
 </div>
-
-<%= stylesheet_link_tag 'search' %>
