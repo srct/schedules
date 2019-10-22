@@ -1,7 +1,13 @@
 <%= render(partial: 'shared/navbar') %>
 
 <div class="search-results">
-  <% @courses.each do |course| %>
+  <% (@instructors || []).each do |inst| %>
+    <section class="instructor">
+      <h5><a href="/instructors/<%= inst.id %>"> <%= inst.name %></a></h5>  
+    </section>
+  <% end %>
+  
+  <% (@courses || []).each do |course| %>
     <section class="course">
       <h4><a href="/courses/<%= course['id'] %>"><%= course['subject'] %> <%= course['course_number'] %></a></h4>  
       <h5><em><%= course['title'] %>. <%= course['credits'] %> <%= 'credit'.pluralize(course['credits'].to_i) %>.</em></h5>

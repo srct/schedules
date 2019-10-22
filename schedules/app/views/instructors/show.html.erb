@@ -2,12 +2,12 @@
 
 <div class="row">
     <div class="col-lg-4 col-12 mb-4">
-	<h1><%= @instructor.name %></h1>
+		<h1><%= @instructor.name %></h1>
 
-	<% unless @rating[:teaching].nil? %>
-	    <%= render(partial: 'shared/stars', locals: { percent: @rating[:teaching][0]/5*100 }) %>
-	    <%= @rating[:teaching][0] %> / <%= @rating[:teaching][1] %> responses
-	<% end %>
+		<% unless @rating[:teaching].nil? %>
+			<%= render(partial: 'shared/stars', locals: { percent: @rating[:teaching][0]/5*100 }) %>
+			<%= @rating[:teaching][0] %> / <%= @rating[:teaching][1] %> responses
+		<% end %>
     </div>
     
     <div class="col-lg-8 col-12">

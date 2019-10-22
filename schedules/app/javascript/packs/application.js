@@ -1,4 +1,3 @@
-/* eslint no-console:0 */
 // This file is automatically compiled by Webpack, along with any other files
 // present in this directory. You're encouraged to place your actual application logic in
 // a relevant structure within app/javascript and only use these pack files to reference
@@ -8,15 +7,19 @@
 // layout file, like app/views/layouts/application.html.erb
 
 import 'url-polyfill'
-import Turbolinks from 'turbolinks'
 
-window.addEventListener('DOMContentLoaded', () => {
-    Turbolinks.start()
-    setLinks()
+import Turbolinks from 'turbolinks'
+Turbolinks.start()
+
+window.addEventListener('turbolinks:load', () => {
+    setInitialLinks()
     addListeners()
+    document.querySelector('#count').innerText = getCart().length
 })
 
-function setLinks(crns) {}
+function setInitialLinks() {
+    getCart().forEach(writeLink)
+}
 
 function addListeners() {
     const links = Array.from(document.querySelectorAll('.add-section'))
@@ -25,8 +28,7 @@ function addListeners() {
             e.preventDefault()
             const crn = link.dataset.crn
             toggleSection(crn)
-            console.log(getCart())
-            writeLinks()
+            writeLink(crn)
         })
     }
 }
@@ -41,6 +43,8 @@ function toggleSection(crn) {
     } else {
         addSection(crn)
     }
+    console.log(getCart())
+    document.querySelector('#count').innerText = getCart().length
 }
 
 function addSection(crn) {
@@ -53,28 +57,21 @@ function removeSection(crn) {
     localStorage.setItem('cart', JSON.stringify(newCart))
 }
 
-function writeLinks() {}
+function writeLink(crn) {
+    const item = document.querySelector(`[data-crn="${crn}"]`)
+    if (!item) return
+    const icon = item.querySelector('.add-remove-link a i')
+    const link = item.querySelector('.add-remove-link a span')
+    if (getCart().includes(crn)) {
+        link.innerText = ' Remove from cart'
+        icon.className = 'fas fa-minus'
+    } else {
+        link.innerText = ' Add Section to Cart'
+        icon.className = 'fas fa-plus'
+    }
+}
 
 const elementFromString = string => {
     const html = new DOMParser().parseFromString(string, 'text/html')
     return html.body.firstChild
-}
-
-if (!HTMLCanvasElement.prototype.toBlob) {
-    Object.defineProperty(HTMLCanvasElement.prototype, 'toBlob', {
-        value: function(callback, type, quality) {
-            var canvas = this
-            setTimeout(function() {
-                var binStr = atob(canvas.toDataURL(type, quality).split(',')[1]),
-                    len = binStr.length,
-                    arr = new Uint8Array(len)
-
-                for (var i = 0; i < len; i++) {
-                    arr[i] = binStr.charCodeAt(i)
-                }
-
-                callback(new Blob([arr], { type: type || 'image/png' }))
-            })
-        },
-    })
 }

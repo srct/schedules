@@ -44,8 +44,14 @@
     </head>
 
     <body>
-		<%= render 'shared/page' do %>
+		<% if @render_page %>
+			<%= render 'shared/page' do %>
+				<%= yield %>
+			<% end %>
+		<% else %>
+			<div class="page">
 			<%= yield %>
+			</div>
 		<% end %>
 
 		<!-- Matomo -->

@@ -105,7 +105,17 @@ nav {
         width: 90%;
     }
 }
+.instructor {
+    box-shadow: 0 3px 5px -2px $gray;
+    border-radius: 5px;
+    padding: 1em 0 0.5em 1em;
+    margin-bottom: 1em;
+    border-top: 5px solid $blue;
 
+    a {
+        text-decoration: underline;
+    }
+}
 .course {
     box-shadow: 0 3px 5px -2px $gray;
     border-radius: 5px;
@@ -133,6 +143,10 @@ nav {
         font-family: 'Roboto', sans-serif;
         color: $gray;
         font-size: 0.9em;
+        max-height: 200px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .see-more {
@@ -199,8 +213,9 @@ a {
 }
 
 .underline {
-    text-decoration: underline;
+    text-decoration: underline !important;
 }
+
 .cart {
     position: fixed;
     right: 5%;
@@ -241,6 +256,7 @@ footer {
     color: white;
     background-color: $blue;
     width: 1.5em;
+    height: 1.5em;
     text-align: center;
-    border-radius: 33%;
+    border-radius: 100%;
 }

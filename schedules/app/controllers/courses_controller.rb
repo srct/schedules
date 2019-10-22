@@ -8,8 +8,6 @@ class CoursesController < ApplicationController
                   .joins(:semester)
                   .select("semesters.id")
 
-    puts semester_ids.map(&:id)
-
     @semesters = Semester.where(id: semester_ids.map(&:id))
     @semesters = Semester.sorted_by_date(@semesters)
 

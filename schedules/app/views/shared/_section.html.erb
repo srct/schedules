@@ -26,5 +26,10 @@
     </div>
     <% end %>
 
-    <div class="add-remove-link"><i class="fas fa-plus"></i><a data-crn="<%= "#{section.crn}" %>" class="underline add-section">Add Section to Cart</a></div>
+    <div class="add-remove-link">
+        <a data-crn="<%= "#{section.crn}" %>" class="underline add-section">
+            <i class="fas fa-plus add-remove-icon"></i>
+            <span>Add Section to Cart</span>
+        </a>
+    </div>
 </li>
