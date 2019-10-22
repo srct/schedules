@@ -1,3 +1,5 @@
+import { saveAs } from 'file-saver'
+
 const initPage = () => {
     if (getCart().length != 0) {
         document.getElementById('root').innerHTML = '<i class="fas fa-spinner fa-spin"></i>'
@@ -14,6 +16,27 @@ const initPage = () => {
         document.getElementById('root').innerHTML = 'Add classes to your cart to see them here!'
     }
     document.querySelector('#count').innerText = getCart().length
+
+    document.getElementById('add-to-system').addEventListener('click', () => {
+        window.open(
+            `webcal://${window.location.hostname}${
+                window.location.port === '3000' ? ':3000' : ''
+            }/api/schedules?crns=${getCart().join(',')}`
+        )
+    })
+
+    document.getElementById('download-ics').addEventListener('click', () => {
+        fetch(
+            `${window.location.protocol}//${window.location.hostname}${
+                window.location.port === '3000' ? ':3000' : ''
+            }/api/schedules?crns=${getCart().join(',')}`
+        )
+            .then(resp => resp.text())
+            .then(text => {
+                const blob = new Blob([text], { type: 'text/calendar;charset=utf-8' })
+                saveAs(blob, 'GMU Schedule.ics')
+            })
+    })
 }
 
 window.addEventListener('DOMContentLoaded', initPage)

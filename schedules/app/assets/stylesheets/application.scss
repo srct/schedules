@@ -63,6 +63,7 @@ h6 {
 
     & i {
         width: 2em;
+        margin-right: 1em;
         margin: auto;
         color: $blue;
     }
@@ -259,4 +260,10 @@ footer {
     height: 1.5em;
     text-align: center;
     border-radius: 100%;
+}
+.btn-variant {
+    background-color: transparent;
+    text-align: left;
+    border: none;
+    padding: 0px;
 }

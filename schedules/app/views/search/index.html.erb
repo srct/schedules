@@ -16,4 +16,8 @@
       <a href="/courses/<%= course['id'] %>" class="see-more">View Sections</a>
     </section>
   <% end %>
+
+  <% if @courses&.empty? && @instructors&.empty? %>
+    <span>No results found. Please try again with another search term.</span>
+  <% end %>
 </div>

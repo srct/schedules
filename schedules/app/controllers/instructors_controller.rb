@@ -17,6 +17,10 @@ class InstructorsController < ApplicationController
 
     @sections = sections.where(semester: @semester).group_by { |s| s.section_type }
 
+    if @semesters.first != Semester.sorted_by_date.first
+      @semesters = [Semester.sorted_by_date.first, *@semesters]
+    end
+
     @rating = { teaching: @instructor.rating, respect: @instructor.rating(6) }
   end
 end
