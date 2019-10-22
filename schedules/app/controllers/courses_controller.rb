@@ -4,11 +4,8 @@ class CoursesController < ApplicationController
     @course = Course.find_by_id(params[:id])
     @rating = @course.rating
 
-    semester_ids = @course.course_sections
-                  .joins(:semester)
-                  .select("semesters.id")
-
-    @semesters = Semester.where(id: semester_ids.map(&:id))
+    semester_ids = Set.new(@course.course_sections.map(&:semester_id)).to_a
+    @semesters = Semester.where(id: semester_ids)
     @semesters = Semester.sorted_by_date(@semesters)
 
     @taught_in = Set.new(@semesters.map(&:season))
