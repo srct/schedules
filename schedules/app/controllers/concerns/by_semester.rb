@@ -12,14 +12,10 @@ module BySemester
   #
   # By default, load the most recent semester.
   def set_semester
-    if params.key?(:semester_id)
-      @semester = Semester.find_by_id(params[:semester_id])
-      session[:semester_id] = @semester.id
-    elsif session[:semester_id].nil?
-      @semester = Semester.first
-      session[:semester_id] = @semester.id
-    else
-      @semester = Semester.find_by_id(session[:semester_id])
-    end
+    @semester = if params.key?(:semester_id)
+                  Semester.find_by_id(params[:semester_id])
+                else
+                  Semester.sorted_by_date.first
+                end
   end
 end

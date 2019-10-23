@@ -1,41 +1,11 @@
-<div class="jumbotron text-center">
-    <h1><i class="fas fa-calendar-alt"></i>&nbsp;SRCT Schedules</h1>
-    <p class="lead">Build, share, and export your schedule. Search for classes and professors.</p>
-    <hr>
-    <p>
-	Schedules was built by <a href="https://srct.gmu.edu">Mason SRCT</a> and is completely open source.<br/>
-	Want to contribute? View the code on the <a href="https://git.gmu.edu/srct/schedules">SRCT GitLab</a>.
-    </p>
+<div class="text-center hero">
+    <h1><i class="fas fa-calendar-alt"></i>&nbsp;<span style="">SRCT</span> <strong style="">Schedules</strong></h1>
+	<form id="search-container" action="/search">
+		<input 
+			name="query"
+			placeholder="PSYC, CS 112, 71926, Jonathan Bell, ..."/>
+		<button type="submit">
+			<i class="fas fa-search"></i>
+		</button>
+	</form>
 </div>
-
-<div class="row ">
-    <div class="col-md-4">
-	<div class="card">
-	    <div class="card-body">
-		<h5 class="card-title">Powerful search</h5>
-		<p class="card-text">Want to see what courses your favorite professor is teaching this semester? Or what they've taught in the past? Search for any professor that's taught at Mason easily.</p>
-	    </div>
-	</div>
-    </div>
-    <div class="col-md-4">
-	<div class="card">
-	    <div class="card-body">
-		<h5 class="card-title">Search classes</h5>
-		<p class="card-text">Looking for cool electives? Want to see who's teaching a class you're looking to take? Search for classes using keywords, subject, or the subject and course number.</p>
-	    </div>
-	</div>
-    </div>
-
-    <div class="col-md-4">
-	<div class="card">
-	    <div class="card-body">
-		<h5 class="card-title">Export your schedule</h5>
-		<p class="card-text">Select the courses you're taking this semester and see them in a beautiful calendar view. Easily export your schedule to your favorite calendar apps. Schedules even knows about breaks!</p>
-	    </div>
-	</div>
-    </div>
-</div>
-
-<div id="quick-add" />
-
-<%= javascript_pack_tag 'home' %>

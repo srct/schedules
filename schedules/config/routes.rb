@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   get 'sessions/add_bulk'
 
   resources :courses, only: [:show]
-  resources :course_sections, only: [:show]
+  resources :course_sections, only: [:index, :show]
   resources :instructors, only: [:index, :show]
   get 'schedule', to: 'schedules#show', as: 'schedule'
   get 'schedule/events', to: 'schedules#events'
