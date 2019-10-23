@@ -1,37 +1,50 @@
+<%= render partial: 'shared/navbar' %>
+
 <div class="row">
     <div class="col-12 col-lg">
-	<h1><%= @course.full_name %></h1>
-	<h4><%= @course.title %></h4>
-	<% unless @rating.nil? %>
-	    <%= render partial: 'shared/stars', locals: { percent: @course.rating[0]/5*100 } %>
-	    Average course rating: <%= @course.rating[0] %> / <%= @course.rating[1] %> responses
-	<% end %>
+		<h1><%= @course.full_name %></h1>
+		<h4><%= @course.title %></h4>
+		<% unless @rating.nil? %>
+			<%= render partial: 'shared/stars', locals: { percent: @course.rating[0]/5*100 } %>
+			Average course rating: <%= @course.rating[0] %> / <%= @course.rating[1] %> responses
+		<% end %>
 
-	<div class="d-flex mt-2">
-	    <div class="attr-list justify-content-start">
-		<div class="attr">
-		    <div class="icon">
-			<i class="fa fa-book"></i>
-		    </div>
-		    <%= @course.credits %> credits
+		<div class="details">
+			<p>
+				<i class="fas fa-book"></i>
+				<%= @course.credits %> <%= 'credit'.pluralize(@course.credits.to_i) %>
+			</p>
+			<p>
+				<i class="fas fa-clock"></i>
+				<span><%= @taught_in %></span>
+			</p>
 		</div>
-		&nbsp;&nbsp;&nbsp;
-		<div class="attr">
-		    <div class="icon">
-			<i class="fa fa-bars"></i>
-		    </div>
-		    <%= @sections.count %> sections
-		</div>
-	    </div>
-	</div>
-	<p class="mt-3"><%= @course.description %></p>
+
+		<p class="mt-3"><%= @course.description %>.</p>
     </div>
 
     <div class="col-12 col-lg">
-	<%= render partial: 'shared/section', collection: @sections %>
+		<form class="semester-select">
+			<select name="semester_id" class="form-control" id="semesterselect" onchange="this.form.submit()" aria-label="Semester">
+				<% @semesters.each do |sem| %>
+					<option 
+						id="<%= sem.id %>"
+						name="semester_id" 
+						value="<%= sem.id %>"
+						<% if sem.id == params[:semester_id]&.to_i %> selected <% end %>
+					>
+						<%= sem.to_s %>
+					</option>
+				<% end %>
+			</select>
+		</form>
+		<% @sections.each do |type, sections| %>
+			<% if @sections.keys.length > 1 %>
+				<h5 class="section-type-label"><%= type %></h5>
+			<% end %>
+			<ul class="section-list">
+				<%= render partial: 'shared/section', collection: sections %>
+			</ul>
+		<% end %>
     </div>
 </div>
-
-
-<%= javascript_pack_tag 'instructor' %>
-<%= stylesheet_link_tag 'search' %>

@@ -1,47 +1,35 @@
-<% unless defined?(editable) %>
-    <% editable = true %>
-<% end %>
+<li id="section-<%= section.id %>" data-crn="<%= "#{section.crn}" %>" class="list-group-item card section-item">
+    <p><strong class="subj"><%= "#{section.name}" %></strong>:  <%= section.title %> <em><%= "(##{section.crn})"%></em></p>
 
-<% unless defined?(show_instr) %>
-    <% show_instr = true %>
-<% end %>
-
-<li id="section-<%= section.id %>"
-    class="list-group-item section-item"
-    data-crn="<%= section.crn %>"
-    data-id="<%= section.id %>"
-    data-cid="<%= course.id if defined?(course) %>"
-    data-type="<%= section.section_type %>"
->
-    <p><b class="subj"><%= "#{section.name}" %></b>:  <%= section.title %> <em><%= "(##{section.crn})"%></em></p>
-
-    <% if editable %>
-	    <span class="float-right text-center add-remove-btn"><i id="icon" class="fas fa-ellipsis-h"></i><br/><span class="text">Add</span></span>
-    <% end %>
-
-
-    <i class="fas fa-chalkboard-teacher"></i>
-    <% if section.instructor.name == "TBA" %>
-	TBA
-    <% else %>
-	<%= link_to section.instructor.name, section.instructor %>
-	<% unless section.instructor.rating.nil? || !show_instr %>
-	    <%= render partial: 'shared/stars', locals: { percent: (section.instructor.rating[0] / 5 * 100).to_i }%>
-	<% end %>
-	
-    <% end %>
-    <br/>
-
-    
-    <i class="fas fa-map-marker-alt"></i> <%= section.location %> <br/>
-    <i class="fas fa-clock"></i> <%= "#{section.days}, #{section.start_time}-#{section.end_time}" %> <br/>
+    <div class="stats">
+        <i class="fas fa-chalkboard-teacher"></i>
+        <% if section.instructor.name == "TBA" %>
+        TBA
+        <% else %>
+            <%= link_to section.instructor.name, section.instructor %>
+            <% unless section.instructor.rating.nil? %>
+                <%= render partial: 'shared/stars', locals: { percent: (section.instructor.rating[0] / 5 * 100).to_i }%>
+            <% end %>
+        <% end %>
+        <br/>
+        <i class="fas fa-map-marker-alt"></i> <%= section.location %> <br/>
+        <i class="fas fa-clock"></i> <%= "#{section.days}, #{section.start_time}-#{section.end_time}" %>
+    </div>
 
     <% unless section.rating_questions.empty? %>
-	<br/>
-	<b>Rating Info</b> (<%= link_to("See all ratings", course_section_url(section))%>)
-	<ul>
-	    <li>Instructor rating: <%= section.teaching_rating %></li>
-	    <li>Course rating: <%= section.course_rating %></li>
-	</ul>
+    <div class="ratings">
+        <b>Rating Info</b> (<%= link_to("See all ratings", course_section_url(section))%>)
+        <ul>
+            <li>Instructor rating: <%= section.teaching_rating %></li>
+            <li>Course rating: <%= section.course_rating %></li>
+        </ul>
+    </div>
     <% end %>
+
+    <div class="add-remove-link">
+        <a data-crn="<%= "#{section.crn}" %>" class="underline add-section">
+            <i class="fas fa-plus add-remove-icon"></i>
+            <span>Add Section to Cart</span>
+        </a>
+    </div>
 </li>

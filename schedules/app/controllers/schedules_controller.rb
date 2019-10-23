@@ -5,10 +5,11 @@ class SchedulesController < ApplicationController
   def show; end
 
   def view
-    @all = params[:crns].split(',').map { |crn|
-      CourseSection.latest_by_crn(crn)
-    }
-    @all.reject!(&:nil?)
+    @all = params[:crns]
+            .split(',')
+            .map { |crn| CourseSection.latest_by_crn(crn) }
+            .reject(&:nil?)
+
     @without_online = @all.reject { |s|
       s.start_time == "TBA" || s.end_time == "TBA"
     }

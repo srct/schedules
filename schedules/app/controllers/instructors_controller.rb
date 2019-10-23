@@ -8,8 +8,15 @@ class InstructorsController < ApplicationController
 
     # find the courses being taught this semester
     sections = CourseSection.where(instructor: @instructor)
-    @semesters = sections.group_by do |s|
-      s.semester.to_s
+    semester_ids = Set.new(sections.map(&:semester_id))
+
+    @semesters = Semester.where(id: semester_ids.to_a)
+    @semesters = Semester.sorted_by_date(@semesters)
+
+    @sections = sections.where(semester: @semester).group_by { |s| s.section_type }
+
+    if @semesters.first != Semester.sorted_by_date.first
+      @semesters = [Semester.sorted_by_date.first, *@semesters]
     end
 
     @rating = { teaching: @instructor.rating, respect: @instructor.rating(6) }

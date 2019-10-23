@@ -1,21 +1,37 @@
+<%= render(partial: 'shared/navbar') %>
+
 <div class="row">
     <div class="col-lg-4 col-12 mb-4">
-	<h1><%= @instructor.name %></h1>
+		<h1><%= @instructor.name %></h1>
 
-	<% unless @rating[:teaching].nil? %>
-	    <%= render partial: 'shared/stars', locals: { percent: @rating[:teaching][0]/5*100 } %><br>
-	    Average teaching rating: <%= @rating[:teaching][0] %> / <%= @rating[:teaching][1] %> responses
-	<% end %>
+		<% unless @rating[:teaching].nil? %>
+			<%= render(partial: 'shared/stars', locals: { percent: @rating[:teaching][0]/5*100 }) %>
+			<%= @rating[:teaching][0] %> / <%= @rating[:teaching][1] %> responses
+		<% end %>
     </div>
     
     <div class="col-lg-8 col-12">
-	<% @semesters.each do |semester, sections| %>
-	    <h2><%= semester %></h2>
-	    <%= render(partial: 'shared/section', collection: sections, locals: { show_instr: false }) %>
-	    <br/>
-	<% end %>
+		<form class="semester-select">
+			<select name="semester_id" class="form-control" id="semesterselect" onchange="this.form.submit()" aria-label="Semester">
+				<% @semesters.each do |sem| %>
+					<option 
+						id="<%= sem.id %>"
+						name="semester_id" 
+						value="<%= sem.id %>"
+						<% if sem.id == params[:semester_id]&.to_i %> selected <% end %>
+					>
+						<%= sem.to_s %>
+					</option>
+				<% end %>
+			</select>
+		</form>
+		<% @sections.each do |type, sections| %>
+			<% if @sections.keys.length > 1 %>
+				<h5 class="section-type-label"><%= type %></h5>
+			<% end %>
+			<ul class="section-list">
+				<%= render partial: 'shared/section', collection: sections %>
+			</ul>
+		<% end %>
     </div>
 </div>
-
-<%= javascript_pack_tag 'instructor' %>
-<%= stylesheet_link_tag 'search' %>

@@ -12,4 +12,23 @@ class Semester < ApplicationRecord
   def to_s
     "#{season} #{year}"
   end
+
+  def self.sorted_by_date(sems = Semester.all)
+    sems.sort do |s1, s2|
+      if s2.year != s1.year
+        s2.year <=> s1.year 
+      else
+        case
+        when s1.season == "Fall"
+          -1
+        when s1.season == "Summer" && s2.season == "Fall"
+          1
+        when s1.season == "Spring"
+          1
+        else
+          0
+        end
+      end
+    end
+  end
 end
