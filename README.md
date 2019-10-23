@@ -48,8 +48,19 @@ See the offical [Ruby docs](https://www.ruby-lang.org/en/documentation/installat
 
 #### Windows
 
-Download the lastest Ruby+DevKit installer from https://rubyinstaller.org/downloads/.
-Run the installer and follow the instructions.
+First, install Chocolatey by following the [official install instructions](https://chocolatey.org/install).
+
+Next, install Ruby:
+
+```sh
+choco install ruby
+```
+
+You'll also have to install SQLite:
+
+```sh
+choco install sqlite
+```
 
 ### Install Yarn
 
@@ -59,13 +70,13 @@ You might have to install node.js as well.
 
 ### Clone the schedules workspace
 We're first going to clone down a copy of the schedules codebase from [git.gmu.edu](http://git.gmu.edu/srct/schedules),
-the SRCT code respository, with SSH.
+the SRCT code respository, with SSH. Follow the following two steps.
 
-**a)** Configure your ssh keys by following the directions at:
+**1.** Configure your ssh keys by following the directions at:
 
 [git.gmu.edu/srct/schedules/wikis/Adding-SSH-Keys-to-GitLab](https://git.gmu.edu/srct/schedules/wikis/Adding-SSH-Keys-to-GitLab).
 
-**b)** Now, on your computer, navigate to the directory in which you want to download the project (ie. perhaps one called `development/SRCT`), and run
+**2.** Now, on your computer, navigate to the directory in which you want to download the project (ie. perhaps one called `development/SRCT`), and run
 
     git clone git@git.gmu.edu:srct/schedules.git
 
