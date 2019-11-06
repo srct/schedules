@@ -1,4 +1,8 @@
-<li id="section-<%= section.id %>" data-crn="<%= "#{section.crn}" %>" class="list-group-item card section-item">
+<li id="section-<%= section.id %>" 
+    data-crn="<%= "#{section.crn}" %>" 
+    class="list-group-item card section-item"
+    >
+
     <p><strong class="subj"><%= "#{section.name}" %></strong>:  <%= section.title %> <em><%= "(##{section.crn})"%></em></p>
 
     <div class="stats">
@@ -27,9 +31,13 @@
     <% end %>
 
     <div class="add-remove-link">
-        <a data-crn="<%= "#{section.crn}" %>" class="underline add-section">
-            <i class="fas fa-plus add-remove-icon"></i>
-            <span>Add Section to Cart</span>
+        <a data-controller="toggle-section" 
+           data-toggle-section-crn="<%= "#{section.crn}" %>" 
+           class="underline add-section"
+           data-action="click->toggle-section#toggle"
+           >
+            <i data-target="toggle-section.icon" class="fas fa-plus add-remove-icon"></i>
+            <span data-target="toggle-section.text">Add Section to Cart</span>
         </a>
     </div>
 </li>

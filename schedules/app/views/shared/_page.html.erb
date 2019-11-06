@@ -1,4 +1,4 @@
-<main class="container">
+<main class="container" data-controller="application">
     <%# <div id="page" class="row"> %>
 		<!-- Search result, List of Courses -->
 		<div class="col-lg-12 col-12 col-sm-12 mx-auto order-2 order-lg-0" id="search-list">
@@ -6,8 +6,8 @@
 		</div>
     <%# </div> %>
 
-	<a class="cart" href="/schedule" data-turbolinks="false">
-		<span id="count">0</span>
+	<a data-controller="cart" class="cart" href="/schedule">
+		<span id="count" data-target="cart.counter">0</span>
 		<i class="fas fa-shopping-cart"></i>
 	</a>
 

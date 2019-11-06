@@ -1,6 +1,5 @@
 class CourseSectionsController < ApplicationController
   def index
-    @render_page = false 
     crns = params[:crns].split(',')
     @sections = crns.map { |crn| CourseSection.latest_by_crn(crn) }
     @days = {
@@ -26,6 +25,8 @@ class CourseSectionsController < ApplicationController
         Time.new(a.start_time) <=> Time.new(b.start_time)
       end
     end
+
+    render(layout: false)
   end
 
   def show

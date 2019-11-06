@@ -1,11 +1,3 @@
-<% expanded = false unless defined? expanded %>
-
-<% if defined?(@instructor) %>
-    <% sections = course.course_sections.where(instructor: @instructor, semester: @semester).order(:name) %>
-<% else %>
-    <% sections = course.course_sections.where(semester: @semester).order(:name) %>
-<% end %>
-
 <div class="card course-card" id="course-<%= course.id %>">
     <div class="card-header">
 	<div class="row">
@@ -49,14 +41,5 @@
 	  	    <i id="course-chevron" class="fas fa-chevron-down"></i>
 		</div>
 	<% end %>
-
-	
-
-
-	
-	<!-- List of Course Sections -->
-	<div class="list-group list-group-flush sections" style="display: <%= expanded ? "flex" : "none" %>">
-	    
-	</div>
     </div>
 </div>

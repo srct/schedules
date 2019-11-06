@@ -1,3 +1,4 @@
 .vscode
 schedules.code-workspace
 schedules/config/test.html
+schedules/db/data/last_update.txt

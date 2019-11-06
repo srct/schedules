@@ -11,8 +11,8 @@
     </div>
     
     <div class="col-lg-8 col-12">
-		<form class="semester-select">
-			<select name="semester_id" class="form-control" id="semesterselect" onchange="this.form.submit()" aria-label="Semester">
+		<form class="semester-select" data-controller="semester-select">
+			<select name="semester_id" class="form-control" data-action="semester-select#changeSemester" aria-label="Semester">
 				<% @semesters.each do |sem| %>
 					<option 
 						id="<%= sem.id %>"
