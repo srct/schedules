@@ -4,16 +4,11 @@ Rails.application.routes.draw do
 
   get '/', to: 'home#index', as: 'home'
   get 'search', to: 'search#index', as: 'search'
-  get 'sessions/update', as: 'update_session'
-  get 'sessions/cart'
-  get 'sessions/add_bulk'
 
   resources :courses, only: [:show]
   resources :course_sections, only: [:index, :show]
-  resources :instructors, only: [:index, :show]
+  resources :instructors, only: [:show]
   get 'schedule', to: 'schedules#show', as: 'schedule'
-  get 'schedule/events', to: 'schedules#events'
-  get 'schedule/view', to: 'schedules#view', as: 'view_schedule'
 
   scope :api, module: 'api' do # Register /api routes
     resources :semesters, only: [:index], as: 'api_semesters'
