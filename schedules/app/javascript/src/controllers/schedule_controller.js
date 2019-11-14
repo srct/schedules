@@ -3,7 +3,7 @@ import { getCart } from 'src/cart'
 import { buildUrl, downloadIcal } from '../utils'
 
 export default class extends Controller {
-    static targets = ['schedule', 'loader', 'export']
+    static targets = ['schedule', 'loader', 'export', 'modal']
 
     connect() {
         if (getCart().length == 0) {
@@ -29,5 +29,9 @@ export default class extends Controller {
 
     openWebcal() {
         window.open(buildUrl(`/api/schedules?crns=${getCart().join(',')}`, 'webcal:'))
+    }
+
+    showModal() {
+        $(this.modalTarget).modal('toggle')
     }
 }

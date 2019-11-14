@@ -2,7 +2,7 @@
 
 <div data-controller="schedule">
     <h2 style="margin-bottom: 0.5em">Your Schedule</h2>
-    <button data-target="schedule.export" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exportModal">
+    <button data-target="schedule.export" type="button" class="btn btn-primary" data-action="schedule#showModal">
         Export Schedule to Calendar
     </button>
     <div>
@@ -11,6 +11,7 @@
     <div data-target="schedule.schedule"></div>
 
     <div
+        data-target="schedule.modal"
         class="modal fade"
         id="exportModal"
         tabindex="-1"
