@@ -1,3 +1,5 @@
+import { saveAs } from 'file-saver'
+
 export function buildUrl(url, protocol = window.location.protocol) {
     const port = window.location.port === '3000' ? ':3000' : ''
     return `${protocol}//${window.location.hostname}${port}${url}`
