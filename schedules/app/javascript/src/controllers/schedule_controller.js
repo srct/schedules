@@ -1,7 +1,6 @@
 import { Controller } from 'stimulus'
 import { getCart } from 'src/cart'
 import { buildUrl, downloadIcal } from '../utils'
-import 
 
 export default class extends Controller {
     static targets = ['schedule', 'loader', 'export', 'modal']
