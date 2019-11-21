@@ -1,13 +1,4 @@
 <nav>
-  <span><a href="/"><i class="fas fa-calendar-alt"></i> Schedules</a></span>
-	<form data-controller="search" data-action="search#search" id="search-container" action="/search">
-		<input 
-			data-target="search.input"
-			name="query"
-			value="<%= params[:query] %>"
-			placeholder="PSYC, CS 112, 71926, Jonathan Bell, ..."/>
-		<button type="submit">
-			<i class="fas fa-search"></i>
-		</button>
-	</form>
+	<span><a href="/"><i class="fas fa-calendar-alt"></i> Schedules</a></span>
+	<%= render(partial: 'shared/search') %>
 </nav>
