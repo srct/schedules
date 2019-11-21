@@ -271,3 +271,10 @@ footer {
     border: none;
     padding: 0px;
 }
+
+@media only screen and (min-width: 600px) {
+    .cart {
+        bottom: inherit;
+        top: 3%;
+    }
+}
