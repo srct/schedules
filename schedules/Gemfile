@@ -7,17 +7,23 @@ end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', github: 'rails/rails'
-# Use sqlite3 as the database for Active Record
+
+# Use sqlite3 as the database for Active Record. May break your Windows.
 gem 'sqlite3'
+
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
+
 # Use SCSS for stylesheets
 gem 'sass-rails'
+
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder'
 
+# me_irl
 gem 'uglifier'
 
+# webpack support for JavaScript asset management
 gem 'webpacker'
 
 group :development, :test do
@@ -57,12 +63,6 @@ gem 'rack-cors', require: 'rack/cors'
 
 # Linting
 gem "rubocop", "~> 0.58.2"
-
-# API documentation
-gem 'apipie-rails'
-
-# Markdown for API docs
-gem 'maruku'
 
 # super fast page loads
 gem 'turbolinks'
