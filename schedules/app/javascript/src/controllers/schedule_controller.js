@@ -14,6 +14,7 @@ export default class extends Controller {
             this.exportTarget.classList.remove('hidden')
             this.loaderTarget.classList.remove('hidden')
             this.scheduleTarget.innerHTML = ''
+
             fetch(`/course_sections?crns=${getCart().join(',')}`)
                 .then(resp => resp.text())
                 .then(text => {

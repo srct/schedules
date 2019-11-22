@@ -66,3 +66,5 @@ gem "rubocop", "~> 0.58.2"
 
 # super fast page loads
 gem 'turbolinks'
+
+gem 'whenever'
