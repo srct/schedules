@@ -34,13 +34,6 @@ class CourseSection < ApplicationRecord
     end
   end
 
-  def overlaps?(other)
-    t1_start, t1_end = Time.parse(start_time), Time.parse(end_time)
-    t2_start, t2_end = Time.parse(other.start_time), Time.parse(other.end_time)
-
-    (t1_start <= t2_end && t2_start <= t1_end) && Set.new(days.split).intersect?(Set.new(other.days.split))
-  end
-
   def self.latest_by_crn(crn)
     sems = Semester.sorted_by_date
     where(crn: crn).min_by { |s| sems.find_index(s.semester) }
