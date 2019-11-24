@@ -9,9 +9,9 @@ default: &default
     pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
     timeout: 5000
 
-development:
-    <<: *default
-    database: db/development.sqlite3
+# development:
+#     <<: *default
+#     database: db/development.sqlite3
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -19,6 +19,16 @@ development:
 test:
     <<: *default
     database: db/test.sqlite3
+
+development:
+    adapter: mysql2
+    database: <%= ENV.fetch("DB_DATABASE") { "schedules" } %>
+    username: <%= ENV.fetch("DB_USERNAME") { "root" } %>
+    password: <%= ENV.fetch("DB_PASSWORD") { "root" } %>
+    host: <%= ENV.fetch("DB_HOST") { "localhost" } %>
+    port: <%= ENV.fetch("DB_PORT") { 5432 } %>
+    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+    timeout: 5000
 
 production:
     adapter: mysql2
