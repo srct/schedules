@@ -1,21 +1,21 @@
 stages:
-  - test
+  # - test
   - build
 
-test:
-  image: starefossen/ruby-node:latest
-  stage: test
-  script:
-    - cd schedules
-    - bundle install
-    - yarn install
-    - rails db:migrate
+# test:
+#   image: starefossen/ruby-node:latest
+#   stage: test
+#   script:
+#     - cd schedules
+#     - bundle install
+#     - yarn install
+#     - rails db:migrate
     # - rails test
     # - rubocop
 
 build:
   stage: build
-  retry: 2
+  retry: 1
   image:
     name: gcr.io/kaniko-project/executor:debug
     entrypoint: [""]
