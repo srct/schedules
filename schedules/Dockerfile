@@ -10,7 +10,7 @@ ENV RAILS_ENV production
 
 RUN bundle install --without development test
 RUN yarn install
-RUN rails assets:precompile
+RUN SECRET_KEY_BASE=1 rails assets:precompile
 
 RUN whenever --update-crontab
 
