@@ -7,6 +7,8 @@ export default class extends Controller {
 
     search(event) {
         event.preventDefault()
-        Turbolinks.visit(buildUrl(`/search?query=${this.inputTarget.value}`))
+        const url = `/search?query=${this.inputTarget.value}`
+        Turbolinks.visit(url)
     }
 }
+console.log('AHHH')
