@@ -1,7 +1,7 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 
-require_relative 'patriot_web_parser'
+require 'patriotweb/patriotweb'
 require_relative 'courses_loader'
 require 'thwait'
 require 'httparty'
@@ -67,7 +67,7 @@ def load_sections(sections_in, semester)
       course = Course.find_or_create_by!(subject: section[:subj],
                                          course_number: section[:course_number])
 
-      instructor = Instructor.find_or_create_by!(name: section[:instructor])
+      instructor = Instructor.find_or_create_by!(name: section[:instructor].strip)
 
       section_name = "#{section[:subj]} #{section[:course_number]} #{section[:section]}"
 
@@ -118,7 +118,7 @@ def main
                 [parser.parse_semesters.first]
               else
                 # expand to include however many semesters you want
-                parser.parse_semesters[0..7]
+                parser.parse_semesters[1..]
               end
 
   puts "\tParsing subjects..."
