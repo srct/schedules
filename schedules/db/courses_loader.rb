@@ -1,14 +1,14 @@
 require 'nokogiri'
 require 'httparty'
 require 'thwait'
-require_relative 'patriot_web_parser'
+require 'patriotweb/patriotweb'
 
 def nbsp
   [160].pack('U*')
 end
 
 def get_courses(subj)
-  response = HTTParty.get("https://catalog.gmu.edu/courses/#{subj}")
+  response = HTTParty.get("https://catalog.gmu.edu/courses/#{subj}/")
   document = Nokogiri::HTML(response)
 
   course_blocks = document.css('.courseblock')

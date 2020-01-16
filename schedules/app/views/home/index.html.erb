@@ -1,13 +1,4 @@
 <div class="text-center hero">
     <h1><i class="fas fa-calendar-alt"></i>&nbsp;<span style="">SRCT</span> <strong style="">Schedules</strong></h1>
-	<form data-controller="search" data-action="search#search" id="search-container" action="/search">
-		<input 
-			data-target="search.input"
-			name="query"
-			value="<%= params[:query] %>"
-			placeholder="PSYC, CS 112, 71926, Jonathan Bell, ..."/>
-		<button type="submit">
-			<i class="fas fa-search"></i>
-		</button>
-	</form>
+	<%= render(partial: 'shared/search') %>
 </div>
