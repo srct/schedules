@@ -1,3 +1,5 @@
+require 'time'
+
 module Update
   FILE_NAME = "db/data/last_update.txt".freeze
 
@@ -10,6 +12,6 @@ module Update
   end
 
   def self.new_update
-    File.write(FILE_NAME, Time.now.strftime("%Y-%m-%d %k:%M:%S"))
+    File.write(FILE_NAME, Time.now.in_time_zone('America/New_York').strftime("%Y-%m-%d %k:%M:%S"))
   end
 end

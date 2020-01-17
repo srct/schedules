@@ -24,6 +24,10 @@ $blue: #297dc5;
     font-family: 'Roboto', sans-serif;
 }
 
+body {
+    min-width: 375px;
+}
+
 h1,
 h2,
 h3,
@@ -254,6 +258,10 @@ footer {
     margin: 4em auto 1em;
     text-align: center;
     max-width: 75%;
+
+    p {
+        margin-bottom: 0em;
+    }
 }
 
 #count {
