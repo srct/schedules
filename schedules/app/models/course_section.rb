@@ -10,7 +10,6 @@ class CourseSection < ApplicationRecord
   # Ensure all necessary fields are present.
   validates :name, presence: true
   validates :crn, presence: true
-  validates :title, presence: true
   validates :course_id, presence: true
   validates :semester_id, presence: true
 
@@ -44,5 +43,24 @@ class CourseSection < ApplicationRecord
     joins(:instructor)
       .where("instructors.name LIKE ?", "%#{name}%")
       .select('course_sections.*, instructors.name as instructor_name')
+  end
+
+  def self.find_or_update_by!(s)
+    base_attrs = { crn: s[:crn], course: s[:course], semester: s[:semester] }
+    section = self.find_by(base_attrs)
+    if section.nil?
+      section = CourseSection.new(base_attrs)
+    end
+
+    section.title = s[:title]
+    section.start_date = s[:start_date]
+    section.end_date = s[:end_date]
+    section.days = s[:days]
+    section.start_time = s[:start_time]
+    section.end_time = s[:end_time]
+    section.location = s[:location]
+    section.instructor = s[:instructor]
+    section.save!
+    section
   end
 end

@@ -86,7 +86,9 @@ def load_sections(sections_in, semester)
                         semester: semester)
     end
 
-    all_sections.each { |s| CourseSection.find_or_create_by! s }
+    all_sections.each do |s|
+      CourseSection.find_or_update_by!(s)
+    end
   end
 end
 
