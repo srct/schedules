@@ -1,7 +1,7 @@
 require 'time'
 
 module Update
-  FILE_NAME = "db/data/last_update.txt".freeze
+  FILE_NAME = Rails.root.join("db", "data", "last_update.txt").freeze
 
   def self.last_update_date
     if File.exist?(FILE_NAME)
