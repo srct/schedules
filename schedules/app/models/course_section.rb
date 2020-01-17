@@ -47,11 +47,18 @@ class CourseSection < ApplicationRecord
 
   def self.find_or_update_by!(s)
     base_attrs = { crn: s[:crn], course: s[:course], semester: s[:semester] }
-    section = self.find_by(base_attrs)
-    if section.nil?
+    sections = CourseSection.where(base_attrs)
+    if sections.empty?
       section = CourseSection.new(base_attrs)
+    else
+      sections = sections.to_a
+      section = sections.shift
+      sections.each do |bad_section|
+        bad_section.destroy
+      end
     end
 
+    section.name = s[:name]
     section.title = s[:title]
     section.start_date = s[:start_date]
     section.end_date = s[:end_date]

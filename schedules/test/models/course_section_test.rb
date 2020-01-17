@@ -43,6 +43,22 @@ class CourseSectionTest < ActiveSupport::TestCase
     }
     a = CourseSection.create!(initial)
 
+    other_initial = {
+      name: 'CS 211 099',
+      crn: '99999',
+      title: 'Bad title',
+      start_date: '2019-01-01',
+      end_date: '2019-01-02',
+      days: 'MWF',
+      start_time: '1:00pm',
+      end_time: '2:00pm',
+      location: 'ENGR',
+      course: courses(:cs211),
+      instructor: instructors(:otten),
+      semester: semesters(:fall2018)
+    }
+    b = CourseSection.create!(other_initial)
+
     updated = {
       name: 'CS 211 099',
       crn: '99999',
@@ -57,23 +73,25 @@ class CourseSectionTest < ActiveSupport::TestCase
       instructor: instructors(:kinga),
       semester: semesters(:fall2018)
     }
-    b = CourseSection.find_or_update_by!(updated)
+    c = CourseSection.find_or_update_by!(updated)
+
+    assert_nil CourseSection.find_by(other_initial)
 
     # reload a with the new attributes
     a.reload
 
     # ensure each field matches the updated value
     updated.each do |key, value|
-      obj_val = b.method(key).call
+      obj_val = c.method(key).call
       if obj_val.is_a? Date
         assert_equal value, obj_val.strftime("%Y-%m-%d")
       else
         assert_equal value, obj_val
       end
 
-      assert_equal a.method(key).call, b.method(key).call
+      assert_equal a.method(key).call, c.method(key).call
     end
 
-    assert_equal a.id, b.id
+    assert_equal a.id, c.id
   end
 end
