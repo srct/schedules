@@ -19,6 +19,7 @@ test:
     database: schedules_test
 
 production:
+    <<: *default
     database: <%= ENV.fetch("DB_DATABASE") { "schedules" } %>
     username: <%= ENV.fetch("DB_USERNAME") { "" } %>
     password: <%= ENV.fetch("DB_PASSWORD") { "" } %>
