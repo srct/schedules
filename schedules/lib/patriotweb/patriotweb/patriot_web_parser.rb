@@ -65,7 +65,8 @@ module PatriotWeb
     # Parse all courses from the subject search page
     # @param document [Nokogiri::HTML::Document]
     # @return [Array] courses
-    def get_courses(document, _subject)
+    def get_courses(document, subject)
+      File.write("BIOL.html", document.to_s) if subject == "BIOL"
       table = document.css('html body div.pagebodydiv table.datadisplaytable')
       rows = table.css('tr')
       data_from rows
@@ -81,13 +82,18 @@ module PatriotWeb
           data = {}
 
           title_elements = rows[i].text.split(' - ')
-          data[:title] = title_elements[0].strip
-          data[:crn] = title_elements[1]
-          full_name = title_elements[2].split(' ')
+          data[:title] = if title_elements.length == 5
+                          "#{title_elements[0].strip} #{title_elements[1].strip}"
+                         else
+                          title_elements[0].strip
+                         end
+
+          data[:crn] = title_elements[-3]
+          full_name = title_elements[-2].split(' ')
           next unless full_name.length == 2
           data[:subj] = full_name[0]
           data[:course_number] = full_name[1]
-          data[:section] = title_elements[3].strip
+          data[:section] = title_elements[-1].strip
 
           details = rows[i + 2].css('td table tr td')
           if details.empty?
@@ -128,9 +134,12 @@ module PatriotWeb
     end
 
     # a title looks this: Survey of Accounting - 71117 - ACCT 203 - 001
+    # OR, General Biology I - Lab Only - 23465 - BIOL 105 - 208
     def title?(text)
       elements = text.split(' - ')
-      elements.length == 4 && elements[2].split(' ').length == 2
+      return false unless elements.length >= 4
+
+      /[0-9]{5}/.match?(elements[-3]) && (elements[-2].split(' ').length == 2)
     end
   end
 end

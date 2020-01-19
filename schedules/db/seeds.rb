@@ -86,6 +86,7 @@ def load_sections(sections_in, semester)
                         semester: semester)
     end
 
+    puts "inserting sections for #{subject}"
     all_sections.each do |s|
       CourseSection.find_or_update_by!(s)
     end
