@@ -24,5 +24,5 @@ Thankfully, there are tons of great free online resources to learn Rails. Here a
 Follow the instructions for your operating system:
 
 - [Windows](https://git.gmu.edu/srct/schedules/-/wikis/Schedules-Setup/Windows)
-- [Mac](https://git.gmu.edu/srct/schedules/-/wikis/Schedules-Setup/Windows)
+- [Mac](https://git.gmu.edu/srct/schedules/-/wikis/Schedules-Setup/Mac)
 - Linux (TODO - for now, follow the Mac instructions using your distro's package manager instead of Homebrew)
