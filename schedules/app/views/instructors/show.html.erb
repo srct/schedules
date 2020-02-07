@@ -1,37 +1,45 @@
 <%= render(partial: 'shared/navbar') %>
 
 <div class="row">
-    <div class="col-lg-4 col-12 mb-4">
-		<h1><%= @instructor.name %></h1>
+  <div class="col-lg-4 col-12 mb-4">
+    <h1><%= @instructor.name %></h1>
 
-		<% unless @rating[:teaching].nil? %>
-			<%= render(partial: 'shared/stars', locals: { percent: @rating[:teaching][0]/5*100 }) %>
-			<%= @rating[:teaching][0] %> / <%= @rating[:teaching][1] %> responses
-		<% end %>
-    </div>
-    
-    <div class="col-lg-8 col-12">
-		<form class="semester-select" data-controller="semester-select">
-			<select name="semester_id" class="form-control" data-action="semester-select#changeSemester" aria-label="Semester">
-				<% @semesters.each do |sem| %>
-					<option 
-						id="<%= sem.id %>"
-						name="semester_id" 
-						value="<%= sem.id %>"
-						<% if sem.id == params[:semester_id]&.to_i %> selected <% end %>
-					>
-						<%= sem.to_s %>
-					</option>
-				<% end %>
-			</select>
-		</form>
-		<% @sections.each do |type, sections| %>
-			<% if @sections.keys.length > 1 %>
-				<h5 class="section-type-label"><%= type %></h5>
-			<% end %>
-			<ul class="section-list">
-				<%= render partial: 'shared/section', collection: sections %>
-			</ul>
-		<% end %>
-    </div>
+    <% unless @rating[:teaching].nil? %>
+      <%= render(partial: 'shared/stars', locals: { percent: @rating[:teaching][0]/5*100 }) %>
+      <%= @rating[:teaching][0] %> / <%= @rating[:teaching][1] %> responses
+    <% end %>
+  </div>
+
+  <div class="col-lg-8 col-12">
+
+    <!-- Semester dropdown -->
+    <form class="semester-select" data-controller="semester-select">
+      <select name="semester_id" class="form-control" data-action="semester-select#changeSemester" aria-label="Semester">
+        <% @semesters.each do |sem| %>
+          <option
+            id="<%= sem.id %>"
+            name="semester_id"
+            value="<%= sem.id %>"
+            <% if sem.id == params[:semester_id]&.to_i %> selected <% end %>
+            >
+            <%= sem.to_s %>
+          </option>
+        <% end %>
+      </select>
+    </form>
+
+    <!-- Render groups of section types + sections -->
+    <% @sections.each do |type, sections| %>
+
+      <!-- Only render a header if there's more than one section type -->
+      <% if @sections.keys.length > 1 %>
+        <h5 class="section-type-label"><%= type %></h5>
+      <% end %>
+
+      <!-- Sections -->
+      <ul class="section-list">
+        <%= render partial: 'shared/section', collection: sections, locals: { on_professor_page: true } %>
+      </ul>
+    <% end %>
+  </div>
 </div>

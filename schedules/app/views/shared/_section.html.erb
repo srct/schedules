@@ -1,43 +1,42 @@
-<li id="section-<%= section.id %>" 
-    data-crn="<%= "#{section.crn}" %>" 
-    class="list-group-item card section-item"
-    >
-
-    <p><strong class="subj"><%= "#{section.name}" %></strong>:  <%= section.title %> <em><%= "(##{section.crn})"%></em></p>
+<li id="section-<%= section.id %>" data-crn="<%= "#{section.crn}" %>" class="list-group-item card section-item">
+    <p><strong class="subj"><%= "#{section.name}" %></strong>:  <%= section.title %> <em><%= "(##{section.crn})" %></em></p>
 
     <div class="stats">
-        <i class="fas fa-chalkboard-teacher"></i>
-        <% if section.instructor.name == "TBA" %>
+      <i class="fas fa-chalkboard-teacher"></i>
+
+      <% if section.instructor.name == "TBA" %>
         TBA
-        <% else %>
-            <%= link_to section.instructor.name, section.instructor %>
-            <% unless section.instructor.rating.nil? %>
-                <%= render partial: 'shared/stars', locals: { percent: (section.instructor.rating[0] / 5 * 100).to_i }%>
-            <% end %>
+      <% else %>
+        <%= link_to section.instructor.name, section.instructor %>
+        <% unless section.instructor.rating.nil? || defined?(:on_professor_page) %>
+          <%= render partial: 'shared/stars', locals: { percent: (section.instructor.rating[0] / 5 * 100).to_i }%>
         <% end %>
-        <br/>
-        <i class="fas fa-map-marker-alt"></i> <%= section.location %> <br/>
-        <i class="fas fa-clock"></i> <%= "#{section.days}, #{section.start_time}-#{section.end_time}" %>
+      <% end %>
+      <br/>
+
+      <i class="fas fa-map-marker-alt"></i> <%= section.location %> <br/>
+
+      <i class="fas fa-clock"></i> <%= "#{section.days}, #{section.start_time}-#{section.end_time}" %>
     </div>
 
     <% unless section.rating_questions.empty? %>
-    <div class="ratings">
+      <div class="ratings">
         <b>Rating Info</b> (<%= link_to("See all ratings", course_section_url(section))%>)
         <ul>
-            <li>Instructor rating: <%= section.teaching_rating %></li>
-            <li>Course rating: <%= section.course_rating %></li>
+          <li>Instructor rating: <%= section.teaching_rating %></li>
+          <li>Course rating: <%= section.course_rating %></li>
         </ul>
-    </div>
+      </div>
     <% end %>
 
     <div class="add-remove-link">
-        <a data-controller="toggle-section" 
-           data-toggle-section-crn="<%= "#{section.crn}" %>" 
-           class="underline add-section"
-           data-action="click->toggle-section#toggle"
-           >
-            <i data-target="toggle-section.icon" class="fas fa-plus add-remove-icon"></i>
-            <span data-target="toggle-section.text">Add Section to Cart</span>
-        </a>
+      <a data-controller="toggle-section"
+         data-toggle-section-crn="<%= "#{section.crn}" %>"
+         class="underline add-section"
+         data-action="click->toggle-section#toggle"
+         >
+          <i data-target="toggle-section.icon" class="fas fa-plus add-remove-icon"></i>
+          <span data-target="toggle-section.text">Add Section to Cart</span>
+      </a>
     </div>
 </li>
