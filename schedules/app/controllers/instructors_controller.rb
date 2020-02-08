@@ -4,9 +4,9 @@ class InstructorsController < ApplicationController
 
     # find the courses being taught this semester
     sections = CourseSection.where(instructor: @instructor)
-    semester_ids = Set.new(sections.map(&:semester_id))
+    semester_ids = Set.new(sections.pluck(:semester_id))
 
-    @semesters = Semester.where(id: semester_ids.to_a)
+    @semesters = Semester.where(id: semester_ids)
     @semesters = Semester.sorted_by_date(@semesters)
 
     @sections = sections.where(semester: @semester).group_by { |s| s.section_type }

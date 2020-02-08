@@ -8,7 +8,14 @@
         TBA
       <% else %>
         <%= link_to section.instructor.name, section.instructor %>
-        <% unless section.instructor.rating.nil? || defined?(:on_professor_page) %>
+
+        <%#
+            We don't want to show the rating starts on the section if it's on the instructor page.
+            So from the instructor page, a local variable called `on_instructor_page` is set.
+            local_assigns.has_key? lets us check if a variable with a given name is defined.
+            So if that variable is defined, don't show the stars.
+          %>
+        <% unless section.instructor.rating.nil? || local_assigns.has_key?(:on_instructor_page)%>
           <%= render partial: 'shared/stars', locals: { percent: (section.instructor.rating[0] / 5 * 100).to_i }%>
         <% end %>
       <% end %>
