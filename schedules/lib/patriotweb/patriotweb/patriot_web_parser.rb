@@ -27,7 +27,6 @@ module PatriotWeb
     def parse_subjects(semester_id)
       response = @networker.fetch_subjects(semester_id)
       document = Nokogiri::HTML(response)
-      File.write('db/test.html', document.to_s)
       get_subject_codes_from_option_values(document)
     end
 
@@ -66,7 +65,6 @@ module PatriotWeb
     # @param document [Nokogiri::HTML::Document]
     # @return [Array] courses
     def get_courses(document, subject)
-      File.write("BIOL.html", document.to_s) if subject == "BIOL"
       table = document.css('html body div.pagebodydiv table.datadisplaytable')
       rows = table.css('tr')
       data_from rows
@@ -97,7 +95,6 @@ module PatriotWeb
 
           details = rows[i + 2].css('td table tr td')
           if details.empty?
-            # puts "#{full_name.join(' ')} is fake news"
             i += 1
             next
           end

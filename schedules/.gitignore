@@ -30,3 +30,4 @@ coverage
 subjects
 
 /config/master.key
+db/data
