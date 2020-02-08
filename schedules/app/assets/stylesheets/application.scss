@@ -361,6 +361,26 @@ footer {
         }
     }
 
+    div.back-stars {
+        color: $black;
+        div.front-stars {
+            color: $gold;
+        }
+    }
+
+    div#exportModal {
+        background-color: rgba(0, 0, 0, 0);
+        div.modal-header {
+            border-bottom: 1px solid $gray;
+        }
+        hr {
+            background-color: rgba(74, 74, 74, 1);
+        }
+        div.modal-footer {
+            border-top: 1px solid $gray;
+        }
+    }
+
     /* This does nothing. 
        I can't seem to find a way to edit these given the current HTML structure.
        If possible, I think that it would look more pleasing to make the background
