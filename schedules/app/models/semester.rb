@@ -6,8 +6,8 @@ class Semester < ApplicationRecord
   has_many :closures
 
   # Ensure necessary fields are present.
-  validates :year, presence: true
-  validates :season, presence: true
+  validates :year, format: { with: /[0-9]{4}/, message: "must be a valid year" }
+  validates :season, inclusion: { in: %w(Spring Summer Fall), message: "must be a valid season" }
 
   def to_s
     "#{season} #{year}"

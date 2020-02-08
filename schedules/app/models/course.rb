@@ -3,8 +3,8 @@ class Course < ApplicationRecord
   has_many :course_sections
 
   # Ensure all necessary are fields present.
-  validates :course_number, presence: true
-  validates :subject, presence: true
+  validates :course_number, format: { with: /^[0-9]{3}$/ }
+  validates :subject, format: { with: /^[A-Z]{2,4}$/ }
 
   def full_name
     "#{subject} #{course_number}"

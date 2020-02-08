@@ -1,4 +1,5 @@
 class CourseSectionsController < ApplicationController
+  # index renders the view that is asyncronously fetched for the /schedule page
   def index
     crns = params[:crns].split(',')
     @sections = crns.map { |crn| CourseSection.latest_by_crn(crn) }
@@ -26,10 +27,11 @@ class CourseSectionsController < ApplicationController
       end
     end
 
+    # Don't render the normal HTML head, just render what's in the view file
     render(layout: false)
   end
 
   def show
-    @section = CourseSection.find_by_id(params[:id])
+    @section = CourseSection.find(params[:id])
   end
 end

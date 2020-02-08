@@ -1,9 +1,9 @@
 # Registers all routes for the app.
 Rails.application.routes.draw do
-  get 'about', to: 'about#index', as: 'about'
 
   get '/', to: 'home#index', as: 'home'
   get 'search', to: 'search#index', as: 'search'
+  get 'about', to: 'about#index', as: 'about'
 
   resources :courses, only: [:show]
   resources :course_sections, only: [:index, :show]

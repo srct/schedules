@@ -10,7 +10,6 @@ rescue StandardError
   File.new('db/data/sems_loaded.txt', 'w')
 end
 
-f = File.open('db/data/sems_loaded.txt', 'a')
 (Dir.entries("db/data").select { |f| f.end_with? ".json" }).each do |file|
   /(?<season>[[:alpha:]]{1,2})(?<year>[0-9]{2})/.match(file) do |m|
     if sems.include? m.to_s
