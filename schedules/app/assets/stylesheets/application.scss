@@ -362,8 +362,10 @@ footer {
     }
 
     div.back-stars {
-        color: $black;
-        div.front-stars {
+        i {
+            color: $white;
+        }
+        div.front-stars i {
             color: $gold;
         }
     }
