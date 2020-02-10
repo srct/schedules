@@ -18,4 +18,21 @@ module BySemester
                   Semester.sorted_by_date.first
                 end
   end
+
+  # Get a sorted list of semesters from a given list of sections
+  def semesters_from(sections)
+    # "pluck" each semester_id from every section in the list of sections
+    semester_ids = sections.pluck(:semester_id).uniq
+    semesters = Semester.where(id: semester_ids)
+    semesters = Semester.sorted_by_date(semesters)
+
+    # If this course is not being taught this semester, the current semester will not
+    # be in @semesters. However, users expect the default semester to be the current semester,
+    # so add the current semester as the first semester to ensure that will be the case.
+    unless semesters.include?(Semester.sorted_by_date.first)
+      semesters = [Semester.sorted_by_date.first, *semesters]
+    end
+
+    semesters
+  end
 end

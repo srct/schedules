@@ -15,8 +15,8 @@
             local_assigns.has_key? lets us check if a variable with a given name is defined.
             So if that variable is defined, don't show the stars.
           %>
-        <% unless section.instructor.rating.nil? || local_assigns.has_key?(:on_instructor_page)%>
-          <%= render partial: 'shared/stars', locals: { percent: (section.instructor.rating[0] / 5 * 100).to_i }%>
+        <% unless section.instructor.rating(:teaching).nil? || local_assigns.has_key?(:on_instructor_page)%>
+          <%= render partial: 'shared/stars', locals: { percent: (section.instructor.rating(:teaching)[0] / 5 * 100).to_i }%>
         <% end %>
       <% end %>
       <br/>

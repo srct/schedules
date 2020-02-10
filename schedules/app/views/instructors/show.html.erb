@@ -4,9 +4,9 @@
   <div class="col-lg-4 col-12 mb-4">
     <h1><%= @instructor.name %></h1>
 
-    <% unless @rating[:teaching].nil? %>
-      <%= render(partial: 'shared/stars', locals: { percent: @rating[:teaching][0]/5*100 }) %>
-      <%= @rating[:teaching][0] %> / <%= @rating[:teaching][1] %> responses
+    <% unless @rating.nil? %>
+      <%= render(partial: 'shared/stars', locals: { percent: @rating[0]/5*100 }) %>
+      <%= @rating[0] %> / <%= @rating[1] %> responses
     <% end %>
   </div>
 

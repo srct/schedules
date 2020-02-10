@@ -1,4 +1,6 @@
 class API::SchedulesController < ApplicationController
+  include BySemester
+
   # Render an iCal file containing the schedules of all the
   # course sections with the given CRNs.
   def index
