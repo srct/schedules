@@ -16,6 +16,7 @@ jobs:
 
       - name: Build and test
         run: |
+          cd schedules
           gem install bundler
           bundle install
           bundle exec rails help
