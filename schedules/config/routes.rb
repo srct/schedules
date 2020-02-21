@@ -14,22 +14,19 @@ Rails.application.routes.draw do
   # GET schedules.gmu.edu/search routes to AboutController#index
   get 'about', to: 'about#index', as: 'about'
 
+  # GET schedules.gmu.edu/schedule routes to SchedulesController#show
+  get 'schedule', to: 'schedules#index', as: 'schedule'
+  get 'schedule/sections', to: 'schedules#sections'
+
   # GET schedules.gmu.edu/courses/:id routes to CoursesController#show
   resources :courses, only: [:show]
 
   # GET schedules.gmu.edu/courses_sections/:id routes to CourseSectionsController#show
   #    - this is for viewing the ratings for that section
-  #
-  # GET schedules.gmu.edu/course_sections routes to CourseSectionsController#index
-  #    - this expects a list of crns as a query paramater
-  #    - used to render the schedule for the /schedule page
-  resources :course_sections, only: [:index, :show]
+  resources :course_sections, only: [:show]
 
   # GET schedules.gmu.edu/instructors/:id routes to InstructorsController#show
   resources :instructors, only: [:show]
-
-  # GET schedules.gmu.edu/schedule routes to SchedulesController#show
-  get 'schedule', to: 'schedules#index', as: 'schedule'
 
   # Register /api routes
   scope :api, module: 'api' do

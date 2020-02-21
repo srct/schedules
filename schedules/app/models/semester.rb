@@ -15,8 +15,8 @@ class Semester < ApplicationRecord
 
   # Sorts semesters in descending temporal order.
   # i.e. Fall 2020, Summer 2020, Spring 2020, Fall 2019, ...
-  def self.sorted_by_date(sems = Semester.all)
-    sems.sort do |s1, s2|
+  def self.sorted_by_date(semesters = Semester.all)
+    semesters.sort do |s1, s2|
       if s2.year != s1.year
         s2.year <=> s1.year
       else

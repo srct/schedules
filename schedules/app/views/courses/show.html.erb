@@ -5,8 +5,8 @@
     <h1><%= @course.full_name %></h1>
     <h4><%= @course.title %></h4>
     <% unless @rating.nil? %>
-      <%= render partial: 'shared/stars', locals: { percent: @course.rating[0]/5*100 } %>
-      Average course rating: <%= @course.rating[0] %> / <%= @course.rating[1] %> responses
+      <%= render partial: 'shared/stars', locals: { percent: @course.rating.avg/5*100 } %>
+      Average course rating: <%= @course.rating.avg %> / <%= @course.rating.responses %> responses
     <% end %>
 
     <div class="details">

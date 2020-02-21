@@ -1,62 +1,62 @@
 <!DOCTYPE html>
 <html lang="en-us">
-    <head>
-	<title>Schedules</title>
-	<%= csrf_meta_tags %>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <title>Schedules</title>
+    <%= csrf_meta_tags %>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<!-- FontAwesome icons -->
-	<script src="https://kit.fontawesome.com/ea45f7e94d.js" crossorigin="anonymous"></script>
+    <!-- FontAwesome icons -->
+    <script src="https://kit.fontawesome.com/ea45f7e94d.js" crossorigin="anonymous"></script>
 
-	<!-- Fonts -->
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto:400,700&display=swap" rel="stylesheet">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Roboto:400,700&display=swap" rel="stylesheet">
 
-	<!-- FB/Opengraph tags -->
-	<meta property="og:url" content="https://schedules.gmu.edu/">
-	<meta property="og:type" content="website">
-	<meta property="og:title" content="SRCT Schedules">
-	<meta property="og:description" content="Browse the GMU catalog, see course reviews, build and share your schedule.">
-	<meta property="og:site_name" content="SRCT Schedules">
-	<meta property="og:locale" content="en_US">
-	<meta property="article:author" content="SRCT">
-	
-	<!-- Twitter card tags -->
-	<meta name="twitter:card" content="summary">
-	<meta name="twitter:site" content="@MasonSRCT">
-	<meta name="twitter:creator" content="@MasonSRCT">
-	<meta name="twitter:url" content="https://schedules.gmu.edu/">
-	<meta name="twitter:title" content="SRCT Schedules">
-	<meta name="twitter:description" content="Browse the GMU catalog, see course reviews, build and share your schedule.">
+    <!-- FB/Opengraph tags -->
+    <meta property="og:url" content="https://schedules.gmu.edu/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="SRCT Schedules">
+    <meta property="og:description" content="Browse the GMU catalog, see course reviews, build and share your schedule.">
+    <meta property="og:site_name" content="SRCT Schedules">
+    <meta property="og:locale" content="en_US">
+    <meta property="article:author" content="SRCT">
 
-	<meta name="Description" content="Browse the GMU catalog, see course reviews, build and share your schedule.">
+    <!-- Twitter card tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@MasonSRCT">
+    <meta name="twitter:creator" content="@MasonSRCT">
+    <meta name="twitter:url" content="https://schedules.gmu.edu/">
+    <meta name="twitter:title" content="SRCT Schedules">
+    <meta name="twitter:description" content="Browse the GMU catalog, see course reviews, build and share your schedule.">
 
-	<!-- favicons -->
-	<%= favicon_link_tag %>
-	<link href="<%= asset_path 'favicon-32x32.png' %>" sizes="32x32" rel="shortcut icon" type="image/png" />
+    <meta name="Description" content="Browse the GMU catalog, see course reviews, build and share your schedule.">
 
-	<!-- Custom styles and code -->
-	<%= javascript_pack_tag('application') %>
-	<%= stylesheet_link_tag('application') %>
-    </head>
+    <!-- favicons -->
+    <%= favicon_link_tag %>
+    <link href="<%= asset_path 'favicon-32x32.png' %>" sizes="32x32" rel="shortcut icon" type="image/png" />
 
-    <body>
-		<%= render 'shared/page' do %>
-			<%= yield %>
-		<% end %>
+    <!-- Custom styles and code -->
+    <%= javascript_pack_tag('application') %>
+    <%= stylesheet_link_tag('application') %>
+  </head>
 
-		<!-- Matomo -->
-		<script type="text/javascript">
-			var _paq = _paq || [];
-			/* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-			_paq.push(['trackPageView']);
-			_paq.push(['enableLinkTracking']);
-			(function() {
-				var u="//matomo.srct.gmu.edu/";
-				_paq.push(['setTrackerUrl', u+'piwik.php']);
-				_paq.push(['setSiteId', '3']);
-				var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-				g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
-			})();
-		</script>
-    </body>
+  <body>
+    <%= render 'shared/page' do %>
+      <%= yield %>
+    <% end %>
+
+    <!-- Matomo -->
+    <script type="text/javascript">
+      var _paq = _paq || [];
+      /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+      _paq.push(['trackPageView']);
+      _paq.push(['enableLinkTracking']);
+      (function() {
+        var u="//matomo.srct.gmu.edu/";
+        _paq.push(['setTrackerUrl', u+'piwik.php']);
+        _paq.push(['setSiteId', '3']);
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+        g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+      })();
+    </script>
+  </body>
 </html>

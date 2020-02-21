@@ -5,7 +5,7 @@ class API::SchedulesController < ApplicationController
   # course sections with the given CRNs.
   def index
     crns = params["crns"].split ','
-    @schedule = Schedule.new(crns, @semester.season)
-    render plain: @schedule.to_ical # render a plaintext iCal file
+    schedule = Schedule.new(crns, @semester.season)
+    render plain: schedule.to_ical # render a plaintext iCal file
   end
 end

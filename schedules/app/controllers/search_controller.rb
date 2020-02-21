@@ -28,10 +28,6 @@ class SearchController < ApplicationController
         @courses = Course.where("(courses.title LIKE ?) OR (courses.description LIKE ?)", query, query).uniq
         @instructors = Instructor.named(params[:query])
       end
-
-      @courses.map! do |c|
-        c.serializable_hash.merge(url: course_url(c))
-      end
     end
 
     /[0-9]{5}/.match(params[:query]) do |m|
@@ -39,7 +35,7 @@ class SearchController < ApplicationController
     end
 
     if @courses&.count == 1 && @instructors&.count&.zero?
-      redirect_to(course_url(@courses.first["id"]))
+      redirect_to(course_url(@courses.first))
     elsif @courses&.count&.zero? && @instructors&.count == 1
       redirect_to(instructor_url(@instructors.first))
     end

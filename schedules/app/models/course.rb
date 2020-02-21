@@ -19,6 +19,6 @@ class Course < ApplicationRecord
       total += s.rating_questions[question]["instr_mean"].to_f * s.rating_questions[0]["resp"].to_i
     end
 
-    [(total / resp).round(2), resp] unless resp.zero?
+    Rating.new((total / resp).round(2), resp) unless resp.zero?
   end
 end

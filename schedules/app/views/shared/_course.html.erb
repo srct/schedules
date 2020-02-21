@@ -1,45 +1,15 @@
-<div class="card course-card" id="course-<%= course.id %>">
-    <div class="card-header">
-	<div class="row">
-	    <div class="col">
-		<%= link_to course do %>
-		    <h4 class="title"><%= "#{course.subject} #{course.course_number}" %></h4>
-		<% end %>
-	    </div>
-	</div>
-	<div class="d-md-flex justify-content-between">
-	    <h5><em><%= course.title %></em></h5>
-	    <div class="attr-list justify-content-start">
-		<div class="attr">
-		    <div class="icon">
-			<i class="fa fa-book"></i>
-		    </div>
-		    <%= course.credits %> credits
-		</div>
-		&nbsp;&nbsp;&nbsp;
-	    </div>
-	</div>
-    </div>
-    <div class="card-body">
-	
-	<p class="description"><%= course.description %></p>	
-	
-	<% unless course.prereqs.nil? || course.prereqs.empty? %>
-    	    <% first, rest = course.prereqs.split(':') %>
-    	    <% prereqs, note = rest.split('.') %>
-    	    <p><strong><%= first %>:</strong> <%= prereqs %> <sub><%= note %></sub></p>
-	<% end %>
+<section class="course">
+  <h4><%= link_to("#{course.subject} #{course.course_number}", course)%></h4>  
 
-	<% if expanded %>
-		<div class="d-block" style="text-align: center">
-	  	    <p id="chevron-label" style="margin-bottom:-4px; font-size: 10px;">Minimize</p>
-	  	    <i id="course-chevron" class="fas fa-chevron-up"></i>
-		</div>
-	<% else %>
-		<div class="d-block" style="text-align: center">
-	  	    <p id="chevron-label" style="margin-bottom:-4px; font-size: 10px;">Expand</p>
-	  	    <i id="course-chevron" class="fas fa-chevron-down"></i>
-		</div>
-	<% end %>
-    </div>
-</div>
+  <h5><em><%= course.title %>. <%= course.credits %> <%= 'credit'.pluralize(course.credits.to_i) %>.</em></h5>
+
+  <span class="description"><%= course.description %></span>
+
+  <% unless course.prereqs.nil? || course.prereqs.empty? %>
+    <% first, rest = course.prereqs.split(':') %>
+    <% prereqs, note = rest.split('.') %>
+    <span class="prereqs"><b><%= first %>:</b> <%= prereqs %> <sub><%= note %></sub></span>
+  <% end %>
+
+  <%= link_to("View Sections", course, class: "see-more") %>
+</section>
