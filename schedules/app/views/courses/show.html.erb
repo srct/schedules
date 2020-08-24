@@ -1,5 +1,15 @@
 <%= render partial: 'shared/navbar' %>
 
+<script>
+    //turbolinks prevents the site from properly jumping to an element when using https://www.url.com/page#element-id
+    //additionally, CSS styling is not properly applied to any :target attributes
+    //this prevented issue 14 from being resolved (https://github.com/srct/schedules/issues/14)
+    //the following script forces the page to update both the CSS and the window's location *after* turbolinks does its thing.
+    document.addEventListener("turbolinks:load", function(){
+        window.location = window.location.hash;
+    });
+</script>
+
 <div class="row">
     <div class="col-12 col-lg">
 		<h1><%= @course.full_name %></h1>
