@@ -11,50 +11,50 @@
 </script>
 
 <div class="row">
-    <div class="col-12 col-lg">
-		<h1><%= @course.full_name %></h1>
-		<h4><%= @course.title %></h4>
-		<% unless @rating.nil? %>
-			<%= render partial: 'shared/stars', locals: { percent: @course.rating[0]/5*100 } %>
-			Average course rating: <%= @course.rating[0] %> / <%= @course.rating[1] %> responses
-		<% end %>
+  <div class="col-12 col-lg">
+    <h1><%= @course.full_name %></h1>
+    <h4><%= @course.title %></h4>
+    <% unless @rating.nil? %>
+      <%= render partial: 'shared/stars', locals: { percent: @course.rating[0]/5*100 } %>
+      Average course rating: <%= @course.rating[0] %> / <%= @course.rating[1] %> responses
+    <% end %>
 
-		<div class="details">
-			<p>
-				<i class="fas fa-book"></i>
-				<%= @course.credits %> <%= 'credit'.pluralize(@course.credits.to_i) %>
-			</p>
-			<p>
-				<i class="fas fa-clock"></i>
-				<span><%= @taught_in %></span>
-			</p>
-		</div>
-
-		<p class="mt-3"><%= @course.description %>.</p>
+    <div class="details">
+      <p>
+        <i class="fas fa-book"></i>
+        <%= @course.credits %> <%= 'credit'.pluralize(@course.credits.to_i) %>
+      </p>
+      <p>
+        <i class="fas fa-clock"></i>
+        <span><%= @taught_in %></span>
+      </p>
     </div>
 
-    <div class="col-12 col-lg">
-		<form class="semester-select" data-controller="semester-select">
-			<select name="semester_id" class="form-control" data-action="semester-select#changeSemester" aria-label="Semester">
-				<% @semesters.each do |sem| %>
-					<option 
-						id="<%= sem.id %>"
-						name="semester_id" 
-						value="<%= sem.id %>"
-						<% if sem.id == params[:semester_id]&.to_i %> selected <% end %>
-					>
-						<%= sem.to_s %>
-					</option>
-				<% end %>
-			</select>
-		</form>
-		<% @sections.each do |type, sections| %>
-			<% if @sections.keys.length > 1 %>
-				<h5 class="section-type-label"><%= type %></h5>
-			<% end %>
-			<ul class="section-list">
-				<%= render partial: 'shared/section', collection: sections %>
-			</ul>
-		<% end %>
-    </div>
+    <p class="mt-3"><%= @course.description %></p>
+  </div>
+
+  <div class="col-12 col-lg">
+    <form class="semester-select" data-controller="semester-select">
+      <select name="semester_id" class="form-control" data-action="semester-select#changeSemester" aria-label="Semester">
+        <% @semesters.each do |sem| %>
+          <option
+            id="<%= sem.id %>"
+            name="semester_id"
+            value="<%= sem.id %>"
+            <% if sem.id == params[:semester_id]&.to_i %> selected <% end %>
+            >
+            <%= sem.to_s %>
+          </option>
+        <% end %>
+      </select>
+    </form>
+    <% @sections.each do |type, sections| %>
+      <% if @sections.keys.length > 1 %>
+        <h5 class="section-type-label"><%= type %></h5>
+      <% end %>
+      <ul class="section-list">
+        <%= render partial: 'shared/section', collection: sections %>
+      </ul>
+    <% end %>
+  </div>
 </div>

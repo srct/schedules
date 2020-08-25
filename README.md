@@ -15,7 +15,7 @@ If you need any help, please feel free to reach out in the `#schedules` channel 
 Rails is a web framework written in Ruby that makes developing web applications fun and productive. However, it does have quite a steep learning curve. Before you contribute to Schedules, it's worth learning the basics of Rails first. This will give you the ability to understand and navigate through the project structure before trying to make your contribution.
 Thankfully, there are tons of great free online resources to learn Rails. Here are a few that we recommend to newcomers:
 - [Official Getting Started with Rails](https://guides.rubyonrails.org/getting_started.html)
-- [Derek Banas' Ruby on Rails Tutorial (30min)](https://www.youtube.com/watch?v=GY7Ps8fqGdc)
+- [Derek Banas' Ruby on Rails Tutorial (30min)](https://www.youtube.com/watch?v=GY7Ps8fqGdc) (NOTE: this a great tutorial, but the setup instructions are outdated. Follow the ones below instead.)
 - [Rails Tutorial (free online ebook)](https://www.railstutorial.org/book)
 
 
