@@ -17,7 +17,7 @@
     </section>
   <% end %>
 
-  <% if @courses&.empty? && @instructors&.empty? %>
+  <% if (@courses&.empty? || @courses.nil?) && (@instructors&.empty? || @instructors.nil?) %>
     <span>No results found. Please try again with another search term.</span>
   <% end %>
 </div>

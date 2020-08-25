@@ -33,8 +33,10 @@ class SearchController < ApplicationController
 
     /[0-9]{5}/.match(params[:query]) do |m|
       course = CourseSection.latest_by_crn(m[0])
-      url = course_url(course.course) + "#section-" + course.id.to_s
-      redirect_to(url)
+      if not course.nil?
+        url = course_url(course.course) + "#section-" + course.id.to_s
+      end
+      redirect_to(url) unless course.nil?
     end
 
     if @courses&.count == 1 && @instructors&.count&.zero?
