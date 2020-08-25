@@ -6,7 +6,9 @@
     //this prevented issue 14 from being resolved (https://github.com/srct/schedules/issues/14)
     //the following script forces the page to update both the CSS and the window's location *after* turbolinks does its thing.
     document.addEventListener("turbolinks:load", function(){
-        window.location = window.location.hash;
+        if(window.location.hash){
+            window.location = window.location.hash;
+        }
     });
 </script>
 
