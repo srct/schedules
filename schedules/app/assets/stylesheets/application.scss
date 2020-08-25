@@ -287,6 +287,15 @@ footer {
     padding: 0px;
 }
 
+
+
+li:target{
+    background-color: #cfc;
+    *{
+        background-color: #cfc !important;
+    }
+}
+
 @media only screen and (min-width: 600px) {
     .cart {
         bottom: inherit;
@@ -396,8 +405,11 @@ footer {
             color: $green;
         }
     }*/
-
-    :target{
-        background-color: $lightgreen;
+    li:target{
+        background-color: #131;
+        *{
+            background-color: #131 !important;
+        }
     }
+
 }
