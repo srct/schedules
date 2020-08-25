@@ -383,7 +383,7 @@ footer {
         }
     }
 
-    /* This does nothing. 
+    /* This does nothing.
        I can't seem to find a way to edit these given the current HTML structure.
        If possible, I think that it would look more pleasing to make the background
        of the pop-up $white and the text contained inside of it $black, as it currently
@@ -397,4 +397,7 @@ footer {
         }
     }*/
 
+    :target{
+        background-color: $lightgreen;
+    }
 }
