@@ -3,7 +3,19 @@
 <div class="search-results">
   <% (@instructors || []).each do |inst| %>
     <section class="instructor">
-      <h5><a href="/instructors/<%= inst.id %>"> <%= inst.name %></a></h5>  
+      <h4><a href="/instructors/<%= inst.id %>"> <%= inst.name %></a></h4>
+      <!-- TODO: add instructor rating. My local database does not have instructor ratings so I have been unable to implement it.-->
+      <button class = "collapse-button" data-toggle="collapse" data-target="#instructor-<%= inst.id %>-sections" role="button" aria-expanded="false" aria-controls="instructor-<%= inst.id %>-sections">
+          &#x27A4; Sections
+      </button>
+      <div class="collapse" id="instructor-<%= inst.id %>-sections">
+          <% sections = CourseSection.where(instructor: inst) %>
+          <% (sections || []).each do |section| %>
+              <li class="instructor-section">
+                <a href="/courses/<%= section['course_id'] %>#section-<%= section['id'] %>"><%= section['name'] %></a> <em><%= section['title'] %>.</em>
+              </li>
+          <% end %>
+      </div>
     </section>
   <% end %>
   

@@ -296,6 +296,17 @@ li:target{
     }
 }
 
+li.instructor-section{
+    position: relative;
+    left: 3%;
+}
+
+button.collapse-button{
+    border:none;
+    padding:0px;
+    background-color:transparent;
+}
+
 @media only screen and (min-width: 600px) {
     .cart {
         bottom: inherit;
