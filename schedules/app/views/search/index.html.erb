@@ -3,25 +3,81 @@
 <div class="search-results">
   <% (@instructors || []).each do |inst| %>
     <section class="instructor">
-      <h4><a href="/instructors/<%= inst.id %>"> <%= inst.name %></a></h4>
-      <!-- TODO: add instructor rating. My local database does not have instructor ratings so I have been unable to implement it.-->
-      <button class = "collapse-button" data-toggle="collapse" data-target="#instructor-<%= inst.id %>-sections" role="button" aria-expanded="false" aria-controls="instructor-<%= inst.id %>-sections">
-          &#x27A4; Sections
-      </button>
-      <div class="collapse" id="instructor-<%= inst.id %>-sections">
-          <% sections = CourseSection.where(instructor: inst) %>
-          <% (sections || []).each do |section| %>
-              <li class="instructor-section">
-                <a href="/courses/<%= section['course_id'] %>#section-<%= section['id'] %>"><%= section['name'] %></a> <em><%= section['title'] %>.</em>
-              </li>
-          <% end %>
+      <h4><a href="/instructors/<%= inst.id %>"> <%= inst.name %></a>
+
+      <!-- Instructor rating -->
+      <div class="search-instructor-rating">
+        <% rating = { teaching: inst.rating, respect: inst.rating(6) } %>
+        <% unless rating[:teaching].nil? %>
+          <%= number_with_precision(rating[:teaching][0], :precision => 2) %>
+          <%= render(partial: 'shared/stars', locals: { percent: rating[:teaching][0]/5*100 }) %>
+        <% end %>
       </div>
+      </h4>
+
+
+      <!--
+      START INSTRUCTOR COURSE LIST
+
+      When redesigning the instructor card I thought it was a neat idea to show
+      the classes the instructor was teaching in a collapsable list/table, but
+      realized that information was redundant since the user can just click on
+      the instructor's name and see that information
+
+      If you're cleaning the code and want to remove this feature in its
+      entirety, everything from the START INSTRUCTOR COURSE LIST to the
+      END INSTRUCTOR COURSE LIST can be removed. If you want to clean the CSS
+      as well, first look for the HTML classes defined below.
+      (e.g collapse-button and instructor-section)
+
+      If, for whatever reason, you want to re-enable this feature, simply
+      remove the "[]#" from the line below.
+      -->
+      <% sections = []#CourseSection.where(instructor: inst, semester_id: 1) %>
+
+      <% unless sections.empty? %>
+        <!-- Collapsible list of classes the instructor teaches -->
+        <!-- Button to toggle -->
+        <button class = "collapse-button" data-toggle="collapse" data-target="#instructor-<%= inst.id %>-sections" role="button" aria-expanded="false" aria-controls="instructor-<%= inst.id %>-sections">
+          Sections Available This Semester
+        </button>
+
+        <!-- list of classes -->
+        <div class="collapse" id="instructor-<%= inst.id %>-sections">
+          <!-- Might be nice to sort the sections by something, idk what -->
+          <% (sections || []).each do |section| %>
+            <!-- Get all the semesters this class was offered in and find the latest one -->
+            <div class="instructor-section">
+              <a href="/courses/<%= section['course_id'] %>#section-<%= section['id'] %>"><b><%= section['name'] %></b></a> <em><%= section['title'] %>.</em>
+
+              <!-- Show when class was last offered -->
+              <% semester_ids = Set.new(section.course.course_sections.map(&:semester_id)).to_a %>
+              <% semesters = Semester.where(id: semester_ids) %>
+              <% semesters = Semester.sorted_by_date(semesters) %>
+              <div class = "last-offered">
+                <% if semesters.empty? %> Has not been offered since <b><%= Semester.sorted_by_date.last.to_s %></b>
+                <% else %> Last offered in <b><%= (semesters.to_a)[0] %></b>
+                <% end %>
+               </div>
+            </div> <!-- end list entry -->
+          <% end %>
+        </div>
+      <% end %>
+
+
+      <!-- END INSTRUCTOR COURSE LIST -->
+
+
+
     </section>
   <% end %>
-  
+
+
+
+  <!-- Courses found in search results -->
   <% (@courses || []).each do |course| %>
     <section class="course">
-      <h4><a href="/courses/<%= course['id'] %>"><%= course['subject'] %> <%= course['course_number'] %></a></h4>  
+      <h4><a href="/courses/<%= course['id'] %>"><%= course['subject'] %> <%= course['course_number'] %></a></h4>
       <h5><em><%= course['title'] %>. <%= course['credits'] %> <%= 'credit'.pluralize(course['credits'].to_i) %>.</em></h5>
 
       <span class="description"><%= course['description'] %></span>

@@ -296,15 +296,37 @@ li:target{
     }
 }
 
-li.instructor-section{
-    position: relative;
-    left: 3%;
+
+div.search-instructor-rating{
+    text-align:right;
+    float:right;
+    padding-right:20px;
+}
+
+div.instructor-section{
+    position:relative;
+    padding-left:10px;
+    padding-right:10px;
+    width:calc(100% - 20px);
+    border: solid 1px $black;
+    background:#ffd;
+}
+div.instructor-section:nth-child(odd){
+    background:#dfd;
+}
+
+div.last-offered{
+    position:relative;
+    text-align:right;
+    float:right;
 }
 
 button.collapse-button{
-    border:none;
+    border:solid 1px $black;
     padding:0px;
     background-color:transparent;
+    width:calc(100% - 20px);
+    text-align:center;
 }
 
 @media only screen and (min-width: 600px) {
