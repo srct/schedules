@@ -1,7 +1,0 @@
-<% @days.each do |day, sections| %>
-    <% next if sections.empty? %>
-    <h4 style="margin-top: 0.5em"><%= @days_map[day] %></h4>
-    <ul class="section-list">
-        <%= render(partial: 'shared/section', collection: sections) %>
-    </ul>
-<% end %>

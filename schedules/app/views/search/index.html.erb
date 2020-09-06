@@ -1,21 +1,8 @@
 <%= render(partial: 'shared/navbar') %>
 
 <div class="search-results">
-  <% (@instructors || []).each do |inst| %>
-    <section class="instructor">
-      <h5><a href="/instructors/<%= inst.id %>"> <%= inst.name %></a></h5>  
-    </section>
-  <% end %>
-  
-  <% (@courses || []).each do |course| %>
-    <section class="course">
-      <h4><a href="/courses/<%= course['id'] %>"><%= course['subject'] %> <%= course['course_number'] %></a></h4>  
-      <h5><em><%= course['title'] %>. <%= course['credits'] %> <%= 'credit'.pluralize(course['credits'].to_i) %>.</em></h5>
-
-      <span class="description"><%= course['description'] %></span>
-      <a href="/courses/<%= course['id'] %>" class="see-more">View Sections</a>
-    </section>
-  <% end %>
+  <%= render partial: 'shared/instructor', collection: @instructors %>
+  <%= render partial: 'shared/course', collection: @courses %>
 
   <% if (@courses&.empty? || @courses.nil?) && (@instructors&.empty? || @instructors.nil?) %>
     <span>No results found. Please try again with another search term.</span>

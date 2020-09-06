@@ -13,9 +13,9 @@ class CourseSection < ApplicationRecord
   validates :course_id, presence: true
   validates :semester_id, presence: true
 
-  serialize :rating_questions, Array
-
   scope :in_semester, ->(semester) { where(semester: semester) }
+
+  serialize :rating_questions, Array
 
   def teaching_rating
     if rating_questions.empty?
@@ -45,12 +45,14 @@ class CourseSection < ApplicationRecord
       .select('course_sections.*, instructors.name as instructor_name')
   end
 
+  # Sections are uniquely identified by their: CRN , Course, and Semester,
+  # but they have other required attributes too, so we can't use find_or_create_by.
   def self.find_or_update_by!(s)
     base_attrs = { crn: s[:crn], course: s[:course], semester: s[:semester] }
     sections = CourseSection.where(base_attrs)
     if sections.empty?
       section = CourseSection.new(base_attrs)
-    else
+    else # multiple sections with same attributes, destroy them
       sections = sections.to_a
       section = sections.shift
       sections.each do |bad_section|

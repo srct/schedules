@@ -164,6 +164,16 @@ nav {
         text-overflow: ellipsis;
     }
 
+    .prereqs {
+        display: block;
+        margin-top: 1em;
+        line-height: 1.7em;
+        font-family: 'Roboto', sans-serif;
+        color: $gray;
+        font-size: 0.9em;
+        max-height: 200px;
+    }
+
     .see-more {
         display: block;
         text-align: center;

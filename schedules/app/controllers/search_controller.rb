@@ -1,12 +1,15 @@
 class SearchController < ApplicationController
+
+  # Searching is hard. This code isn't very good, but it works for the most part.
+  # It trys to match the search query to different regular expressions
+  # and attempts to take you to the correct place based on which one matches.
+  #
+  # - CRNs get sent to the course page that contains the CRN
+  # - Queries of the form "Subject CourseNum", like "CS 112", get sent to that course
+  # - Otherwise search every course's title and description, along with instutor names and display whatever matches
   def index
     params[:query].strip!
     redirect_to(home_url) unless params[:query].length > 1
-
-    if params[:query].casecmp('god').zero?
-      bell = Instructor.find_by_name('Jonathan Bell')
-      redirect_to(instructor_url(bell))
-    end
 
     @instructors = nil
     @courses = nil
@@ -25,10 +28,6 @@ class SearchController < ApplicationController
         @courses = Course.where("(courses.title LIKE ?) OR (courses.description LIKE ?)", query, query).uniq
         @instructors = Instructor.named(params[:query])
       end
-
-      @courses.map! do |c|
-        c.serializable_hash.merge(url: course_url(c))
-      end
     end
 
     /[0-9]{5}/.match(params[:query]) do |m|
@@ -40,7 +39,7 @@ class SearchController < ApplicationController
     end
 
     if @courses&.count == 1 && @instructors&.count&.zero?
-      redirect_to(course_url(@courses.first["id"]))
+      redirect_to(course_url(@courses.first))
     elsif @courses&.count&.zero? && @instructors&.count == 1
       redirect_to(instructor_url(@instructors.first))
     end

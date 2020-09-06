@@ -1,0 +1,23 @@
+name: Rails Test
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone Schedules
+        uses: actions/checkout@v2
+
+      - name: Set up Ruby 2.6
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 2.6.x
+
+      - name: Build and test
+        run: |
+          cd schedules
+          gem install bundler
+          sudo apt-get install -y mysql-client libmysqlclient-dev
+          bundle install
+          bundle exec rails help
